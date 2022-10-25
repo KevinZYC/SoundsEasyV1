@@ -10,26 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace SoundsEasyV1
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for InstrumentWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class InstrumentWindow : Window
     {
-        public MainWindow()
+        public InstrumentWindow()
         {
             InitializeComponent();
-        }
-
-        //what happens when instrument button is clicked
-        private void btnInstrumentPage_Click(object sender, RoutedEventArgs e)
-        {
-            InstrumentWindow objInstWindow = new InstrumentWindow();
-            objInstWindow.Show();
         }
     }
 }

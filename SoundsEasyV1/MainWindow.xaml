@@ -5,8 +5,33 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SoundsEasyV1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Sounds Easy Music Dept. Management" Height="540" Width="960" WindowState="Maximized" ResizeMode="CanResize" MinHeight="540" MinWidth="960">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="3.5*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MinWidth="500" MinHeight="100">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1.75*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1.75*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1.75*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="btnInstrumentPage" Grid.Column="0" Content="Instrument Page" Background="#FFDDDDDD" Click="btnInstrumentPage_Click"/>
+            <Button Content="Button" Grid.Column="2" MinWidth="100" MinHeight="100" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            <Button Content="Button" Grid.Column="4" MinWidth="100" MinHeight="100"/>
+        </Grid>
+
 
     </Grid>
 </Window>
