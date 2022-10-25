@@ -23,5 +23,10 @@ namespace SoundsEasyV1
         {
             InitializeComponent();
         }
+
+        private void LoadData()
+        {
+
+        }
     }
 }
