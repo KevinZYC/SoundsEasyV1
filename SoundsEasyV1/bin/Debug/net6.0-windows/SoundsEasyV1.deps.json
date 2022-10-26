@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v6.0": {
       "SoundsEasyV1/1.0.0": {
         "dependencies": {
+          "Google.Apis": "1.57.0",
           "Google.Apis.Core": "1.57.0",
           "Google.Apis.Sheets.v4": "1.57.0.2826"
         },

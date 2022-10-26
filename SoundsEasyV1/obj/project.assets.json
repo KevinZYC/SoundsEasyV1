@@ -8,14 +8,10 @@
           "Google.Apis.Core": "1.57.0"
         },
         "compile": {
-          "lib/netstandard2.0/Google.Apis.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/netstandard2.0/Google.Apis.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.0/Google.Apis.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/netstandard2.0/Google.Apis.dll": {}
         }
       },
       "Google.Apis.Auth/1.57.0": {
@@ -26,15 +22,11 @@
         },
         "compile": {
           "lib/netstandard2.0/Google.Apis.Auth.PlatformServices.dll": {},
-          "lib/netstandard2.0/Google.Apis.Auth.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/netstandard2.0/Google.Apis.Auth.dll": {}
         },
         "runtime": {
           "lib/netstandard2.0/Google.Apis.Auth.PlatformServices.dll": {},
-          "lib/netstandard2.0/Google.Apis.Auth.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/netstandard2.0/Google.Apis.Auth.dll": {}
         }
       },
       "Google.Apis.Core/1.57.0": {
@@ -43,14 +35,10 @@
           "Newtonsoft.Json": "13.0.1"
         },
         "compile": {
-          "lib/netstandard2.0/Google.Apis.Core.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/netstandard2.0/Google.Apis.Core.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.0/Google.Apis.Core.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/netstandard2.0/Google.Apis.Core.dll": {}
         }
       },
       "Google.Apis.Sheets.v4/1.57.0.2826": {
@@ -60,27 +48,19 @@
           "Google.Apis.Auth": "1.57.0"
         },
         "compile": {
-          "lib/netstandard2.0/Google.Apis.Sheets.v4.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/netstandard2.0/Google.Apis.Sheets.v4.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.0/Google.Apis.Sheets.v4.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/netstandard2.0/Google.Apis.Sheets.v4.dll": {}
         }
       },
       "Newtonsoft.Json/13.0.1": {
         "type": "package",
         "compile": {
-          "lib/netstandard2.0/Newtonsoft.Json.dll": {
-            "related": ".xml"
-          }
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.0/Newtonsoft.Json.dll": {
-            "related": ".xml"
-          }
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
         }
       }
     }
@@ -218,33 +198,29 @@
   },
   "projectFileDependencyGroups": {
     "net6.0-windows7.0": [
+      "Google.Apis >= 1.57.0",
       "Google.Apis.Core >= 1.57.0",
       "Google.Apis.Sheets.v4 >= 1.57.0.2826"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\fred.zhou\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\kevin\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\fred.zhou\\source\\repos\\KevinZYC\\SoundsEasyV1\\SoundsEasyV1\\SoundsEasyV1.csproj",
+      "projectUniqueName": "C:\\Users\\kevin\\source\\repos\\SoundsEasyV1\\SoundsEasyV1\\SoundsEasyV1.csproj",
       "projectName": "SoundsEasyV1",
-      "projectPath": "C:\\Users\\fred.zhou\\source\\repos\\KevinZYC\\SoundsEasyV1\\SoundsEasyV1\\SoundsEasyV1.csproj",
-      "packagesPath": "C:\\Users\\fred.zhou\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\fred.zhou\\source\\repos\\KevinZYC\\SoundsEasyV1\\SoundsEasyV1\\obj\\",
+      "projectPath": "C:\\Users\\kevin\\source\\repos\\SoundsEasyV1\\SoundsEasyV1\\SoundsEasyV1.csproj",
+      "packagesPath": "C:\\Users\\kevin\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\kevin\\source\\repos\\SoundsEasyV1\\SoundsEasyV1\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\fred.zhou\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\kevin\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
-        "net6.0-windows"
+        "net6.0-windows7.0"
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
@@ -266,6 +242,10 @@
       "net6.0-windows7.0": {
         "targetAlias": "net6.0-windows",
         "dependencies": {
+          "Google.Apis": {
+            "target": "Package",
+            "version": "[1.57.0, )"
+          },
           "Google.Apis.Core": {
             "target": "Package",
             "version": "[1.57.0, )"
@@ -281,8 +261,7 @@
           "net47",
           "net471",
           "net472",
-          "net48",
-          "net481"
+          "net48"
         ],
         "assetTargetFallback": true,
         "warn": true,
@@ -294,7 +273,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.200\\RuntimeIdentifierGraph.json"
       }
     }
   }
