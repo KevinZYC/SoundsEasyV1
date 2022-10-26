@@ -25,6 +25,8 @@ namespace SoundsEasyV1
             InitializeComponent();
         }
 
+        
+
         //what happens when instrument button is clicked
         private void btnInstrumentPage_Click(object sender, RoutedEventArgs e)
         {
