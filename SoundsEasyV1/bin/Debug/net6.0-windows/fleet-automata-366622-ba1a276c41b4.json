@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "fleet-automata-366622",
+  "private_key_id": "ba1a276c41b41979a938e4122f1f8712fcfe2204",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQCjllbpMFOx1lW5\n8M7AFJ0RMhkFR4KDiNm11Qw6s1sq1vydCjWZhsCdOeTE/gcyANFRLbyjrHfvu02+\n+kaQt4qNAgE+wO1bVGL+3cWh0oLew49Se38AIJZQaUBH3z3jEcGQ9hragOcRwQrI\n3KzoOL0BEcnyFj5PkNqsR2JpLIkiTWsl3x/SOWFwzRE9ja+Z1eXmbOv14ki66cGK\nbhWX97aXFv095czJNvxoreTJchey4OcDYtlOvGZ6weaPpYNKRqJthIRZRGzBOizv\nbgSEaQoqwIt4mSEmY1PFTCX91yB1ckxoBSShUFwzqLPh6jpyyegp05NhpCjBEuM8\npsnuX2+VAgMBAAECggEAAO9OftWiXM1LPx1DqTBU93CwWOngMo05JUNa5wj4V+XT\nmrggt0hgWGWoy4FiHCSKDaszvUGyi8Gnv5QhjBkoZwbgZ/HlSVTRngA5bWPNEKXQ\nb1m6T49gHISFdAOwEFidIQ1u+NmsuFrAi4ZLTKZqWhO2cjYzU/QRc9OSmeRBwlrp\njEIGdWR8Mu67I7JhnAfimVaQcQGzATEWwfKfzkfBxbgLImUOMIcN3YiwvhsNahYU\nFwdk0NfrUpXq1U7y7JFJNaHNmE1rQzEynuhYmFGZJ1dfOiECPx3Z3baHajS0ansA\nhb48xALk6ljR4U4KBp5iDzVKM/+CdXcsfnr4ER6IrwKBgQDja9/k3ccG4q7jPi5f\nrQ6ce9zDJPvt3WFjiiqORck3hy+d8k7+dodJ2ehKNi+ZJ+caW6tKfix/n6s1gM5F\n/Gt9UqpMLtKPCiABBrwKdYRzAUj8RgIpdm0r/PuUGIPuMdN2I1Q0bVm9wzjdotsm\ncYC4abjxJYkoi+qA+nhjRqOnVwKBgQC4JO1PLTje4j7xNVxeVxQZwUQXVhn1FjSp\n2mftPUolMChpl1YmcqXb2pxma8CZyo2sdB4zZRRnBf10aDJWldR2KjlsYywYxM0O\nGe9/PkT+bHCtRkCUe5niWwOUeDZnHWVqGGw7kYEX84Xl4iXAgCbiyRf1xrn2UBGC\n9wNNpO4o8wKBgQCoRCayhc0+sPZJOLbDH55R9etPj8u/IS9voMj/326T4ThAGwqL\niFNtNweB8Tmijj2V6QGB6n0uKIta2OTGL4+weDt8hqBQKWOonrz+2BiZpvfDgGEV\nIISCKXpTBxiGYuNc46Ln74iYuRsYEekoNo7Q45htBCLJl0x5BdmRSrDHnQKBgQCf\n1YWaRQFpDO5fRdbgGCtdU5C7xMORJW4exHGSzbEu6Ecbp/1iL/9g/rbke8DYfKVO\nPBf+ukzkQ6HEybBv0WtyCaKAPvCGq0PlaoOkabNPN2byL9lcSJDAlglcdJ+cDzr4\nxSwk5F4uIPVnHU1xcorOLIg8j/rYHpWknK1kVrVWGwKBgQDhCgHNJFbq6zoBp5xJ\nulYqBZhmUoo1MWPt3pBSXuIQn8u3mh45o4Gb/1fbifllPvIHrfi1Uf4M8sdSS1Ug\nnZzqeKqYBdO1irVuWaBmA0FaUlo49L66s16jyeiitaRZXciWLhOVWX2IIQi5nc6z\nGvGMKw/SfWqVB2UJVGvsTksxLw==\n-----END PRIVATE KEY-----\n",
+  "client_email": "soundseasysheets@fleet-automata-366622.iam.gserviceaccount.com",
+  "client_id": "102140644412395262988",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/soundseasysheets%40fleet-automata-366622.iam.gserviceaccount.com"
+}
