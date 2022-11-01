@@ -28,8 +28,8 @@
                 <ColumnDefinition Width="1.75*"/>
             </Grid.ColumnDefinitions>
             <Button x:Name="btnInstrumentPage" Grid.Column="0" Content="Instrument Page" Background="#FFDDDDDD" Click="btnInstrumentPage_Click"/>
-            <Button Content="Button" Grid.Column="2" MinWidth="100" MinHeight="100" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-            <Button Content="Button" Grid.Column="4" MinWidth="100" MinHeight="100"/>
+            <Button x:Name="btnStudentPage" Content="Student Page" Grid.Column="2" MinWidth="100" MinHeight="100" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="btnStudentPage_Click"/>
+            <Button x:Name ="btnQuickAssign" Content="Quick Assign" Grid.Column="4" MinWidth="100" MinHeight="100" Click="btnQuickAssign_Click"/>
         </Grid>
 
 

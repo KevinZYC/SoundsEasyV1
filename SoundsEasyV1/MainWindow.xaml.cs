@@ -33,5 +33,20 @@ namespace SoundsEasyV1
             InstrumentWindow objInstWindow = new InstrumentWindow();
             objInstWindow.Show();
         }
+
+        //what happens when student button is clicked
+        private void btnStudentPage_Click(object sender, RoutedEventArgs e)
+        {
+            StudentWindow objStudWindow = new StudentWindow();
+            objStudWindow.Show();
+
+        }
+        //what happens when quick assign button is clicked 
+        private void btnQuickAssign_Click(object sender, RoutedEventArgs e)
+        {
+            QuickAssignWindow objQuickWindow = new QuickAssignWindow();
+            objQuickWindow.Show();
+        }
+
     }
 }
