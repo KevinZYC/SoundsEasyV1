@@ -1,24 +1,28 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\kevin\\source\\repos\\SoundsEasyV1\\SoundsEasyV1\\SoundsEasyV1.csproj": {}
+    "C:\\Users\\fred.zhou\\source\\repos\\KevinZYC\\SoundsEasyV1\\SoundsEasyV1\\SoundsEasyV1.csproj": {}
   },
   "projects": {
-    "C:\\Users\\kevin\\source\\repos\\SoundsEasyV1\\SoundsEasyV1\\SoundsEasyV1.csproj": {
+    "C:\\Users\\fred.zhou\\source\\repos\\KevinZYC\\SoundsEasyV1\\SoundsEasyV1\\SoundsEasyV1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\kevin\\source\\repos\\SoundsEasyV1\\SoundsEasyV1\\SoundsEasyV1.csproj",
+        "projectUniqueName": "C:\\Users\\fred.zhou\\source\\repos\\KevinZYC\\SoundsEasyV1\\SoundsEasyV1\\SoundsEasyV1.csproj",
         "projectName": "SoundsEasyV1",
-        "projectPath": "C:\\Users\\kevin\\source\\repos\\SoundsEasyV1\\SoundsEasyV1\\SoundsEasyV1.csproj",
-        "packagesPath": "C:\\Users\\kevin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\kevin\\source\\repos\\SoundsEasyV1\\SoundsEasyV1\\obj\\",
+        "projectPath": "C:\\Users\\fred.zhou\\source\\repos\\KevinZYC\\SoundsEasyV1\\SoundsEasyV1\\SoundsEasyV1.csproj",
+        "packagesPath": "C:\\Users\\fred.zhou\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\fred.zhou\\source\\repos\\KevinZYC\\SoundsEasyV1\\SoundsEasyV1\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\kevin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\fred.zhou\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net6.0-windows7.0"
+          "net6.0-windows"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
@@ -59,7 +63,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -71,7 +76,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.200\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }
