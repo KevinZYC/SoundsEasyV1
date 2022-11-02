@@ -32,6 +32,7 @@ namespace SoundsEasyV1
         {
             InstrumentWindow objInstWindow = new InstrumentWindow();
             objInstWindow.Show();
+            objInstWindow.Init(ref objInstWindow);
         }
 
         //what happens when student button is clicked

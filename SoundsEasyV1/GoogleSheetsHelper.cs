@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Dynamic;
+using System.Diagnostics;
 
 namespace SoundsEasyV1
 {
@@ -95,6 +96,67 @@ namespace SoundsEasyV1
             return returnValues;
         }
 
+        //I added this myself, it returns the things one at a time
+        public void GetInstrumentDataFromSheet(GoogleSheetParameters googleSheetParameters, ref List<Instrument> myList, ref InstrumentWindow target)
+        {
+            googleSheetParameters = MakeGoogleSheetDataRangeColumnsZeroBased(googleSheetParameters);
+            var range = $"{googleSheetParameters.SheetName}!{GetColumnName(googleSheetParameters.RangeColumnStart)}{googleSheetParameters.RangeRowStart}:{GetColumnName(googleSheetParameters.RangeColumnEnd)}{googleSheetParameters.RangeRowEnd}";
+
+            SpreadsheetsResource.ValuesResource.GetRequest request =
+                _sheetsService.Spreadsheets.Values.Get(_spreadsheetId, range);
+
+            var numberOfColumns = googleSheetParameters.RangeColumnEnd - googleSheetParameters.RangeColumnStart;
+            var columnNames = new List<string>();
+            var returnValues = new List<ExpandoObject>();
+
+            if (!googleSheetParameters.FirstRowIsHeaders)
+            {
+                for (var i = 0; i <= numberOfColumns; i++)
+                {
+                    columnNames.Add($"Column{i}");
+                }
+            }
+
+            var response = request.Execute();
+
+            int rowCounter = 0;
+            IList<IList<Object>> values = response.Values;
+            if (values != null && values.Count > 0)
+            {
+                foreach (var row in values)
+                {
+                    if (googleSheetParameters.FirstRowIsHeaders && rowCounter == 0)
+                    {
+                        for (var i = 0; i <= numberOfColumns; i++)
+                        {
+                            columnNames.Add(row[i].ToString());
+                        }
+                        rowCounter++;
+                        continue;
+                    }
+
+                    var expando = new ExpandoObject();
+                    var expandoDict = expando as IDictionary<String, object>;
+                    var columnCounter = 0;
+                    foreach (var columnName in columnNames)
+                    {
+                        expandoDict.Add(columnName, row[columnCounter].ToString());
+                        columnCounter++;
+                    }
+                    myList.Add(expToInst(expando));
+                    Debug.WriteLine(expToInst(expando).caseNum);
+
+                    
+                    rowCounter++;
+                }
+            }
+
+            
+
+        }
+
+
+
         public void AddCells(GoogleSheetParameters googleSheetParameters, List<GoogleSheetRow> rows)
         {
             var requests = new BatchUpdateSpreadsheetRequest { Requests = new List<Request>() };
@@ -170,6 +232,34 @@ namespace SoundsEasyV1
             var sheet = spreadsheet.Sheets.FirstOrDefault(s => s.Properties.Title == spreadSheetName);
             int sheetId = (int)sheet.Properties.SheetId;
             return sheetId;
+        }
+
+
+
+        //added myself
+        //expando object to instrument object
+        private Instrument expToInst(ExpandoObject item)
+        {
+            var dict = (IDictionary<string, object>)item;
+            var type = dict["Type"] as string;
+            var make = dict["Make"] as string;
+            var caseN = dict["Case Number"] as string;
+            var serial = dict["Serial Number"] as string;
+
+            var grade = -1;
+            try
+            {
+                grade = Int32.Parse(dict["Grade"] as string);
+            }
+            catch (InvalidCastException e)
+            {
+                
+            }
+
+            var sID = dict["Student ID"] as string;
+            var repair = dict["Repair Status"] as string;
+
+            return new Instrument(type, make, caseN, serial, grade, sID, repair);
         }
     }
 

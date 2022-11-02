@@ -28,15 +28,26 @@ namespace SoundsEasyV1
     public partial class InstrumentWindow : Window
     {
         List<double> widthRatios = new List<double> { 1, 1, 1, 1.3, 0.7, 1, 0.7 };
-        
+        List<Instrument> dataSource = new List<Instrument>();
+        InstrumentWindow? thisWindow = null;
+        int selected = -1;
+
+
         public InstrumentWindow()
         {
             InitializeComponent();
-            LoadSheets();
+            //LoadSheets();
             //set min widths
             dataGridInstrument.Loaded += SetMinWidths;
+
+            Debug.WriteLine("started");
         }
         
+        public void Init(ref InstrumentWindow windowObj)
+        {
+            thisWindow = windowObj;
+        }
+
         private List<Instrument> CreateList(List<ExpandoObject> myList)
         {
             List<Instrument> ret = new List<Instrument>();
@@ -67,16 +78,23 @@ namespace SoundsEasyV1
             return ret;
         }
 
-        public void LoadSheets()
+        public void LoadData()
         {
             var gsh = new GoogleSheetsHelper("fleet-automata-366622-ba1a276c41b4.json", "1POh7lSt7QyI45I_16I3An1iTWSc4PsV0rcYP5ExPKhg");
 
-            var gsp = new GoogleSheetParameters() { RangeColumnStart = 1, RangeRowStart = 1, RangeColumnEnd = 7, RangeRowEnd = 3, FirstRowIsHeaders = true, SheetName = "sheet1" };
-            var rowValues = gsh.GetDataFromSheet(gsp);
+            var gsp = new GoogleSheetParameters() { RangeColumnStart = 1, RangeRowStart = 1, RangeColumnEnd = 7, RangeRowEnd = 999, FirstRowIsHeaders = true, SheetName = "sheet1" };
+            //var rowValues = gsh.GetDataFromSheet(gsp);
+            dataSource.Clear();
+            dataGridInstrument.ItemsSource = null;
+            //dataGridInstrument.ItemsSource = CreateList(rowValues);
+            gsh.GetInstrumentDataFromSheet(gsp, ref dataSource, ref thisWindow);
+           
+            LoadSheets();
+        }
 
-            
-            dataGridInstrument.ItemsSource = CreateList(rowValues);
-
+        public void LoadSheets()
+        {
+            dataGridInstrument.ItemsSource = dataSource;
         }
 
         //function to pass into xaml to distribute widths
@@ -89,6 +107,24 @@ namespace SoundsEasyV1
                 column.Width = new DataGridLength(widthRatios[i], DataGridLengthUnitType.Star);
                 i++;
             }
+        }
+
+        //when a row in the data is selected:
+        private void InstrumentRow_Click(object sender, MouseButtonEventArgs e)
+        {
+            var dataGrid = sender as DataGrid;
+            if(dataGrid != null)
+            {
+                int index = dataGrid.SelectedIndex;
+                Debug.WriteLine(index);
+                
+            }
+        }
+
+        private void btnLoadInstruments_Click(object sender, RoutedEventArgs e)
+        {
+            LoadData();
+            
         }
 
     }
