@@ -10,7 +10,9 @@ using System.Dynamic;
 
 using System.Text;
 using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -19,6 +21,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Collections.ObjectModel;
 
 namespace SoundsEasyV1
 {
@@ -28,8 +31,14 @@ namespace SoundsEasyV1
     public partial class InstrumentWindow : Window
     {
         List<double> widthRatios = new List<double> { 1, 1, 1, 1.3, 0.7, 1, 0.7 };
-        List<Instrument> dataSource = new List<Instrument>();
+        ObservableCollection<Instrument> dataSource = new ObservableCollection<Instrument>();
         InstrumentWindow? thisWindow = null;
+
+        bool isLoading = false;
+
+        private GoogleSheetsHelper? gsh = null;
+        private GoogleSheetParameters? gsp = null;
+
         int selected = -1;
 
 
@@ -40,7 +49,15 @@ namespace SoundsEasyV1
             //set min widths
             dataGridInstrument.Loaded += SetMinWidths;
 
+            //initialize googlesheets helper
+            gsh = new GoogleSheetsHelper("fleet-automata-366622-ba1a276c41b4.json", "1POh7lSt7QyI45I_16I3An1iTWSc4PsV0rcYP5ExPKhg");
+
+            //default settings for googlesheets parameters
+            gsp = new GoogleSheetParameters() { RangeColumnStart = 1, RangeRowStart = 1, RangeColumnEnd = 7, RangeRowEnd = 100, FirstRowIsHeaders = true, SheetName = "sheet1" };
+
             Debug.WriteLine("started");
+
+            dataGridInstrument.ItemsSource = dataSource;
         }
         
         public void Init(ref InstrumentWindow windowObj)
@@ -48,11 +65,11 @@ namespace SoundsEasyV1
             thisWindow = windowObj;
         }
 
-        private List<Instrument> CreateList(List<ExpandoObject> myList)
+        private ObservableCollection<Instrument> CreateObservableCollection(ObservableCollection<ExpandoObject> myObservableCollection)
         {
-            List<Instrument> ret = new List<Instrument>();
+            ObservableCollection<Instrument> ret = new ObservableCollection<Instrument>();
 
-            foreach (var item in myList)
+            foreach (var item in myObservableCollection)
             {
                 var dict = (IDictionary<string, object>)item;
                 var type = dict["Type"] as string;
@@ -80,21 +97,52 @@ namespace SoundsEasyV1
 
         public void LoadData()
         {
-            var gsh = new GoogleSheetsHelper("fleet-automata-366622-ba1a276c41b4.json", "1POh7lSt7QyI45I_16I3An1iTWSc4PsV0rcYP5ExPKhg");
-
-            var gsp = new GoogleSheetParameters() { RangeColumnStart = 1, RangeRowStart = 1, RangeColumnEnd = 7, RangeRowEnd = 999, FirstRowIsHeaders = true, SheetName = "sheet1" };
-            //var rowValues = gsh.GetDataFromSheet(gsp);
+            
+            
             dataSource.Clear();
-            dataGridInstrument.ItemsSource = null;
-            //dataGridInstrument.ItemsSource = CreateList(rowValues);
-            gsh.GetInstrumentDataFromSheet(gsp, ref dataSource, ref thisWindow);
-           
-            LoadSheets();
+            isLoading = true;
+            gsp = new GoogleSheetParameters() { RangeColumnStart = 1, RangeRowStart = 1, RangeColumnEnd = 7, RangeRowEnd = 100, FirstRowIsHeaders = true, SheetName = "sheet1" };
+            //run data loading in background
+            BackgroundWorker worker = new BackgroundWorker();
+            worker.RunWorkerCompleted += worker_RunWorkerCompleted;
+            worker.WorkerReportsProgress = true;
+            worker.DoWork += worker_DoWork;
+            worker.ProgressChanged += worker_ProgressChanged;
+            worker.RunWorkerAsync();
+            
+
+            
+        }
+
+        private void worker_ProgressChanged(object? sender, ProgressChangedEventArgs e)
+        {
+            progressInstrumentLoad.Visibility = Visibility.Visible;
+            progressInstrumentLoad.Value = e.ProgressPercentage;
+            progressTextInstrument.Visibility = Visibility.Visible;
+            progressTextInstrument.Text = (string)e.UserState;
+            
+        }
+
+        private void worker_DoWork(object? sender, DoWorkEventArgs e)
+        {
+            var worker = sender as BackgroundWorker;
+            
+            gsh.GetInstrumentDataFromSheet(gsp, ref dataSource, ref thisWindow, ref worker);
+
+            //LoadSheets();
+        }
+
+        private void worker_RunWorkerCompleted(object? sender, RunWorkerCompletedEventArgs e)
+        {
+            progressInstrumentLoad.Visibility = Visibility.Hidden;
+            progressTextInstrument.Visibility= Visibility.Hidden;
+            dataGridInstrument.ItemsSource = dataSource;
+            isLoading = false;
         }
 
         public void LoadSheets()
         {
-            dataGridInstrument.ItemsSource = dataSource;
+            //dataGridInstrument.ItemsSource = dataSource;
         }
 
         //function to pass into xaml to distribute widths
@@ -123,8 +171,18 @@ namespace SoundsEasyV1
 
         private void btnLoadInstruments_Click(object sender, RoutedEventArgs e)
         {
-            LoadData();
+            if(!isLoading)
+                LoadData();
             
+        }
+
+        public void addData(Instrument i)
+        {
+            App.Current.Dispatcher.Invoke((Action)delegate // <--- HERE
+            {
+                dataSource.Add(i);
+
+            });
         }
 
     }

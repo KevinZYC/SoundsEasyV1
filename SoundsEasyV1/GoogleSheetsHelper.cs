@@ -8,6 +8,11 @@ using System.IO;
 using System.Linq;
 using System.Dynamic;
 using System.Diagnostics;
+using System.ComponentModel;
+using System.Threading;
+using System.Windows;
+using System.Windows.Controls;
+using System.Collections.ObjectModel;
 
 namespace SoundsEasyV1
 {
@@ -96,8 +101,8 @@ namespace SoundsEasyV1
             return returnValues;
         }
 
-        //I added this myself, it returns the things one at a time
-        public void GetInstrumentDataFromSheet(GoogleSheetParameters googleSheetParameters, ref List<Instrument> myList, ref InstrumentWindow target)
+        //I added this myself, it returns the things directly to the instrument window, uses an observablecollection, and uses backgroundworker
+        public void GetInstrumentDataFromSheet(GoogleSheetParameters googleSheetParameters, ref ObservableCollection<Instrument> myList, ref InstrumentWindow target, ref BackgroundWorker worker)
         {
             googleSheetParameters = MakeGoogleSheetDataRangeColumnsZeroBased(googleSheetParameters);
             var range = $"{googleSheetParameters.SheetName}!{GetColumnName(googleSheetParameters.RangeColumnStart)}{googleSheetParameters.RangeRowStart}:{GetColumnName(googleSheetParameters.RangeColumnEnd)}{googleSheetParameters.RangeRowEnd}";
@@ -143,10 +148,12 @@ namespace SoundsEasyV1
                         expandoDict.Add(columnName, row[columnCounter].ToString());
                         columnCounter++;
                     }
-                    myList.Add(expToInst(expando));
-                    Debug.WriteLine(expToInst(expando).caseNum);
-
                     
+                    //calls a custom add method so its done in the same thread
+                    target.addData(expToInst(expando));
+                    Debug.WriteLine(rowCounter * (100 / values.Count));
+                    worker.ReportProgress(rowCounter * (100 / values.Count), String.Format("Loading: {0}%", rowCounter * (100 / values.Count)));
+                    Thread.Sleep(10);
                     rowCounter++;
                 }
             }
