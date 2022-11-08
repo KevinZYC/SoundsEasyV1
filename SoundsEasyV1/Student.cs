@@ -6,14 +6,13 @@ using System.Threading.Tasks;
 
 namespace SoundsEasyV1
 {
-    internal class Student
+    public class Student
     {
         public string fname { get; set; }
         public string lname { get; set; }
         public string course { get; set; }
         public int grade { get; set; }
         public string email { get; set; }
-
 
         public Student(string fname, string lname, string course, int grade, string email)
         {

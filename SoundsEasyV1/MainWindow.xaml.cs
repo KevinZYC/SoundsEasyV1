@@ -40,6 +40,7 @@ namespace SoundsEasyV1
         {
             StudentWindow objStudWindow = new StudentWindow();
             objStudWindow.Show();
+            objStudWindow.InitializeComponent(ref objStudWindow)
 
         }
         //what happens when quick assign button is clicked 

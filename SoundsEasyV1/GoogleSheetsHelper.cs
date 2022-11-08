@@ -148,7 +148,7 @@ namespace SoundsEasyV1
                         expandoDict.Add(columnName, row[columnCounter].ToString());
                         columnCounter++;
                     }
-                    
+                    //called for each value pulled
                     //calls a custom add method so its done in the same thread
                     target.addData(expToInst(expando));
                     Debug.WriteLine(rowCounter * (100 / values.Count));
@@ -161,6 +161,66 @@ namespace SoundsEasyV1
             
 
         }
+
+
+
+        public void GetStudentDataFromSheet(GoogleSheetParameters googleSheetParameters, ref ObservableCollection<Student> myList, ref StudentWindow target, ref BackgroundWorker worker)
+        {
+            googleSheetParameters = MakeGoogleSheetDataRangeColumnsZeroBased(googleSheetParameters);
+            var range = $"{googleSheetParameters.SheetName}!{GetColumnName(googleSheetParameters.RangeColumnStart)}{googleSheetParameters.RangeRowStart}:{GetColumnName(googleSheetParameters.RangeColumnEnd)}{googleSheetParameters.RangeRowEnd}";
+
+            SpreadsheetsResource.ValuesResource.GetRequest request =
+                _sheetsService.Spreadsheets.Values.Get(_spreadsheetId, range);
+
+            var numberOfColumns = googleSheetParameters.RangeColumnEnd - googleSheetParameters.RangeColumnStart;
+            var columnNames = new List<string>();
+            var returnValues = new List<ExpandoObject>();
+
+            if (!googleSheetParameters.FirstRowIsHeaders)
+            {
+                for (var i = 0; i <= numberOfColumns; i++)
+                {
+                    columnNames.Add($"Column{i}");
+                }
+            }
+
+            var response = request.Execute();
+
+            int rowCounter = 0;
+            IList<IList<Object>> values = response.Values;
+            if (values != null && values.Count > 0)
+            {
+                foreach (var row in values)
+                {
+                    if (googleSheetParameters.FirstRowIsHeaders && rowCounter == 0)
+                    {
+                        for (var i = 0; i <= numberOfColumns; i++)
+                        {
+                            columnNames.Add(row[i].ToString());
+                        }
+                        rowCounter++;
+                        continue;
+                    }
+
+                    var expando = new ExpandoObject();
+                    var expandoDict = expando as IDictionary<String, object>;
+                    var columnCounter = 0;
+                    foreach (var columnName in columnNames)
+                    {
+                        expandoDict.Add(columnName, row[columnCounter].ToString());
+                        columnCounter++;
+                    }
+
+                    //calls a custom add method so its done in the same thread
+                    target.addData(expToStud(expando));
+                    Debug.WriteLine(rowCounter * (100 / values.Count));
+                    worker.ReportProgress(rowCounter * (100 / values.Count), String.Format("Loading: {0}%", rowCounter * (100 / values.Count)));
+                    Thread.Sleep(10);
+                    rowCounter++;
+                }
+            }
+        }
+
 
 
 
@@ -267,6 +327,28 @@ namespace SoundsEasyV1
             var repair = dict["Repair Status"] as string;
 
             return new Instrument(type, make, caseN, serial, grade, sID, repair);
+        }
+
+        private Student expToStud(ExpandoObject item)
+        {
+            var dict = (IDictionary<string, object>)item;
+            var fname = dict["First Name"] as string;
+            var lname = dict["Last Name"] as string;
+            var course = dict["Class"] as string;
+            
+            var grade = -1;
+            try
+            {
+                grade = Int32.Parse(dict["Grade"] as string);
+            }
+            catch (InvalidCastException e)
+            {
+                
+            }
+
+            var email = dict["email"] as string;
+
+            return new Student(fname,lname,course,grade,email);
         }
     }
 
