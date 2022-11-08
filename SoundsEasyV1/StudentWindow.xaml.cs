@@ -68,7 +68,7 @@ namespace SoundsEasyV1
 
 
         }
-        //copied files from InstrumentWindow.xaml.cs, need to change to apply to Student Window from here on
+        //copied files from InstrumentWindow.xaml.cs, changed to apply to Student Window from here on
         private void worker_ProgressChanged(object? sender, ProgressChangedEventArgs e)
         {
             progressStudentLoad.Visibility = Visibility.Visible;
@@ -82,38 +82,26 @@ namespace SoundsEasyV1
         {
             var worker = sender as BackgroundWorker;
 
-            gsh.GetInstrumentDataFromSheet(gsp, ref dataSource, ref thisWindow, ref worker);
+            gsh.GetStudentDataFromSheet(gsp, ref dataSource, ref thisWindow, ref worker);
 
             //LoadSheets();
         }
 
         private void worker_RunWorkerCompleted(object? sender, RunWorkerCompletedEventArgs e)
         {
-            progressInstrumentLoad.Visibility = Visibility.Hidden;
-            progressTextInstrument.Visibility = Visibility.Hidden;
-            dataGridInstrument.ItemsSource = dataSource;
+            progressStudentLoad.Visibility = Visibility.Hidden;
+            progressTextStudent.Visibility = Visibility.Hidden;
+            dataGridStudent.ItemsSource = dataSource;
             isLoading = false;
         }
 
         public void LoadSheets()
         {
-            //dataGridInstrument.ItemsSource = dataSource;
-        }
-
-        //function to pass into xaml to distribute widths
-        public void SetMinWidths(object source, EventArgs e)
-        {
-            int i = 0;
-            foreach (var column in dataGridInstrument.Columns)
-            {
-                column.MinWidth = column.ActualWidth;
-                column.Width = new DataGridLength(widthRatios[i], DataGridLengthUnitType.Star);
-                i++;
-            }
+            //dataGridStudent.ItemsSource = dataSource;
         }
 
         //when a row in the data is selected:
-        private void InstrumentRow_Click(object sender, MouseButtonEventArgs e)
+        private void StudentRow_Click(object sender, MouseButtonEventArgs e)
         {
             var dataGrid = sender as DataGrid;
             if (dataGrid != null)
@@ -124,14 +112,14 @@ namespace SoundsEasyV1
             }
         }
 
-        private void btnLoadInstruments_Click(object sender, RoutedEventArgs e)
+        private void btnLoadStudents_Click(object sender, RoutedEventArgs e)
         {
             if (!isLoading)
                 LoadData();
 
         }
 
-        public void addData(Instrument i)
+        public void addData(Student i)
         {
             App.Current.Dispatcher.Invoke((Action)delegate // <--- HERE
             {
