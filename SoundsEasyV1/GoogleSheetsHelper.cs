@@ -213,7 +213,7 @@ namespace SoundsEasyV1
 
                     //calls a custom add method so its done in the same thread
                     target.addData(expToStud(expando));
-                    Debug.WriteLine(rowCounter * (100 / values.Count));
+                    //Debug.WriteLine();
                     worker.ReportProgress(rowCounter * (100 / values.Count), String.Format("Loading: {0}%", rowCounter * (100 / values.Count)));
                     Thread.Sleep(10);
                     rowCounter++;
@@ -346,7 +346,7 @@ namespace SoundsEasyV1
                 
             }
 
-            var email = dict["email"] as string;
+            var email = dict["Email"] as string;
 
             return new Student(fname,lname,course,grade,email);
         }

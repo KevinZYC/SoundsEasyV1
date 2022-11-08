@@ -38,7 +38,7 @@ namespace SoundsEasyV1
 
             gsh = new GoogleSheetsHelper("fleet-automata-366622-ba1a276c41b4.json", "1NolOQnhFOmPTaXXp7G1tNkrl8is3gVe9X1AIjgEKg7c");
 
-            gsp = new GoogleSheetParameters() { RangeColumnStart = 1, RangeRowStart = 1, RangeColumnEnd = 7, RangeRowEnd = 100, FirstRowIsHeaders = true, SheetName = "sheet1" };
+            gsp = new GoogleSheetParameters() { RangeColumnStart = 1, RangeRowStart = 1, RangeColumnEnd = 5, RangeRowEnd = 100, FirstRowIsHeaders = true, SheetName = "sheet1" };
 
             dataGridStudent.ItemsSource = dataSource;
         }
@@ -56,7 +56,7 @@ namespace SoundsEasyV1
             isLoading = true;
 
             //set parameters for pull request
-            gsp = new GoogleSheetParameters() { RangeColumnStart = 1, RangeRowStart = 1, RangeColumnEnd = 7, RangeRowEnd = 100, FirstRowIsHeaders = true, SheetName = "sheet1" };
+            gsp = new GoogleSheetParameters() { RangeColumnStart = 1, RangeRowStart = 1, RangeColumnEnd = 5, RangeRowEnd = 100, FirstRowIsHeaders = true, SheetName = "sheet1" };
             //run data loading in background
             BackgroundWorker worker = new BackgroundWorker();
             worker.RunWorkerCompleted += worker_RunWorkerCompleted;
@@ -124,6 +124,7 @@ namespace SoundsEasyV1
             App.Current.Dispatcher.Invoke((Action)delegate // <--- HERE
             {
                 dataSource.Add(i);
+                Debug.WriteLine(dataSource.Count);
 
             });
         }
