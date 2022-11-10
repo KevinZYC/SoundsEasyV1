@@ -10,6 +10,7 @@ namespace SoundsEasyV1
 {
     public class Instrument
     {
+        public int id { get; set; }
         public string type { get; set; }
         public string make { get; set; }
         public string caseNum { get; set; }
@@ -19,8 +20,9 @@ namespace SoundsEasyV1
         public string repairStatus { get; set; }
 
         
-        public Instrument(string type, string make, string caseNum, string serialNum, int grade, string studentID, string repairStatus)
+        public Instrument(int id, string type, string make, string caseNum, string serialNum, int grade, string studentID, string repairStatus)
         {
+            this.id = id;
             this.type = type;
             this.make = make;
             this.caseNum = caseNum;

@@ -24,6 +24,8 @@ namespace SoundsEasyV1
     public partial class StudentWindow : Window
     {
         public ObservableCollection<Student> dataSource = new ObservableCollection<Student>();
+        
+
         StudentWindow? thisWindow = null;
 
         bool isLoading = false;
@@ -106,7 +108,8 @@ namespace SoundsEasyV1
             var dataGrid = sender as DataGrid;
             if (dataGrid != null)
             {
-                int index = dataGrid.SelectedIndex;
+                Student target = dataGrid.SelectedItem as Student;
+                int index = target.id;
                 Debug.WriteLine(index);
 
             }

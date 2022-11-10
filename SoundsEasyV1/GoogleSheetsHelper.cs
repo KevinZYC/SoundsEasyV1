@@ -150,7 +150,7 @@ namespace SoundsEasyV1
                     }
                     //called for each value pulled
                     //calls a custom add method so its done in the same thread
-                    target.addData(expToInst(expando));
+                    target.addData(expToInst(expando,rowCounter));
                     Debug.WriteLine(rowCounter * (100 / values.Count));
                     worker.ReportProgress(rowCounter * (100 / values.Count), String.Format("Loading: {0}%", rowCounter * (100 / values.Count)));
                     Thread.Sleep(10);
@@ -212,7 +212,7 @@ namespace SoundsEasyV1
                     }
 
                     //calls a custom add method so its done in the same thread
-                    target.addData(expToStud(expando));
+                    target.addData(expToStud(expando,rowCounter));
                     //Debug.WriteLine();
                     worker.ReportProgress(rowCounter * (100 / values.Count), String.Format("Loading: {0}%", rowCounter * (100 / values.Count)));
                     Thread.Sleep(10);
@@ -305,7 +305,7 @@ namespace SoundsEasyV1
 
         //added myself
         //expando object to instrument object
-        private Instrument expToInst(ExpandoObject item)
+        private Instrument expToInst(ExpandoObject item, int id)
         {
             var dict = (IDictionary<string, object>)item;
             var type = dict["Type"] as string;
@@ -326,10 +326,10 @@ namespace SoundsEasyV1
             var sID = dict["Student ID"] as string;
             var repair = dict["Repair Status"] as string;
 
-            return new Instrument(type, make, caseN, serial, grade, sID, repair);
+            return new Instrument(id, type, make, caseN, serial, grade, sID, repair);
         }
 
-        private Student expToStud(ExpandoObject item)
+        private Student expToStud(ExpandoObject item, int id)
         {
             var dict = (IDictionary<string, object>)item;
             var fname = dict["First Name"] as string;
@@ -348,7 +348,7 @@ namespace SoundsEasyV1
 
             var email = dict["Email"] as string;
 
-            return new Student(fname,lname,course,grade,email);
+            return new Student(id, fname,lname,course,grade,email);
         }
     }
 

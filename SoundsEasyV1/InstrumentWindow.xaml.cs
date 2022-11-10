@@ -32,6 +32,7 @@ namespace SoundsEasyV1
     {
         List<double> widthRatios = new List<double> { 1, 1, 1, 1.3, 0.7, 1, 0.7 };
         ObservableCollection<Instrument> dataSource = new ObservableCollection<Instrument>();
+        ObservableCollection<Instrument> dataSourceFiltered = new ObservableCollection<Instrument>();
         InstrumentWindow? thisWindow = null;
 
         bool isLoading = false;
@@ -47,7 +48,7 @@ namespace SoundsEasyV1
             InitializeComponent();
             //LoadSheets();
             //set min widths
-            dataGridInstrument.Loaded += SetMinWidths;
+            //dataGridInstrument.Loaded += SetMinWidths;
 
             //initialize googlesheets helper
             gsh = new GoogleSheetsHelper("fleet-automata-366622-ba1a276c41b4.json", "1POh7lSt7QyI45I_16I3An1iTWSc4PsV0rcYP5ExPKhg");
@@ -58,6 +59,8 @@ namespace SoundsEasyV1
             Debug.WriteLine("started");
 
             dataGridInstrument.ItemsSource = dataSource;
+
+            LoadData();
         }
         
         public void Init(ref InstrumentWindow windowObj)
@@ -65,6 +68,7 @@ namespace SoundsEasyV1
             thisWindow = windowObj;
         }
 
+        /* currently unused
         private ObservableCollection<Instrument> CreateObservableCollection(ObservableCollection<ExpandoObject> myObservableCollection)
         {
             ObservableCollection<Instrument> ret = new ObservableCollection<Instrument>();
@@ -94,7 +98,9 @@ namespace SoundsEasyV1
 
             return ret;
         }
+        */
 
+        //load entire dataset
         public void LoadData()
         {
             
@@ -112,6 +118,25 @@ namespace SoundsEasyV1
             
 
             
+        }
+
+        //takes specific items from the overall dataset
+        public void LoadDataFilter()
+        {
+            dataSourceFiltered.Clear();
+
+           
+
+            for (int i = 0; i < dataSource.Count; i++)
+            {
+                if (checkFilter(dataSource[i]))
+                {
+                    dataSourceFiltered.Add(dataSource[i]);
+                }
+                
+            }
+            dataGridInstrument.ItemsSource=dataSourceFiltered;
+
         }
 
         private void worker_ProgressChanged(object? sender, ProgressChangedEventArgs e)
@@ -163,7 +188,8 @@ namespace SoundsEasyV1
             var dataGrid = sender as DataGrid;
             if(dataGrid != null)
             {
-                int index = dataGrid.SelectedIndex;
+                Instrument target = dataGrid.SelectedItem as Instrument;
+                int index = target.id;
                 Debug.WriteLine(index);
                 
             }
@@ -172,7 +198,7 @@ namespace SoundsEasyV1
         private void btnLoadInstruments_Click(object sender, RoutedEventArgs e)
         {
             if(!isLoading)
-                LoadData();
+                LoadDataFilter();
             
         }
 
@@ -183,6 +209,41 @@ namespace SoundsEasyV1
                 dataSource.Add(i);
 
             });
+        }
+
+        //pulls the filter text box's contents and check if an instrument fits the filter
+        private bool checkFilter(Instrument i)
+        {
+            if(i.type != txtInstrumentType.Text && txtInstrumentType.Text.Length > 0)
+            {
+                return false;
+            }
+            if (i.make != txtInstrumentMake.Text && txtInstrumentMake.Text.Length > 0)
+            {
+                return false;
+            }
+            if (i.caseNum != txtInstrumentCase.Text && txtInstrumentCase.Text.Length > 0)
+            {
+                return false;
+            }
+            if (i.serialNum != txtInstrumentSerial.Text && txtInstrumentSerial.Text.Length > 0)
+            {
+                return false;
+            }
+            if (i.grade.ToString() != txtInstrumentGrade.Text && txtInstrumentGrade.Text.Length > 0)
+            {
+                return false;
+            }
+            if (i.studentID != txtInstrumentStudent.Text && txtInstrumentStudent.Text.Length > 0)
+            {
+                return false;
+            }
+            if (i.repairStatus != txtInstrumentRepair.Text && txtInstrumentRepair.Text.Length > 0)
+            {
+                return false;
+            }
+
+            return true;
         }
 
     }

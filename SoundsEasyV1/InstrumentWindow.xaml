@@ -11,14 +11,15 @@
             <RowDefinition Height="1*"/>
             <RowDefinition Height="5*"/>
             <RowDefinition Height="0.3*"/>
+            <RowDefinition Height="0.3*"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
-        <ProgressBar x:Name="progressInstrumentLoad" HorizontalAlignment="Stretch" Height="20" Margin="30,0,30,0" Grid.Row="2" VerticalAlignment="Center" Panel.ZIndex="5" Background="#FFE2E2E2"/>
+        <ProgressBar x:Name="progressInstrumentLoad" HorizontalAlignment="Stretch" Height="20" Margin="30,0,30,0" Grid.Row="3" VerticalAlignment="Center" Panel.ZIndex="5" Background="#FFE2E2E2"/>
 
         <DataGrid x:Name="dataGridInstrument" Grid.Row="1" AutoGenerateColumns="True" ColumnWidth="*" ScrollViewer.CanContentScroll="True" UseLayoutRounding="True" ColumnHeaderHeight="40" MouseUp="InstrumentRow_Click" RowHeight="30" IsReadOnly="True">
 
         </DataGrid>
-        <Grid Grid.Row="3">
+        <Grid Grid.Row="4">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="4*"/>
@@ -37,7 +38,33 @@
             <Button Grid.Column="3" Content="Repair Change" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" FontStretch="ExtraExpanded"/>
             <Button Grid.Column="5" Content="Delete Instrument" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" FontStretch="ExtraExpanded"/>
         </Grid>
-        <TextBlock x:Name="progressTextInstrument" HorizontalAlignment="Center" Grid.Row="2" TextWrapping="Wrap" Text="Set Filters and Click Load Instruments" VerticalAlignment="Center" Panel.ZIndex="5" FontSize="14"/>
+        <TextBlock x:Name="progressTextInstrument" HorizontalAlignment="Center" Grid.Row="3" TextWrapping="Wrap" Text="Loading Instrument Data..." VerticalAlignment="Center" Panel.ZIndex="5" FontSize="14"/>
+
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1.02*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="0.065*"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Name="txtInstrumentType" Grid.Column="1" TextAlignment="Center" HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="" VerticalAlignment="Stretch" FontStretch="Normal" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <TextBox Name="txtInstrumentMake" Grid.Column="2" TextAlignment="Center" HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="" VerticalAlignment="Stretch" FontStretch="Normal" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <TextBox Name="txtInstrumentCase" Grid.Column="3" TextAlignment="Center" HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="" VerticalAlignment="Stretch" FontStretch="Normal" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <TextBox Name="txtInstrumentSerial" Grid.Column="4" TextAlignment="Center" HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="" VerticalAlignment="Stretch" FontStretch="Normal" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <TextBox Name="txtInstrumentGrade" Grid.Column="5" TextAlignment="Center" HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="" VerticalAlignment="Stretch" FontStretch="Normal" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <TextBox Name="txtInstrumentStudent" Grid.Column="6" TextAlignment="Center" HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="" VerticalAlignment="Stretch" FontStretch="Normal" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <TextBox Name="txtInstrumentRepair" Grid.Column="7" TextAlignment="Center" HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="" VerticalAlignment="Stretch" FontStretch="Normal" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Filters:" VerticalAlignment="Center" FontWeight="Black" FontSize="14" />
+
+        </Grid>
 
     </Grid>
 </Window>
