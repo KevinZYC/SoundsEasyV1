@@ -124,9 +124,6 @@ namespace SoundsEasyV1
         public void LoadDataFilter()
         {
             dataSourceFiltered.Clear();
-
-           
-
             for (int i = 0; i < dataSource.Count; i++)
             {
                 if (checkFilter(dataSource[i]))
