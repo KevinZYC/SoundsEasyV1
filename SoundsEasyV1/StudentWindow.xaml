@@ -15,7 +15,7 @@
         </Grid.RowDefinitions>
         <ProgressBar x:Name="progressStudentLoad" HorizontalAlignment="Stretch" Height="20" Margin="30,0,30,0" Grid.Row="2" VerticalAlignment="Center" Panel.ZIndex="5" Background="#FFE2E2E2"/>
 
-        <DataGrid x:Name="dataGridStudent" Grid.Row="1" AutoGenerateColumns="True" ColumnWidth="*" ScrollViewer.CanContentScroll="True" UseLayoutRounding="True" ColumnHeaderHeight="40" RowHeight="30" IsReadOnly="True">
+        <DataGrid x:Name="dataGridStudent" Grid.Row="1" AutoGenerateColumns="True" ColumnWidth="*" ScrollViewer.CanContentScroll="True" UseLayoutRounding="True" ColumnHeaderHeight="40" RowHeight="30" IsReadOnly="True" SelectionMode="Single">
 
         </DataGrid>
         <Grid Grid.Row="3">
