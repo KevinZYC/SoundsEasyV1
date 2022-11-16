@@ -43,16 +43,16 @@ namespace SoundsEasyV1
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        /*
-        public int id = 0;
-        public string type = "";
-        public string make = "";
-        public string caseNum = "";
-        public string serialNum = "";
-        public int grade = 0;
-        public string studentID = "";
-        public string repairStatus = "";
-        */
+        
+        private int Id = 0;
+        private string Type = "";
+        private string Make = "";
+        private string CaseNum = "";
+        private string SerialNum = "";
+        private int Grade = 0;
+        private string StudentID = "";
+        private string RepairStatus = "";
+
 
         private Instrument()
         {
@@ -76,17 +76,19 @@ namespace SoundsEasyV1
         }
 
         //get and set for each variable
+
+        //variable themselves are capitalized, but the name of the get/set is lower case
         public int id
         {
             get
             {
-                return this.id;
+                return this.Id;
             }
             set
             {
-                if(value != this.id)
+                if(value != this.Id)
                 {
-                    this.id = id;
+                    this.Id = value;
                     NotifyPropertyChanged();
                 }
             }
@@ -96,13 +98,13 @@ namespace SoundsEasyV1
         {
             get
             {
-                return this.type;
+                return this.Type;
             }
             set
             {
-                if (value != this.type)
+                if (value != this.Type)
                 {
-                    this.type = type;
+                    this.Type = value;
                     NotifyPropertyChanged();
                 }
             }
@@ -112,13 +114,13 @@ namespace SoundsEasyV1
         {
             get
             {
-                return this.make;
+                return this.Make;
             }
             set
             {
-                if (value != this.make)
+                if (value != this.Make)
                 {
-                    this.make = make;
+                    this.Make = value;
                     NotifyPropertyChanged();
                 }
             }
@@ -128,13 +130,13 @@ namespace SoundsEasyV1
         {
             get
             {
-                return this.caseNum;
+                return this.CaseNum;
             }
             set
             {
-                if (value != this.caseNum)
+                if (value != this.CaseNum)
                 {
-                    this.caseNum = caseNum;
+                    this.CaseNum = value;
                     NotifyPropertyChanged();
                 }
             }
@@ -144,13 +146,13 @@ namespace SoundsEasyV1
         {
             get
             {
-                return this.serialNum;
+                return this.SerialNum;
             }
             set
             {
-                if (value != this.serialNum)
+                if (value != this.SerialNum)
                 {
-                    this.serialNum = serialNum;
+                    this.serialNum = value;
                     NotifyPropertyChanged();
                 }
             }
@@ -160,13 +162,13 @@ namespace SoundsEasyV1
         {
             get
             {
-                return this.grade;
+                return this.Grade;
             }
             set
             {
-                if (value != this.grade)
+                if (value != this.Grade)
                 {
-                    this.grade = grade;
+                    this.Grade = value;
                     NotifyPropertyChanged();
                 }
             }
@@ -176,13 +178,13 @@ namespace SoundsEasyV1
         {
             get
             {
-                return this.studentID;
+                return this.StudentID;
             }
             set
             {
-                if (value != this.studentID)
+                if (value != this.StudentID)
                 {
-                    this.studentID = studentID;
+                    this.StudentID = value;
                     NotifyPropertyChanged();
                 }
             }
@@ -192,13 +194,13 @@ namespace SoundsEasyV1
         {
             get
             {
-                return this.repairStatus;
+                return this.RepairStatus;
             }
             set
             {
-                if (value != this.repairStatus)
+                if (value != this.RepairStatus)
                 {
-                    this.repairStatus = repairStatus;
+                    this.RepairStatus = value;
                     NotifyPropertyChanged();
                 }
             }

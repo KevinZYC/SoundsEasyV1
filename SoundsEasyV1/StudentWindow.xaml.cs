@@ -68,6 +68,7 @@ namespace SoundsEasyV1
             worker.RunWorkerAsync();
 
 
+            
 
         }
         //copied files from InstrumentWindow.xaml.cs, changed to apply to Student Window from here on
@@ -95,6 +96,13 @@ namespace SoundsEasyV1
             progressTextStudent.Visibility = Visibility.Hidden;
             dataGridStudent.ItemsSource = dataSource;
             isLoading = false;
+
+            Thread.Sleep(1000);
+            App.Current.Dispatcher.Invoke((Action)delegate // <--- HERE
+            {
+                dataSource[0].fname="troll";
+                
+            });
         }
 
         public void LoadSheets()
