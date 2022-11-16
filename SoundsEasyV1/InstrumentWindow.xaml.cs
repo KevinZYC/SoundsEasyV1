@@ -186,8 +186,12 @@ namespace SoundsEasyV1
             if(dataGrid != null)
             {
                 Instrument target = dataGrid.SelectedItem as Instrument;
-                int index = target.id;
-                Debug.WriteLine(index);
+                if(target != null)
+                {
+                    selected = target.id;
+                    Debug.WriteLine(selected);
+                }
+                
                 
             }
         }
