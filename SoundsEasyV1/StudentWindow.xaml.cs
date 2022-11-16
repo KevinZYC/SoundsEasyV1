@@ -15,6 +15,7 @@ using System.Diagnostics;
 using System.ComponentModel;
 using System.Threading;
 using System.Collections.ObjectModel;
+using System.Windows.Controls.Primitives;
 
 namespace SoundsEasyV1
 {
@@ -27,6 +28,7 @@ namespace SoundsEasyV1
         
 
         StudentWindow? thisWindow = null;
+        int selected = -1;
 
         bool isLoading = false;
 
@@ -117,8 +119,11 @@ namespace SoundsEasyV1
             if (dataGrid != null)
             {
                 Student target = dataGrid.SelectedItem as Student;
-                int index = target.id;
-                Debug.WriteLine(index);
+                if (target != null)
+                {
+                    selected = target.id;
+                    Debug.WriteLine(selected);
+                }
 
             }
         }
