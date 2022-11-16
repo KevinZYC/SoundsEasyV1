@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Drawing;
 using System.Runtime.CompilerServices;
+using System.Diagnostics;
 
 //https://stackoverflow.com/questions/40054539/datagrid-itemsource-binding-not-updating-and-binding-in-wpf-not-working this source for notify data changed
 namespace SoundsEasyV1
@@ -88,6 +89,8 @@ namespace SoundsEasyV1
             {
                 if(value != this.Id)
                 {
+                    Debug.WriteLine("id");
+                    Debug.WriteLine(this.Id);
                     this.Id = value;
                     NotifyPropertyChanged();
                 }
@@ -104,6 +107,7 @@ namespace SoundsEasyV1
             {
                 if (value != this.Type)
                 {
+                    Debug.WriteLine("id");
                     this.Type = value;
                     NotifyPropertyChanged();
                 }
@@ -121,6 +125,7 @@ namespace SoundsEasyV1
                 if (value != this.Make)
                 {
                     this.Make = value;
+                    Debug.WriteLine("id");
                     NotifyPropertyChanged();
                 }
             }
@@ -137,6 +142,7 @@ namespace SoundsEasyV1
                 if (value != this.CaseNum)
                 {
                     this.CaseNum = value;
+                    Debug.WriteLine("id");
                     NotifyPropertyChanged();
                 }
             }
@@ -152,7 +158,9 @@ namespace SoundsEasyV1
             {
                 if (value != this.SerialNum)
                 {
-                    this.serialNum = value;
+                    Debug.WriteLine(this.SerialNum);
+                    this.SerialNum = value;
+                    
                     NotifyPropertyChanged();
                 }
             }
@@ -169,6 +177,7 @@ namespace SoundsEasyV1
                 if (value != this.Grade)
                 {
                     this.Grade = value;
+                    Debug.WriteLine("id");
                     NotifyPropertyChanged();
                 }
             }
@@ -185,6 +194,7 @@ namespace SoundsEasyV1
                 if (value != this.StudentID)
                 {
                     this.StudentID = value;
+                    Debug.WriteLine("id");
                     NotifyPropertyChanged();
                 }
             }
@@ -201,6 +211,7 @@ namespace SoundsEasyV1
                 if (value != this.RepairStatus)
                 {
                     this.RepairStatus = value;
+                    Debug.WriteLine("id");
                     NotifyPropertyChanged();
                 }
             }
