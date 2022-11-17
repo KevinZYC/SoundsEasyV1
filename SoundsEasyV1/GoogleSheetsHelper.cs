@@ -150,6 +150,7 @@ namespace SoundsEasyV1
                     }
                     //called for each value pulled
                     //calls a custom add method so its done in the same thread
+
                     target.addData(expToInst(expando,rowCounter));
                     Debug.WriteLine(rowCounter * (100 / values.Count));
                     worker.ReportProgress(rowCounter * (100 / values.Count), String.Format("Loading: {0}%", rowCounter * (100 / values.Count)));
@@ -326,7 +327,20 @@ namespace SoundsEasyV1
             var sID = dict["Student ID"] as string;
             var repair = dict["Repair Status"] as string;
 
-            return new Instrument(id, type, make, caseN, serial, grade, sID, repair);
+            Instrument ret = Instrument.CreateInstrument();
+            
+            ret.id = id;
+            ret.type = type;
+            ret.make = make;
+            ret.caseNum = caseN;
+            ret.serialNum = serial;
+            ret.grade = grade;
+            ret.studentID = sID;
+            ret.repairStatus = repair;
+            
+            
+
+            return ret;
         }
 
         private Student expToStud(ExpandoObject item, int id)

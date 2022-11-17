@@ -15,6 +15,7 @@ using System.Diagnostics;
 using System.ComponentModel;
 using System.Threading;
 using System.Collections.ObjectModel;
+using System.Windows.Controls.Primitives;
 
 namespace SoundsEasyV1
 {
@@ -27,6 +28,7 @@ namespace SoundsEasyV1
         
 
         StudentWindow? thisWindow = null;
+        int selected = -1;
 
         bool isLoading = false;
 
@@ -68,6 +70,7 @@ namespace SoundsEasyV1
             worker.RunWorkerAsync();
 
 
+            
 
         }
         //copied files from InstrumentWindow.xaml.cs, changed to apply to Student Window from here on
@@ -95,6 +98,13 @@ namespace SoundsEasyV1
             progressTextStudent.Visibility = Visibility.Hidden;
             dataGridStudent.ItemsSource = dataSource;
             isLoading = false;
+
+            Thread.Sleep(1000);
+            App.Current.Dispatcher.Invoke((Action)delegate // <--- HERE
+            {
+                dataSource[0].fname="troll";
+                
+            });
         }
 
         public void LoadSheets()
@@ -109,8 +119,11 @@ namespace SoundsEasyV1
             if (dataGrid != null)
             {
                 Student target = dataGrid.SelectedItem as Student;
-                int index = target.id;
-                Debug.WriteLine(index);
+                if (target != null)
+                {
+                    selected = target.id;
+                    Debug.WriteLine(selected);
+                }
 
             }
         }
