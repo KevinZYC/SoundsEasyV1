@@ -154,7 +154,7 @@ namespace SoundsEasyV1
                     target.addData(expToInst(expando,rowCounter));
                     Debug.WriteLine(rowCounter * (100 / values.Count));
                     worker.ReportProgress(rowCounter * (100 / values.Count), String.Format("Loading: {0}%", rowCounter * (100 / values.Count)));
-                    Thread.Sleep(10);
+                    //Thread.Sleep(10);
                     rowCounter++;
                 }
             }
@@ -216,7 +216,7 @@ namespace SoundsEasyV1
                     target.addData(expToStud(expando,rowCounter));
                     //Debug.WriteLine();
                     worker.ReportProgress(rowCounter * (100 / values.Count), String.Format("Loading: {0}%", rowCounter * (100 / values.Count)));
-                    Thread.Sleep(10);
+                    //Thread.Sleep(10);
                     rowCounter++;
                 }
             }

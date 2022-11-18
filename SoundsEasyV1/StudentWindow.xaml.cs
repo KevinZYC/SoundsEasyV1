@@ -99,12 +99,7 @@ namespace SoundsEasyV1
             dataGridStudent.ItemsSource = dataSource;
             isLoading = false;
 
-            Thread.Sleep(1000);
-            App.Current.Dispatcher.Invoke((Action)delegate // <--- HERE
-            {
-                dataSource[0].fname="troll";
-                
-            });
+            
         }
 
         public void LoadSheets()
