@@ -362,7 +362,16 @@ namespace SoundsEasyV1
 
             var email = dict["Email"] as string;
 
-            return new Student(id, fname,lname,course,grade,email);
+            Student student1 = Student.CreateStudent();
+            student1.id = id;
+            student1.fname = fname;
+            student1.lname = lname;
+            student1.course = course;
+            student1.grade = grade;
+            student1.email = email;
+
+            return student1;
+
         }
     }
 
