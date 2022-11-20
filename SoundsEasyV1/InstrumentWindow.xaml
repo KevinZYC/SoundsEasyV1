@@ -35,7 +35,7 @@
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
             <Button Grid.Column="1" Content="Load Instruments" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" FontStretch="ExtraExpanded" Click="btnLoadInstruments_Click"/>
-            <Button Grid.Column="3" Content="Repair Change" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" FontStretch="ExtraExpanded"/>
+            <Button Grid.Column="3" Content="Repair Change" Click ="btnRepairChange_Click" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" FontStretch="ExtraExpanded"/>
             <Button Grid.Column="5" Content="Delete Instrument" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" FontStretch="ExtraExpanded"/>
         </Grid>
         <TextBlock x:Name="progressTextInstrument" HorizontalAlignment="Center" Grid.Row="3" TextWrapping="Wrap" Text="Loading Instrument Data..." VerticalAlignment="Center" Panel.ZIndex="5" FontSize="14"/>
