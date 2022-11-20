@@ -196,6 +196,16 @@ namespace SoundsEasyV1
             }
         }
 
+        private void btnRepairChange_Click(object sender, RoutedEventArgs e)
+        {
+            if(selected >= 0 && selected < dataSource.Count)
+            {
+                dataSource[selected].repairStatus = "broken";
+                Debug.WriteLine(dataGridInstrument.SelectedIndex + "  " + dataSourceFiltered.Count);
+                dataSourceFiltered[dataGridInstrument.SelectedIndex].repairStatus = "broken";
+            }
+        }
+
         private void btnLoadInstruments_Click(object sender, RoutedEventArgs e)
         {
             if(!isLoading)
