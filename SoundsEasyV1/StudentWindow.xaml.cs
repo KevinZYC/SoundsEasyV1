@@ -60,6 +60,10 @@ namespace SoundsEasyV1
             dataSource.Clear();
             isLoading = true;
 
+            //set pop up size
+            popupAddStudent.Height = SystemParameters.PrimaryScreenHeight * 0.7;
+            popupAddStudent.Width = SystemParameters.PrimaryScreenWidth * 0.7;
+
             //set parameters for pull request
             gsp = new GoogleSheetParameters() { RangeColumnStart = 1, RangeRowStart = 1, RangeColumnEnd = 5, RangeRowEnd = 100, FirstRowIsHeaders = true, SheetName = "sheet1" };
             //run data loading in background
