@@ -52,7 +52,7 @@ namespace SoundsEasyV1
         }
 
         //get and set for each variable 
-        //varaibles capitalized, get/set lowercase
+        //variables capitalized, get/set lowercase
         public int id
         {
             get
