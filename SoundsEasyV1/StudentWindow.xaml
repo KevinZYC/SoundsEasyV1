@@ -11,14 +11,15 @@
             <RowDefinition Height="1*"/>
             <RowDefinition Height="5*"/>
             <RowDefinition Height="0.3*"/>
+            <RowDefinition Height="0.3*"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
-        <ProgressBar x:Name="progressStudentLoad" HorizontalAlignment="Stretch" Height="20" Margin="30,0,30,0" Grid.Row="2" VerticalAlignment="Center" Panel.ZIndex="5" Background="#FFE2E2E2"/>
+        <ProgressBar x:Name="progressStudentLoad" HorizontalAlignment="Stretch" Height="20" Margin="30,0,30,0" Grid.Row="3" VerticalAlignment="Center" Panel.ZIndex="5" Background="#FFE2E2E2"/>
 
         <DataGrid x:Name="dataGridStudent" Grid.Row="1" AutoGenerateColumns="True" MouseUp="StudentRow_Click" ColumnWidth="*" ScrollViewer.CanContentScroll="True" UseLayoutRounding="True" ColumnHeaderHeight="40" RowHeight="30" IsReadOnly="True" SelectionMode="Single">
 
         </DataGrid>
-        <Grid Grid.Row="3">
+        <Grid Grid.Row="4">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="4*"/>
@@ -37,7 +38,29 @@
             <Button Grid.Column="3" Content="View Assigned" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" FontStretch="ExtraExpanded"/>
             <Button Grid.Column="5" Content="Modify Student" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" FontStretch="ExtraExpanded"/>
         </Grid>
-        <TextBlock x:Name="progressTextStudent" HorizontalAlignment="Center" Grid.Row="2" TextWrapping="Wrap" Text="Set Filters and Click Load Instruments" VerticalAlignment="Center" Panel.ZIndex="5" FontSize="14"/>
+        <TextBlock x:Name="progressTextStudent" HorizontalAlignment="Center" Grid.Row="3" TextWrapping="Wrap" Text="Set Filters and Click Load Instruments" VerticalAlignment="Center" Panel.ZIndex="5" FontSize="14"/>
 
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1.02*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="0.065*"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Name="txtStudentFName" Grid.Column="1" TextAlignment="Center" HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="" VerticalAlignment="Stretch" FontStretch="Normal" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <TextBox Name="txtStudentLName" Grid.Column="2" TextAlignment="Center" HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="" VerticalAlignment="Stretch" FontStretch="Normal" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <TextBox Name="txtStudentCourse" Grid.Column="3" TextAlignment="Center" HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="" VerticalAlignment="Stretch" FontStretch="Normal" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <TextBox Name="txtStudentGrade" Grid.Column="4" TextAlignment="Center" HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="" VerticalAlignment="Stretch" FontStretch="Normal" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <TextBox Name="txtStudentEmail" Grid.Column="5" TextAlignment="Center" HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="" VerticalAlignment="Stretch" FontStretch="Normal" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            
+            <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Filters:" VerticalAlignment="Center" FontWeight="Black" FontSize="14" />
+
+        </Grid>
     </Grid>
 </Window>

@@ -25,6 +25,7 @@ namespace SoundsEasyV1
     public partial class StudentWindow : Window
     {
         public ObservableCollection<Student> dataSource = new ObservableCollection<Student>();
+        public ObservableCollection<Student> dataSourceFiltered = new ObservableCollection<Student>();
         
 
         StudentWindow? thisWindow = null;
@@ -44,7 +45,7 @@ namespace SoundsEasyV1
 
             gsp = new GoogleSheetParameters() { RangeColumnStart = 1, RangeRowStart = 1, RangeColumnEnd = 5, RangeRowEnd = 100, FirstRowIsHeaders = true, SheetName = "sheet1" };
 
-            dataGridStudent.ItemsSource = dataSource;
+            LoadData();
         }
 
         public void Init(ref StudentWindow windowObj)
@@ -73,6 +74,49 @@ namespace SoundsEasyV1
             
 
         }
+
+        public void LoadDataFilter()
+        {
+            dataSourceFiltered.Clear();
+            for (int i = 0; i < dataSource.Count; i++)
+            {
+                if (checkFilter(dataSource[i]))
+                {
+                    dataSourceFiltered.Add(dataSource[i]);
+                }
+
+            }
+            dataGridStudent.ItemsSource = dataSourceFiltered;
+
+        }
+
+        private bool checkFilter(Student s)
+        {
+            if (s.fname != txtStudentFName.Text && txtStudentFName.Text.Length > 0)
+            {
+                return false;
+            }
+            if (s.lname != txtStudentLName.Text && txtStudentLName.Text.Length > 0)
+            {
+                return false;
+            }
+            if (s.course != txtStudentCourse.Text && txtStudentCourse.Text.Length > 0)
+            {
+                return false;
+            }
+            if (s.grade.ToString() != txtStudentGrade.Text && txtStudentGrade.Text.Length > 0)
+            {
+                return false;
+            }
+            if (s.fname != txtStudentEmail.Text && txtStudentEmail.Text.Length > 0)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+
         //copied files from InstrumentWindow.xaml.cs, changed to apply to Student Window from here on
         private void worker_ProgressChanged(object? sender, ProgressChangedEventArgs e)
         {
@@ -99,7 +143,7 @@ namespace SoundsEasyV1
             dataGridStudent.ItemsSource = dataSource;
             isLoading = false;
 
-            
+            LoadDataFilter();
         }
 
         public void LoadSheets()
@@ -126,7 +170,7 @@ namespace SoundsEasyV1
         private void btnLoadStudents_Click(object sender, RoutedEventArgs e)
         {
             if (!isLoading)
-                LoadData();
+                LoadDataFilter();
 
         }
 

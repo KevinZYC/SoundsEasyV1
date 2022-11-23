@@ -89,8 +89,8 @@ namespace SoundsEasyV1
             {
                 if(value != this.Id)
                 {
-                    Debug.WriteLine("id");
-                    Debug.WriteLine(this.Id);
+                    //Debug.WriteLine("id");
+                    //Debug.WriteLine(this.Id);
                     this.Id = value;
                     NotifyPropertyChanged();
                 }
@@ -107,7 +107,7 @@ namespace SoundsEasyV1
             {
                 if (value != this.Type)
                 {
-                    Debug.WriteLine("id");
+                   // Debug.WriteLine("id");
                     this.Type = value;
                     NotifyPropertyChanged();
                 }
@@ -125,7 +125,7 @@ namespace SoundsEasyV1
                 if (value != this.Make)
                 {
                     this.Make = value;
-                    Debug.WriteLine("id");
+                    //Debug.WriteLine("id");
                     NotifyPropertyChanged();
                 }
             }
@@ -142,7 +142,7 @@ namespace SoundsEasyV1
                 if (value != this.CaseNum)
                 {
                     this.CaseNum = value;
-                    Debug.WriteLine("id");
+                    //Debug.WriteLine("id");
                     NotifyPropertyChanged();
                 }
             }
@@ -158,7 +158,7 @@ namespace SoundsEasyV1
             {
                 if (value != this.SerialNum)
                 {
-                    Debug.WriteLine(this.SerialNum);
+                    //Debug.WriteLine(this.SerialNum);
                     this.SerialNum = value;
                     
                     NotifyPropertyChanged();
@@ -177,7 +177,7 @@ namespace SoundsEasyV1
                 if (value != this.Grade)
                 {
                     this.Grade = value;
-                    Debug.WriteLine("id");
+                    //Debug.WriteLine("id");
                     NotifyPropertyChanged();
                 }
             }
@@ -194,7 +194,7 @@ namespace SoundsEasyV1
                 if (value != this.StudentID)
                 {
                     this.StudentID = value;
-                    Debug.WriteLine("id");
+                    //Debug.WriteLine("id");
                     NotifyPropertyChanged();
                 }
             }
@@ -211,7 +211,7 @@ namespace SoundsEasyV1
                 if (value != this.RepairStatus)
                 {
                     this.RepairStatus = value;
-                    Debug.WriteLine("id");
+                    //Debug.WriteLine("id");
                     NotifyPropertyChanged();
                 }
             }

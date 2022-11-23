@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SoundsEasyV1
 {
-    public class Student
+    public class Student : INotifyPropertyChanged
     {
         /* public int id { get; set; }
          public string fname { get; set; }
@@ -43,7 +43,14 @@ namespace SoundsEasyV1
        
         private Student()
         {
-          
+            /*
+             this.id = id;
+               this.fname = fname;
+               this.lname = lname;
+               this.course = course;
+               this.grade = grade;
+               this.email = email;
+              */
         }
         //public constructor
         public static Student CreateStudent()
