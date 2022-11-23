@@ -60,6 +60,10 @@ namespace SoundsEasyV1
 
             dataGridInstrument.ItemsSource = dataSource;
 
+            //set pop up size
+            popupAddInstrument.Height = SystemParameters.PrimaryScreenHeight * 0.7;
+            popupAddInstrument.Width = SystemParameters.PrimaryScreenWidth * 0.7;
+
             LoadData();
         }
         
@@ -160,6 +164,8 @@ namespace SoundsEasyV1
             progressTextInstrument.Visibility= Visibility.Hidden;
             dataGridInstrument.ItemsSource = dataSource;
             isLoading = false;
+
+            LoadDataFilter();
         }
 
         public void LoadSheets()
@@ -192,6 +198,25 @@ namespace SoundsEasyV1
                     Debug.WriteLine(selected);
                 }
                 
+                
+            }
+        }
+
+        private void btnRepairChange_Click(object sender, RoutedEventArgs e)
+        {
+            if(selected >= 0 && selected < dataSource.Count)
+            {
+                if(dataSource[selected-1].repairStatus == "good")
+                {
+                    dataSource[selected-1].repairStatus = "broken";
+                    Debug.WriteLine(dataGridInstrument.SelectedIndex + "  " + selected);
+                    dataSourceFiltered[dataGridInstrument.SelectedIndex].repairStatus = "broken";
+                } else
+                {
+                    dataSource[selected-1].repairStatus = "good";
+                    Debug.WriteLine(dataGridInstrument.SelectedIndex + "  " + selected);
+                    dataSourceFiltered[dataGridInstrument.SelectedIndex].repairStatus = "good";
+                }
                 
             }
         }
