@@ -62,7 +62,7 @@
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="0.065*"/>
+                <ColumnDefinition Width="18"/>
             </Grid.ColumnDefinitions>
             <TextBox Name="txtStudentFName" Grid.Column="1" TextAlignment="Center" HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="" VerticalAlignment="Stretch" FontStretch="Normal" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
             <TextBox Name="txtStudentLName" Grid.Column="2" TextAlignment="Center" HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="" VerticalAlignment="Stretch" FontStretch="Normal" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>

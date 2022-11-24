@@ -44,8 +44,27 @@
 
         <Popup Name="popupAddInstrument" IsOpen="{Binding IsChecked, ElementName=btnAddInstrument}" Placement="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="50" Grid.Row="1">
             <Border BorderThickness="1">
-                <Grid>
-                    <TextBlock Name="myPopupText" Background="White" Foreground="Black" Padding="30" TextAlignment="Center"/>
+                <Grid Background="White">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Name="myPopupText" Text="Add Instrument" Grid.Row="0" FontSize="20" Grid.Column="0" Grid.ColumnSpan="2"  Foreground="Black" Padding="30" TextAlignment="Center"/>
+                    <TextBox Name="txtAddInstrumentType" Background="LightGray" Text="" Grid.Row="1" FontSize="20" Grid.Column="0" Margin="30" TextAlignment="Left"/>
+                    <TextBox Name="txtAddInstrumentMake" Background="LightGray" Text="" Grid.Row="1" FontSize="20" Grid.Column="1" Margin="30" TextAlignment="Left"/>
+                    <TextBox Name="txtAddInstrumentCase" Background="LightGray" Text="" Grid.Row="2" FontSize="20" Grid.Column="0" Margin="30" TextAlignment="Left"/>
+                    <TextBox Name="txtAddInstrumentSerial" Background="LightGray" Text="" Grid.Row="2" FontSize="20" Grid.Column="1" Margin="30" TextAlignment="Left"/>
+                    <TextBox Name="txtAddInstrumentGrade" Background="LightGray" Text="" Grid.Row="3" FontSize="20" Grid.Column="0" Margin="30" TextAlignment="Left"/>
+                    <TextBox Name="txtAddInstrumentStudentID" Background="LightGray" Text="" Grid.Row="3" FontSize="20" Grid.Column="1" Margin="30" TextAlignment="Left"/>
+                    <Button Name="btnConfirmAddInstrument" Click="btnConfirmAddInstrument_Click" Background="LightGray" Content="Add Instrument" Grid.Row="4" FontSize="20" Grid.Column="1" Margin="30" HorizontalContentAlignment="Center"/>
                 </Grid>
             </Border>
         </Popup>
@@ -65,7 +84,7 @@
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="0.065*"/>
+                <ColumnDefinition Width="18"/>
             </Grid.ColumnDefinitions>
             <TextBox Name="txtInstrumentType" Grid.Column="1" TextAlignment="Center" HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="" VerticalAlignment="Stretch" FontStretch="Normal" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
             <TextBox Name="txtInstrumentMake" Grid.Column="2" TextAlignment="Center" HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="" VerticalAlignment="Stretch" FontStretch="Normal" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>

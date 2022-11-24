@@ -228,6 +228,21 @@ namespace SoundsEasyV1
             
         }
 
+        private void btnConfirmAddInstrument_Click(object sender, RoutedEventArgs e)
+        {
+
+
+            //reset
+            txtAddInstrumentCase.Clear();
+            txtAddInstrumentGrade.Clear();
+            txtAddInstrumentMake.Clear();
+            txtAddInstrumentSerial.Clear();
+            txtAddInstrumentStudentID.Clear();
+            txtAddInstrumentType.Clear();
+            popupAddInstrument.IsOpen = false;
+        }
+
+
         public void addData(Instrument i)
         {
             App.Current.Dispatcher.Invoke((Action)delegate // <--- HERE
