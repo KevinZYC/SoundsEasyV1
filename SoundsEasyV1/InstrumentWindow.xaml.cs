@@ -61,8 +61,8 @@ namespace SoundsEasyV1
             dataGridInstrument.ItemsSource = dataSource;
 
             //set pop up size
-            popupAddInstrument.Height = SystemParameters.PrimaryScreenHeight * 0.7;
-            popupAddInstrument.Width = SystemParameters.PrimaryScreenWidth * 0.7;
+            popupAddInstrument.Height = SystemParameters.PrimaryScreenHeight * 0.5;
+            popupAddInstrument.Width = SystemParameters.PrimaryScreenWidth * 0.5;
 
             LoadData();
         }
@@ -124,6 +124,12 @@ namespace SoundsEasyV1
             
         }
 
+        public struct InstrumentOption
+        {
+            public string Type { get; set; }
+        }
+
+
         //takes specific items from the overall dataset
         public void LoadDataFilter()
         {
@@ -138,6 +144,21 @@ namespace SoundsEasyV1
             }
             dataGridInstrument.ItemsSource=dataSourceFiltered;
 
+            HashSet<string> s = new HashSet<string>();
+            foreach (Instrument i in dataSourceFiltered)
+            {
+                s.Add(i.type);
+                Debug.WriteLine(i.type);
+            }
+
+            List<InstrumentOption> tempSource = new List<InstrumentOption>();
+
+            foreach(string val in s)
+            {
+                tempSource.Add(new InstrumentOption { Type = val });
+            }
+
+            dataInstrumentOptions.ItemsSource = tempSource;
         }
 
         private void worker_ProgressChanged(object? sender, ProgressChangedEventArgs e)
@@ -199,6 +220,20 @@ namespace SoundsEasyV1
                 }
                 
                 
+            }
+        }
+
+        private void dataInstrumentOptions_Click(object sender, MouseButtonEventArgs e)
+        {
+            var dataGrid = sender as DataGrid;
+            if (dataGrid != null)
+            {
+                if (dataGrid.SelectedItem is InstrumentOption target)
+                {
+                    txtAddInstrumentType.Text = target.Type;
+                }
+
+
             }
         }
 
