@@ -144,6 +144,11 @@ namespace SoundsEasyV1
             }
             dataGridInstrument.ItemsSource=dataSourceFiltered;
 
+            loadInstrumentOptions();
+        }
+
+        private void loadInstrumentOptions()
+        {
             HashSet<string> s = new HashSet<string>();
             foreach (Instrument i in dataSourceFiltered)
             {
@@ -153,7 +158,7 @@ namespace SoundsEasyV1
 
             List<InstrumentOption> tempSource = new List<InstrumentOption>();
 
-            foreach(string val in s)
+            foreach (string val in s)
             {
                 tempSource.Add(new InstrumentOption { Type = val });
             }
@@ -239,7 +244,7 @@ namespace SoundsEasyV1
 
         private void btnRepairChange_Click(object sender, RoutedEventArgs e)
         {
-            if(selected >= 0 && selected < dataSource.Count)
+            if(selected >= 0 && selected < dataSource.Count && dataGridInstrument.SelectedItem != null)
             {
                 if(dataSource[selected-1].repairStatus == "good")
                 {
@@ -256,6 +261,19 @@ namespace SoundsEasyV1
             }
         }
 
+        private void btnRemoveInstrument_Click(object sender, RoutedEventArgs e)
+        {
+            if (selected >= 0 && selected <= dataSource.Count && dataGridInstrument.SelectedItem!=null)
+            {
+                dataSource.RemoveAt(selected - 1);
+                Debug.WriteLine(dataGridInstrument.SelectedIndex + "  " + selected);
+                dataSourceFiltered.RemoveAt(dataGridInstrument.SelectedIndex);
+            } else if(dataGridInstrument.SelectedItem != null)
+            {
+                Debug.WriteLine(dataGridInstrument.SelectedIndex + "  " + selected);
+            }
+        }
+
         private void btnLoadInstruments_Click(object sender, RoutedEventArgs e)
         {
             if(!isLoading)
@@ -265,18 +283,96 @@ namespace SoundsEasyV1
 
         private void btnConfirmAddInstrument_Click(object sender, RoutedEventArgs e)
         {
+            if (addInstrumentEntry())
+            {
+                resetPopup();
+            }
+        }
 
+        private bool addInstrumentEntry()
+        {
+            Instrument cur = Instrument.CreateInstrument();
+            if(txtAddInstrumentType.Text.Length > 0)
+            {
+                cur.type = txtAddInstrumentType.Text;
+            } 
+            else
+            {
+                return false;
+            }
 
-            //reset
+            if (txtAddInstrumentMake.Text.Length > 0)
+            {
+                cur.make = txtAddInstrumentMake.Text;
+            }
+            else
+            {
+                return false;
+            }
+
+            if (txtAddInstrumentCase.Text.Length > 0)
+            {
+                cur.caseNum = txtAddInstrumentCase.Text;
+            }
+            else
+            {
+                return false;
+            }
+
+            if (txtAddInstrumentSerial.Text.Length > 0)
+            {
+                cur.serialNum = txtAddInstrumentSerial.Text;
+            }
+            else
+            {
+                return false;
+            }
+
+            if (txtAddInstrumentStudentID.Text.Length > 0)
+            {
+                cur.studentID = txtAddInstrumentStudentID.Text;
+            }
+            else
+            {
+                cur.studentID = "none";
+            }
+
+            if (radioG9.IsChecked == true)
+            {
+                cur.grade = 9;
+            } else if(radioG10.IsChecked == true)
+            {
+                cur.grade = 10;
+            } else if(radioG11.IsChecked == true)
+            {
+                cur.grade = 11;
+            } else if(radioG12.IsChecked == true)
+            {
+                cur.grade = 12;
+            } else
+            {
+                cur.grade = -1;
+            }
+
+            cur.id = dataSource.Count + 1;
+
+            cur.repairStatus = "good";
+
+            dataSource.Add(cur);
+            LoadDataFilter();
+            return true;
+
+        }
+
+        private void resetPopup()
+        {
             txtAddInstrumentCase.Clear();
-            txtAddInstrumentGrade.Clear();
             txtAddInstrumentMake.Clear();
             txtAddInstrumentSerial.Clear();
             txtAddInstrumentStudentID.Clear();
             txtAddInstrumentType.Clear();
             popupAddInstrument.IsOpen = false;
         }
-
 
         public void addData(Instrument i)
         {
@@ -320,6 +416,53 @@ namespace SoundsEasyV1
             }
 
             return true;
+        }
+
+
+        //handling hint texts
+        void hintChangeInsType(object sender, TextChangedEventArgs e)
+        {
+            hintInsType.Visibility = Visibility.Visible;
+            if (txtAddInstrumentType.Text != "")
+            {
+                hintInsType.Visibility = Visibility.Hidden;
+            }
+        }
+
+        void hintChangeInsMake(object sender, TextChangedEventArgs e)
+        {
+            hintInsMake.Visibility = Visibility.Visible;
+            if (txtAddInstrumentMake.Text != "")
+            {
+                hintInsMake.Visibility = Visibility.Hidden;
+            }
+        }
+
+        void hintChangeInsCase(object sender, TextChangedEventArgs e)
+        {
+            hintInsCase.Visibility = Visibility.Visible;
+            if (txtAddInstrumentCase.Text != "")
+            {
+                hintInsCase.Visibility = Visibility.Hidden;
+            }
+        }
+
+        void hintChangeInsSerial(object sender, TextChangedEventArgs e)
+        {
+            hintInsSerial.Visibility = Visibility.Visible;
+            if (txtAddInstrumentSerial.Text != "")
+            {
+                hintInsSerial.Visibility = Visibility.Hidden;
+            }
+        }
+
+        void hintChangeInsSID(object sender, TextChangedEventArgs e)
+        {
+            hintInsSID.Visibility = Visibility.Visible;
+            if (txtAddInstrumentStudentID.Text != "")
+            {
+                hintInsSID.Visibility = Visibility.Hidden;
+            }
         }
 
     }
