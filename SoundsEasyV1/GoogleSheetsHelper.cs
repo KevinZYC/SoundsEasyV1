@@ -31,7 +31,9 @@ namespace SoundsEasyV1
         static string[] Scopes = { SheetsService.Scope.Spreadsheets };
         static string ApplicationName = "GoogleSheetsHelper";
 
-        private readonly SheetsService _sheetsService;
+        private BatchUpdateSpreadsheetRequest requestsList = new BatchUpdateSpreadsheetRequest { Requests = new List<Request>()};
+
+    private readonly SheetsService _sheetsService;
         private readonly string _spreadsheetId;
 
         public GoogleSheetsHelper(string credentialFileName, string spreadsheetId)
@@ -227,7 +229,7 @@ namespace SoundsEasyV1
 
         public void AddCells(GoogleSheetParameters googleSheetParameters, List<GoogleSheetRow> rows)
         {
-            var requests = new BatchUpdateSpreadsheetRequest { Requests = new List<Request>() };
+            //var requests = new BatchUpdateSpreadsheetRequest { Requests = new List<Request>() };
 
             var sheetId = GetSheetId(_sheetsService, _spreadsheetId, googleSheetParameters.SheetName);
 
@@ -269,10 +271,42 @@ namespace SoundsEasyV1
             }
             request.UpdateCells.Rows = listRowData;
 
-            // It's a batch request so you can create more than one request and send them all in one batch. Just use reqs.Requests.Add() to add additional requests for the same spreadsheet
-            requests.Requests.Add(request);
+            // It's a batch request so you can create more than one request and send them all in one batch. Just use reqs.Requests.Add() to add additional requestsList for the same spreadsheet
+            
+            
+            requestsList.Requests.Add(request);
 
-            _sheetsService.Spreadsheets.BatchUpdate(requests, _spreadsheetId).Execute();
+            executeModify();
+
+
+        }
+
+        public void RemoveRow(int rowStart, int rowEnd)
+        {
+            var request = new Request
+            {
+                DeleteDimension = new DeleteDimensionRequest
+                {
+                    Range = new DimensionRange
+                    {
+                        SheetId = 0,
+                        Dimension = "ROWS",
+                        StartIndex = rowStart,
+                        EndIndex = rowEnd
+                    }
+                }
+            };
+
+
+            requestsList.Requests.Add(request);
+
+            executeModify();
+        }
+
+
+        public void executeModify()
+        {
+            _sheetsService.Spreadsheets.BatchUpdate(requestsList, _spreadsheetId).Execute();
         }
 
         private string GetColumnName(int index)
