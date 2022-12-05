@@ -61,8 +61,8 @@ namespace SoundsEasyV1
             isLoading = true;
 
             //set pop up size
-            popupAddStudent.Height = SystemParameters.PrimaryScreenHeight * 0.7;
-            popupAddStudent.Width = SystemParameters.PrimaryScreenWidth * 0.7;
+            popupAddStudent.Height = SystemParameters.PrimaryScreenHeight * 0.5;
+            popupAddStudent.Width = SystemParameters.PrimaryScreenWidth * 0.5;
 
             //set parameters for pull request
             gsp = new GoogleSheetParameters() { RangeColumnStart = 1, RangeRowStart = 1, RangeColumnEnd = 5, RangeRowEnd = 100, FirstRowIsHeaders = true, SheetName = "sheet1" };
@@ -175,6 +175,12 @@ namespace SoundsEasyV1
         {
             if (!isLoading)
                 LoadDataFilter();
+
+        }
+        
+        private void popupCloserS_click(object sender, RoutedEventArgs e)
+        {
+            btnAddStudent.IsChecked = false;
 
         }
 

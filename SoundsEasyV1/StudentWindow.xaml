@@ -39,12 +39,27 @@
             <Button Grid.Column="1" Content="Load Student Info" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" FontStretch="ExtraExpanded" Click="btnLoadStudents_Click"/>
             <Button Grid.Column="3" Content="View Assigned" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" FontStretch="ExtraExpanded"/>
             <Button Grid.Column="5" Content="Modify Student" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" FontStretch="ExtraExpanded"/>
-            <ToggleButton Grid.Column="7" Name="btnAddStudent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1"/>
+            <ToggleButton Grid.Column="7" Content="Add Student" Name="btnAddStudent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1"/>
         </Grid>
         <Popup Name="popupAddStudent" IsOpen="{Binding IsChecked, ElementName=btnAddStudent}" Placement="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="50" Grid.Row="1">
-            <Border BorderThickness="1">
-                <Grid>
-                    <TextBlock Name="myPopupText" Background="White" Foreground="Black" Padding="30" TextAlignment="Center"/>
+            <Border BorderThickness="1" BorderBrush="#FF888888" Background="#FF888888">
+                <Grid Background="White" Margin="30">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="0.5*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Name="myPopupText" Text="Add New Student" FontSize="24" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Background="White" Foreground="Black" Padding="30" TextAlignment="Center"/>
+                    <Button x:Name="popupCloserS" Content="  X  " Grid.Column="1" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Click="popupCloserS_click"/>
+                    <TextBox Name="txt_addfname" Background="LightGray" Grid.Row="1" Grid.Column="1" FontSize="20" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="15"/>
+                    <TextBox Name="txt_addlname" Background="LightGray" Grid.Row="2" Grid.Column="1" FontSize="20" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="15"/>
+                    <TextBox Name="txt_addemail" Background="LightGray" Grid.Row="3" Grid.Column="1" FontSize="20" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="15"/>
                 </Grid>
             </Border>
         </Popup>
