@@ -36,10 +36,10 @@
                 <ColumnDefinition Width="4*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="1" Content="Load Instruments" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" FontStretch="ExtraExpanded" Click="btnLoadInstruments_Click"/>
+            
             <Button Grid.Column="3" Content="Repair Change" Click ="btnRepairChange_Click" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" FontStretch="ExtraExpanded"/>
             <Button Grid.Column="5" Content="Delete Instrument" Click="btnRemoveInstrument_Click" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" FontStretch="ExtraExpanded"/>
-            <ToggleButton Grid.Column="7" Name="btnAddInstrument" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1"/>
+            <ToggleButton Grid.Column="1" Content="Add Instrument" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="btnAddInstrument" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1"/>
         </Grid>
 
         <Popup Name="popupAddInstrument" IsOpen="{Binding IsChecked, ElementName=btnAddInstrument}" Placement="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="50" Grid.Row="1">
@@ -116,7 +116,7 @@
             <TextBox Name="txtInstrumentGrade" Grid.Column="5" TextAlignment="Center" HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="" VerticalAlignment="Stretch" FontStretch="Normal" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
             <TextBox Name="txtInstrumentStudent" Grid.Column="6" TextAlignment="Center" HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="" VerticalAlignment="Stretch" FontStretch="Normal" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
             <TextBox Name="txtInstrumentRepair" Grid.Column="7" TextAlignment="Center" HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="" VerticalAlignment="Stretch" FontStretch="Normal" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-            <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Filters:" VerticalAlignment="Center" FontWeight="Black" FontSize="14" />
+            <Button Grid.Column="0" Content="Load Filters" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontStretch="ExtraExpanded" Click="btnLoadInstruments_Click"/>
 
         </Grid>
 

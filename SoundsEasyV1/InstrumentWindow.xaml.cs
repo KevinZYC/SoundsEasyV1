@@ -58,13 +58,15 @@ namespace SoundsEasyV1
 
             Debug.WriteLine("started");
 
-            dataGridInstrument.ItemsSource = dataSource;
+            //dataGridInstrument.ItemsSource = dataSource;
 
             //set pop up size
             popupAddInstrument.Height = SystemParameters.PrimaryScreenHeight * 0.5;
             popupAddInstrument.Width = SystemParameters.PrimaryScreenWidth * 0.5;
 
             LoadData();
+
+            
         }
         
         public void Init(ref InstrumentWindow windowObj)
@@ -111,7 +113,7 @@ namespace SoundsEasyV1
             
             dataSource.Clear();
             isLoading = true;
-            gsp = new GoogleSheetParameters() { RangeColumnStart = 1, RangeRowStart = 1, RangeColumnEnd = 7, RangeRowEnd = 100, FirstRowIsHeaders = true, SheetName = "sheet1" };
+            gsp = new GoogleSheetParameters() { RangeColumnStart = 1, RangeRowStart = 1, RangeColumnEnd = 7, RangeRowEnd = 100, FirstRowIsHeaders = true, SheetName = "Sheet1" };
             //run data loading in background
             BackgroundWorker worker = new BackgroundWorker();
             worker.RunWorkerCompleted += worker_RunWorkerCompleted;
@@ -145,6 +147,9 @@ namespace SoundsEasyV1
             dataGridInstrument.ItemsSource=dataSourceFiltered;
 
             loadInstrumentOptions();
+
+
+            //dataGridInstrument.ColumnWidth = new DataGridLength(1, DataGridLengthUnitType.Star);
         }
 
         private void loadInstrumentOptions()
@@ -190,7 +195,6 @@ namespace SoundsEasyV1
             progressTextInstrument.Visibility= Visibility.Hidden;
             dataGridInstrument.ItemsSource = dataSource;
             isLoading = false;
-
             LoadDataFilter();
         }
 
@@ -268,6 +272,7 @@ namespace SoundsEasyV1
                 dataSource.RemoveAt(selected - 1);
                 Debug.WriteLine(dataGridInstrument.SelectedIndex + "  " + selected);
                 dataSourceFiltered.RemoveAt(dataGridInstrument.SelectedIndex);
+                gsh.RemoveRow(selected, selected+1);
             } else if(dataGridInstrument.SelectedItem != null)
             {
                 Debug.WriteLine(dataGridInstrument.SelectedIndex + "  " + selected);
@@ -292,9 +297,13 @@ namespace SoundsEasyV1
         private bool addInstrumentEntry()
         {
             Instrument cur = Instrument.CreateInstrument();
-            if(txtAddInstrumentType.Text.Length > 0)
+            var curRow = new GoogleSheetRow();
+
+            if (txtAddInstrumentType.Text.Length > 0)
             {
                 cur.type = txtAddInstrumentType.Text;
+                //add item to GoogleSheetRow
+                curRow.Cells.Add(new GoogleSheetCell { CellValue = txtAddInstrumentType.Text });
             } 
             else
             {
@@ -304,6 +313,7 @@ namespace SoundsEasyV1
             if (txtAddInstrumentMake.Text.Length > 0)
             {
                 cur.make = txtAddInstrumentMake.Text;
+                curRow.Cells.Add(new GoogleSheetCell { CellValue = txtAddInstrumentMake.Text });
             }
             else
             {
@@ -313,6 +323,7 @@ namespace SoundsEasyV1
             if (txtAddInstrumentCase.Text.Length > 0)
             {
                 cur.caseNum = txtAddInstrumentCase.Text;
+                curRow.Cells.Add(new GoogleSheetCell { CellValue = txtAddInstrumentCase.Text });
             }
             else
             {
@@ -322,6 +333,7 @@ namespace SoundsEasyV1
             if (txtAddInstrumentSerial.Text.Length > 0)
             {
                 cur.serialNum = txtAddInstrumentSerial.Text;
+                curRow.Cells.Add(new GoogleSheetCell { CellValue = txtAddInstrumentSerial.Text });
             }
             else
             {
@@ -331,6 +343,7 @@ namespace SoundsEasyV1
             if (txtAddInstrumentStudentID.Text.Length > 0)
             {
                 cur.studentID = txtAddInstrumentStudentID.Text;
+                curRow.Cells.Add(new GoogleSheetCell { CellValue = txtAddInstrumentStudentID.Text });
             }
             else
             {
@@ -353,13 +366,22 @@ namespace SoundsEasyV1
             {
                 cur.grade = -1;
             }
+            curRow.Cells.Add(new GoogleSheetCell { CellValue = cur.grade.ToString() });
 
             cur.id = dataSource.Count + 1;
 
             cur.repairStatus = "good";
+            curRow.Cells.Add(new GoogleSheetCell { CellValue = "good" });
 
             dataSource.Add(cur);
             LoadDataFilter();
+            
+            Debug.WriteLine("cols " + curRow.Cells.Count);
+
+            //the function requires a list of rows
+            var rowsToAdd = new List<GoogleSheetRow>() { curRow };
+            //add cells request with a built-in construction of a googlesheetparameter
+            gsh.AddCells(new GoogleSheetParameters { SheetName = "Sheet1", RangeColumnStart = 1, RangeRowStart = dataSource.Count + 1 }, rowsToAdd);
             return true;
 
         }
