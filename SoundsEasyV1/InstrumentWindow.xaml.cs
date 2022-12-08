@@ -68,6 +68,16 @@ namespace SoundsEasyV1
 
             LoadData();
 
+
+            
+
+            
+
+        }
+
+        void InstrumentWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+
             scaleTextDimensions(txtAddInstrumentType);
             scaleTextDimensions(txtAddInstrumentMake);
             scaleTextDimensions(txtAddInstrumentCase);
@@ -79,9 +89,8 @@ namespace SoundsEasyV1
             scaleTextDimensions(hintInsCase);
             scaleTextDimensions(hintInsSerial);
             scaleTextDimensions(hintInsSID);
-
         }
-        
+
         public void Init(ref InstrumentWindow windowObj)
         {
             thisWindow = windowObj;
@@ -89,21 +98,15 @@ namespace SoundsEasyV1
 
         public void scaleTextDimensions(TextBox t)
         {
-            t.FontSize = SystemParameters.PrimaryScreenHeight * popupSize / 25;
-            Thickness margin = t.Margin;
-            margin.Top = SystemParameters.PrimaryScreenHeight * popupSize / 50;
-            margin.Bottom = SystemParameters.PrimaryScreenHeight * popupSize / 50;
-            margin.Left = SystemParameters.PrimaryScreenHeight * popupSize / 50;
-            margin.Right = SystemParameters.PrimaryScreenHeight * popupSize / 50;
-            t.Margin = margin;
+            t.FontSize = t.ActualHeight;
         }
         public void scaleTextDimensions(TextBlock t)
         {
-
+            t.FontSize = t.ActualHeight;
         }
         public void scaleTextDimensions(Button b)
         {
-
+            b.FontSize = b.ActualHeight;
         }
 
         /* currently unused
@@ -228,6 +231,7 @@ namespace SoundsEasyV1
             dataGridInstrument.ItemsSource = dataSource;
             isLoading = false;
             LoadDataFilter();
+
         }
 
         public void LoadSheets()

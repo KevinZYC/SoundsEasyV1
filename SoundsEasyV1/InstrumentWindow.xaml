@@ -97,7 +97,7 @@
 
                     <DataGrid Name="dataInstrumentOptions" IsReadOnly="True" SelectionMode="Single" RowBackground="WhiteSmoke" AlternatingRowBackground="White" ColumnWidth="*" RowHeight="30" Background="White" Grid.Row="1" Grid.Column="0" Grid.RowSpan="8" MouseUp="dataInstrumentOptions_Click" Margin="10,10,10,40" BorderBrush="White"/>
                     <TextBlock Text="Instrument Information" Grid.Row="1" Grid.Column="1" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"></TextBlock>
-                    <TextBox Name="txtAddInstrumentType" TextChanged="hintChangeInsType" Text="" Background="LightGray" Height="40" Grid.Row="8" FontSize="17" Grid.Column="0" TextAlignment="Left"></TextBox>
+                    <TextBox Name="txtAddInstrumentType" TextChanged="hintChangeInsType" Text="" Background="LightGray" Height="40" Grid.Row="8" FontSize="17" Grid.Column="0" Margin="10" TextAlignment="Left"></TextBox>
                     <TextBox Name="txtAddInstrumentMake" TextChanged="hintChangeInsMake" Text="" Background="LightGray" Grid.Row="2" FontSize="20" Grid.Column="1" Margin="10" TextAlignment="Left"></TextBox>
                     <TextBox Name="txtAddInstrumentCase" TextChanged="hintChangeInsCase" Text="" Background="LightGray" Grid.Row="3" FontSize="20" Grid.Column="1" Margin="10" TextAlignment="Left"></TextBox>
                     <TextBox Name="txtAddInstrumentSerial" TextChanged="hintChangeInsSerial" Background="LightGray" Text="" Grid.Row="4" FontSize="20" Grid.Column="1" Margin="10" TextAlignment="Left"></TextBox>
