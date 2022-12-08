@@ -16,8 +16,15 @@
         </Grid.RowDefinitions>
         <ProgressBar x:Name="progressInstrumentLoad" HorizontalAlignment="Stretch" Height="20" Margin="30,0,30,0" Grid.Row="3" VerticalAlignment="Center" Panel.ZIndex="5" Background="#FFE2E2E2"/>
 
-        <DataGrid x:Name="dataGridInstrument" SelectionMode="Single" Grid.Row="1" AutoGenerateColumns="True" ColumnWidth="*" ScrollViewer.CanContentScroll="True" UseLayoutRounding="True" ColumnHeaderHeight="40" MouseUp="InstrumentRow_Click" RowHeight="30" IsReadOnly="True">
-            
+        <DataGrid x:Name="dataGridInstrument" BorderBrush="LightGray" VerticalGridLinesBrush="WhiteSmoke" HorizontalGridLinesBrush="WhiteSmoke" Background="White" GridLinesVisibility="All" RowBackground="White" SelectionMode="Single" Grid.Row="1" AutoGenerateColumns="True" ColumnWidth="*" ScrollViewer.CanContentScroll="True" UseLayoutRounding="True" ColumnHeaderHeight="40" MouseUp="InstrumentRow_Click" RowHeight="30" IsReadOnly="True" FontFamily="Microsoft JhengHei UI">
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="{x:Type DataGridColumnHeader}">
+                    <Setter Property="Background"  Value="White"/>
+                    <Setter Property="BorderBrush" Value="LightGray"/>
+                    <Setter Property="BorderThickness" Value="0,1,1,1"/>
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+
         </DataGrid>
         <Grid Grid.Row="4">
             <Grid.RowDefinitions>
@@ -36,15 +43,40 @@
                 <ColumnDefinition Width="4*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            
-            <Button Grid.Column="3" Content="Repair Change" Click ="btnRepairChange_Click" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" FontStretch="ExtraExpanded"/>
-            <Button Grid.Column="5" Content="Delete Instrument" Click="btnRemoveInstrument_Click" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" FontStretch="ExtraExpanded"/>
-            <ToggleButton Grid.Column="1" Content="Add Instrument" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="btnAddInstrument" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1"/>
+
+            <Button Grid.Column="3" Content="Repair Change" Click ="btnRepairChange_Click" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" FontStretch="ExtraExpanded">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button Grid.Column="5" Content="Delete Instrument" Click="btnRemoveInstrument_Click" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" FontStretch="ExtraExpanded">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <ToggleButton Grid.Column="1" Content="Add Instrument" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="btnAddInstrument" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1">
+                <ToggleButton.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </ToggleButton.Resources>
+            </ToggleButton>
+            <Button Grid.Column="7" Content="" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" FontStretch="ExtraExpanded">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
         </Grid>
 
-        <Popup Name="popupAddInstrument" IsOpen="{Binding IsChecked, ElementName=btnAddInstrument}" Placement="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="50" Grid.Row="1">
-            <Border BorderThickness="1" CornerRadius="3" BorderBrush="#FF888888" Background="#FF888888">
-                <Grid Background="White" Margin="30">
+        <Popup Name="popupAddInstrument" IsOpen="{Binding IsChecked, ElementName=btnAddInstrument}" Placement="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="50" Grid.Row="1" Opacity="0" AllowsTransparency="True">
+            <Border BorderThickness="5" CornerRadius="15" BorderBrush="#FF888888" Background="White">
+                <Grid Background="Transparent">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1.5*"/>
                         <RowDefinition Height="1*"/>
@@ -63,9 +95,9 @@
                     </Grid.ColumnDefinitions>
                     <TextBlock Name="myPopupText" Text="Add Instrument" Grid.Row="0" FontSize="20" Grid.Column="0" Grid.ColumnSpan="2"  Foreground="Black" Padding="10" TextAlignment="Center"/>
 
-                    <DataGrid Name="dataInstrumentOptions" SelectionMode="Single" RowBackground="WhiteSmoke" AlternatingRowBackground="White" ColumnWidth="*" RowHeight="30" Background="White" Grid.Row="1" Grid.Column="0" Grid.RowSpan="8" MouseUp="dataInstrumentOptions_Click" Margin="10,10,10,40" BorderBrush="White"/>
+                    <DataGrid Name="dataInstrumentOptions" IsReadOnly="True" SelectionMode="Single" RowBackground="WhiteSmoke" AlternatingRowBackground="White" ColumnWidth="*" RowHeight="30" Background="White" Grid.Row="1" Grid.Column="0" Grid.RowSpan="8" MouseUp="dataInstrumentOptions_Click" Margin="10,10,10,40" BorderBrush="White"/>
                     <TextBlock Text="Instrument Information" Grid.Row="1" Grid.Column="1" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"></TextBlock>
-                    <TextBox Name="txtAddInstrumentType" TextChanged="hintChangeInsType" Text="" Background="LightGray" Height="40" Grid.Row="8" FontSize="17" Grid.Column="0" Margin="10" TextAlignment="Left"></TextBox>
+                    <TextBox Name="txtAddInstrumentType" TextChanged="hintChangeInsType" Text="" Background="LightGray" Height="40" Grid.Row="8" FontSize="17" Grid.Column="0" TextAlignment="Left"></TextBox>
                     <TextBox Name="txtAddInstrumentMake" TextChanged="hintChangeInsMake" Text="" Background="LightGray" Grid.Row="2" FontSize="20" Grid.Column="1" Margin="10" TextAlignment="Left"></TextBox>
                     <TextBox Name="txtAddInstrumentCase" TextChanged="hintChangeInsCase" Text="" Background="LightGray" Grid.Row="3" FontSize="20" Grid.Column="1" Margin="10" TextAlignment="Left"></TextBox>
                     <TextBox Name="txtAddInstrumentSerial" TextChanged="hintChangeInsSerial" Background="LightGray" Text="" Grid.Row="4" FontSize="20" Grid.Column="1" Margin="10" TextAlignment="Left"></TextBox>
@@ -74,11 +106,11 @@
                     <TextBox Name="txtAddInstrumentStudentID" TextChanged="hintChangeInsSID" Background="LightGray" Text="" Grid.Row="7" FontSize="20" Grid.Column="1" Margin="10" TextAlignment="Left"></TextBox>
                     <Button Name="btnConfirmAddInstrument" Click="btnConfirmAddInstrument_Click" Background="LightGray" Content="Add Instrument" Grid.Row="8" FontSize="20" Grid.Column="1" Margin="10" HorizontalContentAlignment="Center"/>
 
-                    <TextBlock Name="hintInsType" Text="Select Instrument Type" Grid.Row="8" Grid.Column="0" FontSize="17" Foreground="Gray" Margin="10" HorizontalAlignment="Left"/>
-                    <TextBlock Name="hintInsMake" Text="Make/Brand" Grid.Row="2" Grid.Column="1" FontSize="17" Foreground="Gray" Margin="10" HorizontalAlignment="Left"/>
-                    <TextBlock Name="hintInsCase" Text="Case ID" Grid.Row="3" Grid.Column="1" FontSize="17" Foreground="Gray" Margin="10" HorizontalAlignment="Left"/>
-                    <TextBlock Name="hintInsSerial" Text="Serial ID" Grid.Row="4" Grid.Column="1" FontSize="17" Foreground="Gray" Margin="10" HorizontalAlignment="Left"/>
-                    <TextBlock Name="hintInsSID" Text="Student ID" Grid.Row="7" Grid.Column="1" FontSize="17" Foreground="Gray" Margin="10" HorizontalAlignment="Left"/>
+                    <TextBlock Name="hintInsType" IsHitTestVisible="False" Text="  Select Instrument Type" Grid.Row="8" Grid.Column="0" FontSize="17" Foreground="Gray" Margin="10" HorizontalAlignment="Left"/>
+                    <TextBlock Name="hintInsMake" IsHitTestVisible="False" Text="  Make/Brand" Grid.Row="2" Grid.Column="1" FontSize="17" Foreground="Gray" Margin="10" HorizontalAlignment="Left"/>
+                    <TextBlock Name="hintInsCase" IsHitTestVisible="False" Text="  Case ID" Grid.Row="3" Grid.Column="1" FontSize="17" Foreground="Gray" Margin="10" HorizontalAlignment="Left"/>
+                    <TextBlock Name="hintInsSerial" IsHitTestVisible="False" Text="  Serial ID" Grid.Row="4" Grid.Column="1" FontSize="17" Foreground="Gray" Margin="10" HorizontalAlignment="Left"/>
+                    <TextBlock Name="hintInsSID" IsHitTestVisible="False" Text="  Student ID" Grid.Row="7" Grid.Column="1" FontSize="17" Foreground="Gray" Margin="10" HorizontalAlignment="Left"/>
 
                     <UniformGrid Grid.Row="6" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Rows="1" Margin="10,20,10,0">
                         <Label FontWeight="Bold">Grade:</Label>

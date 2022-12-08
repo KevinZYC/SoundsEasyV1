@@ -40,6 +40,8 @@ namespace SoundsEasyV1
         private GoogleSheetsHelper? gsh = null;
         private GoogleSheetParameters? gsp = null;
 
+        double popupSize = 0.5;
+
         int selected = -1;
 
 
@@ -61,17 +63,47 @@ namespace SoundsEasyV1
             //dataGridInstrument.ItemsSource = dataSource;
 
             //set pop up size
-            popupAddInstrument.Height = SystemParameters.PrimaryScreenHeight * 0.5;
-            popupAddInstrument.Width = SystemParameters.PrimaryScreenWidth * 0.5;
+            popupAddInstrument.Height = SystemParameters.PrimaryScreenHeight * popupSize;
+            popupAddInstrument.Width = SystemParameters.PrimaryScreenWidth * popupSize;
 
             LoadData();
 
-            
+            scaleTextDimensions(txtAddInstrumentType);
+            scaleTextDimensions(txtAddInstrumentMake);
+            scaleTextDimensions(txtAddInstrumentCase);
+            scaleTextDimensions(txtAddInstrumentSerial);
+            scaleTextDimensions(txtAddInstrumentStudentID);
+
+            scaleTextDimensions(hintInsType);
+            scaleTextDimensions(hintInsMake);
+            scaleTextDimensions(hintInsCase);
+            scaleTextDimensions(hintInsSerial);
+            scaleTextDimensions(hintInsSID);
+
         }
         
         public void Init(ref InstrumentWindow windowObj)
         {
             thisWindow = windowObj;
+        }
+
+        public void scaleTextDimensions(TextBox t)
+        {
+            t.FontSize = SystemParameters.PrimaryScreenHeight * popupSize / 25;
+            Thickness margin = t.Margin;
+            margin.Top = SystemParameters.PrimaryScreenHeight * popupSize / 50;
+            margin.Bottom = SystemParameters.PrimaryScreenHeight * popupSize / 50;
+            margin.Left = SystemParameters.PrimaryScreenHeight * popupSize / 50;
+            margin.Right = SystemParameters.PrimaryScreenHeight * popupSize / 50;
+            t.Margin = margin;
+        }
+        public void scaleTextDimensions(TextBlock t)
+        {
+
+        }
+        public void scaleTextDimensions(Button b)
+        {
+
         }
 
         /* currently unused
