@@ -45,11 +45,12 @@
             <Border BorderThickness="1" BorderBrush="#FF888888" Background="#FF888888">
                 <Grid Background="White" Margin="30">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="1*"/>
-                        <RowDefinition Height="1*"/>
-                        <RowDefinition Height="1*"/>
-                        <RowDefinition Height="1*"/>
                         <RowDefinition Height="0.5*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
@@ -57,9 +58,25 @@
                     </Grid.ColumnDefinitions>
                     <TextBlock Name="myPopupText" Text="Add New Student" FontSize="24" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Background="White" Foreground="Black" Padding="30" TextAlignment="Center"/>
                     <Button x:Name="popupCloserS" Content="  X  " Grid.Column="1" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Click="popupCloserS_click"/>
-                    <TextBox Name="txt_addfname" Background="LightGray" Grid.Row="1" Grid.Column="1" FontSize="20" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="15"/>
-                    <TextBox Name="txt_addlname" Background="LightGray" Grid.Row="2" Grid.Column="1" FontSize="20" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="15"/>
-                    <TextBox Name="txt_addemail" Background="LightGray" Grid.Row="3" Grid.Column="1" FontSize="20" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="15"/>
+                    
+                    <DataGrid Name="dataClassOptions" SelectionMode="Single" RowBackground="WhiteSmoke" AlternatingRowBackground="White" ColumnWidth="*" RowHeight="30" Grid.Row="1" Grid.Column="0" Grid.RowSpan="8" MouseUp="dataClassOptions_Click" Margin="10,10,10,40" BorderBrush="White">
+
+                    </DataGrid>
+                    <TextBlock Text = "Student Information" Grid.Row="1" Grid.Column="1" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
+                    <TextBox Name="txtAddFirstName" TextChanged="hintChangeFirstName" Text="" Background="LightGray" Height="40" Grid.Row="2" FontSize="17" Grid.Column="1" Margin="10" TextAlignment="Left"/>
+                    <TextBox Name="txtAddLastName" TextChanged="hintChangeLastName" Text="" Background="LightGray" Grid.Row="3" FontSize="20" Grid.Column="1" Margin="10" TextAlignment="Left"/>
+                    <TextBox Name="txtAddEmail" TextChanged="hintChangeEmail" Text="" Background="LightGray" Grid.Row="4" FontSize="20" Grid.Column="1" Margin="10" TextAlignment="Left"/>
+
+                    <TextBlock Name="hintFirstName" IsHitTestVisible="False" Text="  Add First Name" Grid.Row="2" FontSize="20" Grid.Column="1" Foreground="Gray" Margin="10" TextAlignment="Left"/>
+                    <TextBlock Name="hintLastName" IsHitTestVisible="False" Text="  Add Last Name" Grid.Row="3" FontSize="20" Grid.Column="1" Foreground="Gray" Margin="10" TextAlignment="Left"/>
+                    <TextBlock Name ="hintEmail" IsHitTestVisible="False" Text="  Add Email" Grid.Row="4" FontSize="20" Grid.Column="1" Foreground="Gray" Margin="10" TextAlignment="Left"/>
+
+                    <UniformGrid Grid.Row="5" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Rows="1" Margin="10,20,10,0">
+                        <RadioButton Name="radioG9" VerticalAlignment="Center">9</RadioButton>
+                        <RadioButton Name="radioG10" VerticalAlignment="Center">10</RadioButton>
+                        <RadioButton Name="radioG11" VerticalAlignment="Center">11</RadioButton>
+                        <RadioButton Name="radioG12" VerticalAlignment="Center">12</RadioButton>
+                    </UniformGrid>
                 </Grid>
             </Border>
         </Popup>
