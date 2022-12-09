@@ -16,6 +16,7 @@ using System.ComponentModel;
 using System.Threading;
 using System.Collections.ObjectModel;
 using System.Windows.Controls.Primitives;
+using System.Runtime.ConstrainedExecution;
 
 namespace SoundsEasyV1
 {
@@ -171,6 +172,11 @@ namespace SoundsEasyV1
             }
         }
 
+        private void dataClassOptions_Click(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
         private void btnLoadStudents_Click(object sender, RoutedEventArgs e)
         {
             if (!isLoading)
@@ -193,9 +199,115 @@ namespace SoundsEasyV1
 
             });
         }
-    }
 
+        private bool addStudentEntry()
+        {
+             Student stud = Student.CreateStudent();
+             var studRow = new GoogleSheetRow();
+
+             if (txtAddFirstName.Text.Length > 0)
+             {
+                stud.fname = txtAddFirstName.Text;
+                //adds item to GoogleSheetRow
+                studRow.Cells.Add(new GoogleSheetCell { CellValue = txtAddFirstName.Text });
     
+              }
+            else
+            {
+                return false;
+            }
+            if (txtAddLastName.Text.Length > 0)
+            {
+                stud.lname = txtAddLastName.Text;
+                studRow.Cells.Add(new GoogleSheetCell { CellValue = txtAddLastName.Text });
+            }
+            else
+            {
+                return false;
+            }
+            if (txtAddEmail.Text.Length > 0)
+            {
+                stud.email = txtAddEmail.Text;
+                studRow.Cells.Add(new GoogleSheetCell { CellValue = txtAddEmail.Text });
+            }
+            else
+            {
+                return false;
+            }
+            if (radioG9.IsChecked == true)
+            {
+                stud.grade = 9;
+            }
+            else if (radioG10.IsChecked == true)
+            {
+                stud.grade = 10;
+            }
+            else if (radioG11.IsChecked == true)
+            {
+                stud.grade = 11;
+            }
+            else if (radioG12.IsChecked == true)
+            {
+                stud.grade = 12;
+            }
+            else
+            {
+                stud.grade = -1;
+            }
+            studRow.Cells.Add(new GoogleSheetCell { CellValue = stud.grade.ToString() });
 
-}
+            stud.id = dataSource.Count + 1;
 
+            studRow.Cells.Add(new GoogleSheetCell { CellValue = "good" });
+
+            dataSource.Add(stud);
+            LoadDataFilter();
+
+            Debug.WriteLine("cols " + studRow.Cells.Count);
+
+            //the function requires a list of rows
+            var rowsToAdd = new List<GoogleSheetRow>() { studRow };
+            //add cells request with a built-in construction of a googlesheetparameter
+            gsh.AddCells(new GoogleSheetParameters { SheetName = "Sheet1", RangeColumnStart = 1, RangeRowStart = dataSource.Count + 1 }, rowsToAdd);
+            return true;
+
+        }
+        private void resetPopup()
+        {
+            txtAddFirstName.Clear();
+            txtAddLastName.Clear();
+            txtAddEmail.Clear();
+            popupAddStudent.IsOpen = false;
+        }
+
+
+        //handling hint texts
+        void hintChangeFirstName(object sender, TextChangedEventArgs e)
+        {
+            hintFirstName.Visibility = Visibility.Visible;
+            if (txtAddFirstName.Text != "")
+            {
+                hintFirstName.Visibility= Visibility.Hidden;
+            }
+        }
+
+        void hintChangeLastName(object sender, TextChangedEventArgs e)
+        {
+            hintFirstName.Visibility = Visibility.Visible;
+            if (txtAddFirstName.Text != "")
+            {
+                hintFirstName.Visibility = Visibility.Hidden;
+            }
+        }
+
+        void hintChangeEmail(object sender, TextChangedEventArgs e)
+        {
+            hintEmail.Visibility = Visibility.Visible;
+            if (txtAddEmail.Text != "")
+            {
+                hintEmail.Visibility = Visibility.Hidden;
+            }
+        }
+    }
+        }
+   
