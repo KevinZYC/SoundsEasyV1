@@ -44,6 +44,8 @@ namespace SoundsEasyV1
 
         int selected = -1;
 
+        string insSheetName = "Instruments";
+
 
         public InstrumentWindow()
         {
@@ -53,10 +55,10 @@ namespace SoundsEasyV1
             //dataGridInstrument.Loaded += SetMinWidths;
 
             //initialize googlesheets helper
-            gsh = new GoogleSheetsHelper("fleet-automata-366622-ba1a276c41b4.json", "1POh7lSt7QyI45I_16I3An1iTWSc4PsV0rcYP5ExPKhg");
+            gsh = new GoogleSheetsHelper("fleet-automata-366622-ba1a276c41b4.json", MainWindow.sheetCode);
 
             //default settings for googlesheets parameters
-            gsp = new GoogleSheetParameters() { RangeColumnStart = 1, RangeRowStart = 1, RangeColumnEnd = 7, RangeRowEnd = 100, FirstRowIsHeaders = true, SheetName = "sheet1" };
+            gsp = new GoogleSheetParameters() { RangeColumnStart = 1, RangeRowStart = 1, RangeColumnEnd = 7, RangeRowEnd = 100, FirstRowIsHeaders = true, SheetName = insSheetName };
 
             Debug.WriteLine("started");
 
@@ -148,7 +150,7 @@ namespace SoundsEasyV1
             
             dataSource.Clear();
             isLoading = true;
-            gsp = new GoogleSheetParameters() { RangeColumnStart = 1, RangeRowStart = 1, RangeColumnEnd = 7, RangeRowEnd = 100, FirstRowIsHeaders = true, SheetName = "Sheet1" };
+            gsp = new GoogleSheetParameters() { RangeColumnStart = 1, RangeRowStart = 1, RangeColumnEnd = 7, RangeRowEnd = 100, FirstRowIsHeaders = true, SheetName = insSheetName };
             //run data loading in background
             BackgroundWorker worker = new BackgroundWorker();
             worker.RunWorkerCompleted += worker_RunWorkerCompleted;
@@ -417,7 +419,7 @@ namespace SoundsEasyV1
             //the function requires a list of rows
             var rowsToAdd = new List<GoogleSheetRow>() { curRow };
             //add cells request with a built-in construction of a googlesheetparameter
-            gsh.AddCells(new GoogleSheetParameters { SheetName = "Sheet1", RangeColumnStart = 1, RangeRowStart = dataSource.Count + 1 }, rowsToAdd);
+            gsh.AddCells(new GoogleSheetParameters { SheetName = insSheetName, RangeColumnStart = 1, RangeRowStart = dataSource.Count + 1 }, rowsToAdd);
             return true;
 
         }

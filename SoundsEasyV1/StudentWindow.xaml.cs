@@ -37,14 +37,15 @@ namespace SoundsEasyV1
         private GoogleSheetsHelper? gsh = null;
         private GoogleSheetParameters? gsp = null;
 
+        string studSheetName = "Students";
 
         public StudentWindow()
         {
             InitializeComponent();
 
-            gsh = new GoogleSheetsHelper("fleet-automata-366622-ba1a276c41b4.json", "1NolOQnhFOmPTaXXp7G1tNkrl8is3gVe9X1AIjgEKg7c");
+            gsh = new GoogleSheetsHelper("fleet-automata-366622-ba1a276c41b4.json", MainWindow.sheetCode);
 
-            gsp = new GoogleSheetParameters() { RangeColumnStart = 1, RangeRowStart = 1, RangeColumnEnd = 5, RangeRowEnd = 100, FirstRowIsHeaders = true, SheetName = "sheet1" };
+            gsp = new GoogleSheetParameters() { RangeColumnStart = 1, RangeRowStart = 1, RangeColumnEnd = 5, RangeRowEnd = 100, FirstRowIsHeaders = true, SheetName = studSheetName };
 
             LoadData();
         }
@@ -66,7 +67,7 @@ namespace SoundsEasyV1
             popupAddStudent.Width = SystemParameters.PrimaryScreenWidth * 0.5;
 
             //set parameters for pull request
-            gsp = new GoogleSheetParameters() { RangeColumnStart = 1, RangeRowStart = 1, RangeColumnEnd = 5, RangeRowEnd = 100, FirstRowIsHeaders = true, SheetName = "sheet1" };
+            gsp = new GoogleSheetParameters() { RangeColumnStart = 1, RangeRowStart = 1, RangeColumnEnd = 5, RangeRowEnd = 100, FirstRowIsHeaders = true, SheetName = studSheetName };
             //run data loading in background
             BackgroundWorker worker = new BackgroundWorker();
             worker.RunWorkerCompleted += worker_RunWorkerCompleted;
@@ -268,7 +269,7 @@ namespace SoundsEasyV1
             //the function requires a list of rows
             var rowsToAdd = new List<GoogleSheetRow>() { studRow };
             //add cells request with a built-in construction of a googlesheetparameter
-            gsh.AddCells(new GoogleSheetParameters { SheetName = "Sheet1", RangeColumnStart = 1, RangeRowStart = dataSource.Count + 1 }, rowsToAdd);
+            gsh.AddCells(new GoogleSheetParameters { SheetName = studSheetName, RangeColumnStart = 1, RangeRowStart = dataSource.Count + 1 }, rowsToAdd);
             return true;
 
         }
