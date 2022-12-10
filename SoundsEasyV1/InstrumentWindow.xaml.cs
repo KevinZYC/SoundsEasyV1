@@ -40,9 +40,11 @@ namespace SoundsEasyV1
         private GoogleSheetsHelper? gsh = null;
         private GoogleSheetParameters? gsp = null;
 
-        double popupSize = 0.5;
+        double popupSize = 0.3;
 
         int selected = -1;
+
+        string insSheetName = "Instruments";
 
 
         public InstrumentWindow()
@@ -53,10 +55,10 @@ namespace SoundsEasyV1
             //dataGridInstrument.Loaded += SetMinWidths;
 
             //initialize googlesheets helper
-            gsh = new GoogleSheetsHelper("fleet-automata-366622-ba1a276c41b4.json", "1POh7lSt7QyI45I_16I3An1iTWSc4PsV0rcYP5ExPKhg");
+            gsh = new GoogleSheetsHelper("fleet-automata-366622-ba1a276c41b4.json", MainWindow.sheetCode);
 
             //default settings for googlesheets parameters
-            gsp = new GoogleSheetParameters() { RangeColumnStart = 1, RangeRowStart = 1, RangeColumnEnd = 7, RangeRowEnd = 100, FirstRowIsHeaders = true, SheetName = "sheet1" };
+            gsp = new GoogleSheetParameters() { RangeColumnStart = 1, RangeRowStart = 1, RangeColumnEnd = 7, RangeRowEnd = 100, FirstRowIsHeaders = true, SheetName = insSheetName };
 
             Debug.WriteLine("started");
 
@@ -69,15 +71,22 @@ namespace SoundsEasyV1
             LoadData();
 
 
-            
+            Loaded += delegate
+            {
+                // access ActualWidth and ActualHeight here
+            };
 
-            
+
 
         }
 
-        void InstrumentWindow_Loaded(object sender, RoutedEventArgs e)
+        void popupAddInstrument_Loaded(object sender, RoutedEventArgs e)
         {
+            popupAddInstrument.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+            popupAddInstrument.Arrange(new Rect(0, 0, popupAddInstrument.DesiredSize.Width, popupAddInstrument.DesiredSize.Height));
+            Debug.WriteLine("loaded window");
 
+            /*
             scaleTextDimensions(txtAddInstrumentType);
             scaleTextDimensions(txtAddInstrumentMake);
             scaleTextDimensions(txtAddInstrumentCase);
@@ -88,7 +97,39 @@ namespace SoundsEasyV1
             scaleTextDimensions(hintInsMake);
             scaleTextDimensions(hintInsCase);
             scaleTextDimensions(hintInsSerial);
-            scaleTextDimensions(hintInsSID);
+            scaleTextDimensions(hintInsSID);*/
+
+            scaleText(txtAddInstrumentMake);
+            scaleText(hintInsMake);
+            
+        }
+
+        public void scaleText(TextBox t)
+        {
+            t.Loaded += new RoutedEventHandler(runScaleText);
+        }
+
+        public void scaleText(TextBlock t)
+        {
+            t.Loaded += new RoutedEventHandler(runScaleText);
+        }
+
+        public void runScaleText(object sender, RoutedEventArgs e)
+        {
+            if(sender.GetType() == typeof(TextBox))
+            {
+                
+                var obj = sender as TextBox;
+                obj.FontSize = obj.ActualHeight / 1.75;
+                Debug.WriteLine("scale text" + obj.ActualHeight);
+            }
+            if (sender.GetType() == typeof(TextBlock))
+            {
+
+                var obj = sender as TextBlock;
+                obj.FontSize = obj.ActualHeight / 1.75;
+                Debug.WriteLine("scale text" + obj.ActualHeight);
+            }
         }
 
         public void Init(ref InstrumentWindow windowObj)
@@ -96,18 +137,23 @@ namespace SoundsEasyV1
             thisWindow = windowObj;
         }
 
+        /* does not work!!!!!!!
         public void scaleTextDimensions(TextBox t)
         {
             t.FontSize = t.ActualHeight;
+            Debug.WriteLine("Height" + t.ActualHeight);
         }
         public void scaleTextDimensions(TextBlock t)
         {
             t.FontSize = t.ActualHeight;
+            t.FontSize = t.ActualHeight;
+            Debug.WriteLine("Height" + t.ActualHeight);
         }
         public void scaleTextDimensions(Button b)
         {
             b.FontSize = b.ActualHeight;
         }
+        */
 
         /* currently unused
         private ObservableCollection<Instrument> CreateObservableCollection(ObservableCollection<ExpandoObject> myObservableCollection)
@@ -148,7 +194,7 @@ namespace SoundsEasyV1
             
             dataSource.Clear();
             isLoading = true;
-            gsp = new GoogleSheetParameters() { RangeColumnStart = 1, RangeRowStart = 1, RangeColumnEnd = 7, RangeRowEnd = 100, FirstRowIsHeaders = true, SheetName = "Sheet1" };
+            gsp = new GoogleSheetParameters() { RangeColumnStart = 1, RangeRowStart = 1, RangeColumnEnd = 7, RangeRowEnd = 100, FirstRowIsHeaders = true, SheetName = insSheetName };
             //run data loading in background
             BackgroundWorker worker = new BackgroundWorker();
             worker.RunWorkerCompleted += worker_RunWorkerCompleted;
@@ -376,6 +422,28 @@ namespace SoundsEasyV1
                 return false;
             }
 
+            if (radioG9.IsChecked == true)
+            {
+                cur.grade = 9;
+            }
+            else if (radioG10.IsChecked == true)
+            {
+                cur.grade = 10;
+            }
+            else if (radioG11.IsChecked == true)
+            {
+                cur.grade = 11;
+            }
+            else if (radioG12.IsChecked == true)
+            {
+                cur.grade = 12;
+            }
+            else
+            {
+                cur.grade = -1;
+            }
+            curRow.Cells.Add(new GoogleSheetCell { CellValue = cur.grade.ToString() });
+
             if (txtAddInstrumentStudentID.Text.Length > 0)
             {
                 cur.studentID = txtAddInstrumentStudentID.Text;
@@ -386,23 +454,7 @@ namespace SoundsEasyV1
                 cur.studentID = "none";
             }
 
-            if (radioG9.IsChecked == true)
-            {
-                cur.grade = 9;
-            } else if(radioG10.IsChecked == true)
-            {
-                cur.grade = 10;
-            } else if(radioG11.IsChecked == true)
-            {
-                cur.grade = 11;
-            } else if(radioG12.IsChecked == true)
-            {
-                cur.grade = 12;
-            } else
-            {
-                cur.grade = -1;
-            }
-            curRow.Cells.Add(new GoogleSheetCell { CellValue = cur.grade.ToString() });
+           
 
             cur.id = dataSource.Count + 1;
 
@@ -417,7 +469,7 @@ namespace SoundsEasyV1
             //the function requires a list of rows
             var rowsToAdd = new List<GoogleSheetRow>() { curRow };
             //add cells request with a built-in construction of a googlesheetparameter
-            gsh.AddCells(new GoogleSheetParameters { SheetName = "Sheet1", RangeColumnStart = 1, RangeRowStart = dataSource.Count + 1 }, rowsToAdd);
+            gsh.AddCells(new GoogleSheetParameters { SheetName = insSheetName, RangeColumnStart = 1, RangeRowStart = dataSource.Count + 1 }, rowsToAdd);
             return true;
 
         }
