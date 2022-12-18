@@ -225,6 +225,16 @@ namespace SoundsEasyV1
                 }
                 
             }
+            if(dataSourceFiltered.Count == 0)
+            {
+                string messageBoxText = "No matching entries found";
+                string caption = "Did you make a typo?";
+                MessageBoxButton button = MessageBoxButton.OK;
+                MessageBoxImage icon = MessageBoxImage.Warning;
+                MessageBoxResult result;
+
+                result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
+            }
             dataGridInstrument.ItemsSource=dataSourceFiltered;
 
             loadInstrumentOptions();
