@@ -24,6 +24,10 @@
                     <Setter Property="BorderThickness" Value="0,1,1,1"/>
                 </Style>
             </DataGrid.ColumnHeaderStyle>
+            <DataGrid.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" 
+                   Color="MediumSeaGreen"/>
+            </DataGrid.Resources>
 
         </DataGrid>
         <Grid Grid.Row="4">
@@ -95,7 +99,12 @@
                     </Grid.ColumnDefinitions>
                     <TextBlock Name="myPopupText" Text="Add Instrument" Grid.Row="0" FontSize="20" Grid.Column="0" Grid.ColumnSpan="2"  Foreground="Black" Padding="10" TextAlignment="Center"/>
 
-                    <DataGrid Name="dataInstrumentOptions" IsReadOnly="True" SelectionMode="Single" RowBackground="WhiteSmoke" AlternatingRowBackground="White" ColumnWidth="*" RowHeight="30" Background="White" Grid.Row="1" Grid.Column="0" Grid.RowSpan="8" MouseUp="dataInstrumentOptions_Click" Margin="10,10,10,40" BorderBrush="White"/>
+                    <DataGrid Name="dataInstrumentOptions" IsReadOnly="True" SelectionMode="Single" RowBackground="WhiteSmoke" AlternatingRowBackground="White" ColumnWidth="*" RowHeight="30" Background="White" Grid.Row="1" Grid.Column="0" Grid.RowSpan="8" MouseUp="dataInstrumentOptions_Click" Margin="10,10,10,40" BorderBrush="White">
+                        <DataGrid.Resources>
+                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" 
+                                Color="MediumSeaGreen"/>
+                        </DataGrid.Resources>
+                    </DataGrid>
                     <TextBlock Text="Instrument Information" Grid.Row="1" Grid.Column="1" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"></TextBlock>
                     <TextBox Name="txtAddInstrumentType" TextChanged="hintChangeInsType" Text="" Background="LightGray" Height="40" Grid.Row="8" FontSize="17" Grid.Column="0" Margin="10" TextAlignment="Left"></TextBox>
                     <TextBox Name="txtAddInstrumentMake" TextChanged="hintChangeInsMake" Text="" Background="LightGray" Grid.Row="2" FontSize="20" Grid.Column="1" Margin="10" TextAlignment="Left"></TextBox>
