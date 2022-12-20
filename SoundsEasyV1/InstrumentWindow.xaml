@@ -78,7 +78,7 @@
             </Button>
         </Grid>
 
-        <Popup Name="popupAddInstrument" IsOpen="{Binding IsChecked, ElementName=btnAddInstrument}" Placement="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="50" Grid.Row="1" Opacity="0" AllowsTransparency="True">
+        <Popup Name="popupAddInstrument" IsOpen="{Binding IsChecked, ElementName=btnAddInstrument}" Loaded="popupAddInstrument_Loaded" Placement="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="50" Grid.Row="1" Opacity="0" AllowsTransparency="True">
             <Border BorderThickness="5" CornerRadius="15" BorderBrush="#FF888888" Background="White">
                 <Grid Background="Transparent">
                     <Grid.RowDefinitions>

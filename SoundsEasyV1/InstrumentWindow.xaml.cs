@@ -40,7 +40,7 @@ namespace SoundsEasyV1
         private GoogleSheetsHelper? gsh = null;
         private GoogleSheetParameters? gsp = null;
 
-        double popupSize = 0.5;
+        double popupSize = 0.3;
 
         int selected = -1;
 
@@ -71,15 +71,22 @@ namespace SoundsEasyV1
             LoadData();
 
 
-            
+            Loaded += delegate
+            {
+                // access ActualWidth and ActualHeight here
+            };
 
-            
+
 
         }
 
-        void InstrumentWindow_Loaded(object sender, RoutedEventArgs e)
+        void popupAddInstrument_Loaded(object sender, RoutedEventArgs e)
         {
+            popupAddInstrument.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+            popupAddInstrument.Arrange(new Rect(0, 0, popupAddInstrument.DesiredSize.Width, popupAddInstrument.DesiredSize.Height));
+            Debug.WriteLine("loaded window");
 
+            /*
             scaleTextDimensions(txtAddInstrumentType);
             scaleTextDimensions(txtAddInstrumentMake);
             scaleTextDimensions(txtAddInstrumentCase);
@@ -90,7 +97,39 @@ namespace SoundsEasyV1
             scaleTextDimensions(hintInsMake);
             scaleTextDimensions(hintInsCase);
             scaleTextDimensions(hintInsSerial);
-            scaleTextDimensions(hintInsSID);
+            scaleTextDimensions(hintInsSID);*/
+
+            scaleText(txtAddInstrumentMake);
+            scaleText(hintInsMake);
+            
+        }
+
+        public void scaleText(TextBox t)
+        {
+            t.Loaded += new RoutedEventHandler(runScaleText);
+        }
+
+        public void scaleText(TextBlock t)
+        {
+            t.Loaded += new RoutedEventHandler(runScaleText);
+        }
+
+        public void runScaleText(object sender, RoutedEventArgs e)
+        {
+            if(sender.GetType() == typeof(TextBox))
+            {
+                
+                var obj = sender as TextBox;
+                obj.FontSize = obj.ActualHeight / 1.75;
+                Debug.WriteLine("scale text" + obj.ActualHeight);
+            }
+            if (sender.GetType() == typeof(TextBlock))
+            {
+
+                var obj = sender as TextBlock;
+                obj.FontSize = obj.ActualHeight / 1.75;
+                Debug.WriteLine("scale text" + obj.ActualHeight);
+            }
         }
 
         public void Init(ref InstrumentWindow windowObj)
@@ -98,18 +137,23 @@ namespace SoundsEasyV1
             thisWindow = windowObj;
         }
 
+        /* does not work!!!!!!!
         public void scaleTextDimensions(TextBox t)
         {
             t.FontSize = t.ActualHeight;
+            Debug.WriteLine("Height" + t.ActualHeight);
         }
         public void scaleTextDimensions(TextBlock t)
         {
             t.FontSize = t.ActualHeight;
+            t.FontSize = t.ActualHeight;
+            Debug.WriteLine("Height" + t.ActualHeight);
         }
         public void scaleTextDimensions(Button b)
         {
             b.FontSize = b.ActualHeight;
         }
+        */
 
         /* currently unused
         private ObservableCollection<Instrument> CreateObservableCollection(ObservableCollection<ExpandoObject> myObservableCollection)
@@ -180,6 +224,16 @@ namespace SoundsEasyV1
                     dataSourceFiltered.Add(dataSource[i]);
                 }
                 
+            }
+            if(dataSourceFiltered.Count == 0)
+            {
+                string messageBoxText = "No matching entries found";
+                string caption = "Did you make a typo?";
+                MessageBoxButton button = MessageBoxButton.OK;
+                MessageBoxImage icon = MessageBoxImage.Warning;
+                MessageBoxResult result;
+
+                result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
             }
             dataGridInstrument.ItemsSource=dataSourceFiltered;
 
@@ -378,6 +432,28 @@ namespace SoundsEasyV1
                 return false;
             }
 
+            if (radioG9.IsChecked == true)
+            {
+                cur.grade = 9;
+            }
+            else if (radioG10.IsChecked == true)
+            {
+                cur.grade = 10;
+            }
+            else if (radioG11.IsChecked == true)
+            {
+                cur.grade = 11;
+            }
+            else if (radioG12.IsChecked == true)
+            {
+                cur.grade = 12;
+            }
+            else
+            {
+                cur.grade = -1;
+            }
+            curRow.Cells.Add(new GoogleSheetCell { CellValue = cur.grade.ToString() });
+
             if (txtAddInstrumentStudentID.Text.Length > 0)
             {
                 cur.studentID = txtAddInstrumentStudentID.Text;
@@ -388,23 +464,7 @@ namespace SoundsEasyV1
                 cur.studentID = "none";
             }
 
-            if (radioG9.IsChecked == true)
-            {
-                cur.grade = 9;
-            } else if(radioG10.IsChecked == true)
-            {
-                cur.grade = 10;
-            } else if(radioG11.IsChecked == true)
-            {
-                cur.grade = 11;
-            } else if(radioG12.IsChecked == true)
-            {
-                cur.grade = 12;
-            } else
-            {
-                cur.grade = -1;
-            }
-            curRow.Cells.Add(new GoogleSheetCell { CellValue = cur.grade.ToString() });
+           
 
             cur.id = dataSource.Count + 1;
 
