@@ -103,8 +103,8 @@ namespace SoundsEasyV1
             return returnValues;
         }
 
-        //I added this myself, it returns the things directly to the instrument window, uses an observablecollection, and uses backgroundworker
-        public void GetInstrumentDataFromSheet(GoogleSheetParameters googleSheetParameters, ref ObservableCollection<Instrument> myList, ref InstrumentWindow target, ref BackgroundWorker worker)
+        //I added this myself, it returns the things directly to the instrument window, uses an observablecollection, NO LONGER USES BACKGROUNDWORKER
+        public void GetInstrumentDataFromSheet(GoogleSheetParameters googleSheetParameters, ref ObservableCollection<Instrument> myList)
         {
             googleSheetParameters = MakeGoogleSheetDataRangeColumnsZeroBased(googleSheetParameters);
             var range = $"{googleSheetParameters.SheetName}!{GetColumnName(googleSheetParameters.RangeColumnStart)}{googleSheetParameters.RangeRowStart}:{GetColumnName(googleSheetParameters.RangeColumnEnd)}{googleSheetParameters.RangeRowEnd}";
@@ -153,9 +153,10 @@ namespace SoundsEasyV1
                     //called for each value pulled
                     //calls a custom add method so its done in the same thread
 
-                    target.addData(expToInst(expando,rowCounter));
+                    //target.addData(expToInst(expando,rowCounter));
+                    MainWindow.dataSourceInstrument.Add(expToInst(expando, rowCounter));
                     Debug.WriteLine(rowCounter * (100 / values.Count));
-                    worker.ReportProgress(rowCounter * (100 / values.Count), String.Format("Loading: {0}%", rowCounter * (100 / values.Count)));
+                    //worker.ReportProgress(rowCounter * (100 / values.Count), String.Format("Loading: {0}%", rowCounter * (100 / values.Count)));
                     //Thread.Sleep(10);
                     rowCounter++;
                 }
@@ -167,7 +168,7 @@ namespace SoundsEasyV1
 
 
 
-        public void GetStudentDataFromSheet(GoogleSheetParameters googleSheetParameters, ref ObservableCollection<Student> myList, ref StudentWindow target, ref BackgroundWorker worker)
+        public void GetStudentDataFromSheet(GoogleSheetParameters googleSheetParameters, ref ObservableCollection<Student> myList)
         {
             googleSheetParameters = MakeGoogleSheetDataRangeColumnsZeroBased(googleSheetParameters);
             var range = $"{googleSheetParameters.SheetName}!{GetColumnName(googleSheetParameters.RangeColumnStart)}{googleSheetParameters.RangeRowStart}:{GetColumnName(googleSheetParameters.RangeColumnEnd)}{googleSheetParameters.RangeRowEnd}";
@@ -215,9 +216,10 @@ namespace SoundsEasyV1
                     }
 
                     //calls a custom add method so its done in the same thread
-                    target.addData(expToStud(expando,rowCounter));
+                    MainWindow.dataSourceStudent.Add(expToStud(expando, rowCounter));
+                    //target.addData(expToStud(expando,rowCounter));
                     //Debug.WriteLine();
-                    worker.ReportProgress(rowCounter * (100 / values.Count), String.Format("Loading: {0}%", rowCounter * (100 / values.Count)));
+                    //worker.ReportProgress(rowCounter * (100 / values.Count), String.Format("Loading: {0}%", rowCounter * (100 / values.Count)));
                     //Thread.Sleep(10);
                     rowCounter++;
                 }

@@ -33,7 +33,11 @@
             <Button x:Name ="btnQuickAssign" Content="Quick Assign" Grid.Column="4" MinWidth="100" MinHeight="100" Click="btnQuickAssign_Click"/>
             
         </Grid>
-        <TextBox x:Name="txtSheetLink" Grid.Row="2" Grid.Column="1" Background="WhiteSmoke" Margin="5" TextChanged="txtSheetLink_Changed"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1" >
+            <TextBox x:Name="txtSheetLink" Text="https://docs.google.com/spreadsheets/d/1POh7lSt7QyI45I_16I3An1iTWSc4PsV0rcYP5ExPKhg/edit#gid=0" Background="WhiteSmoke" Margin="5" TextChanged="txtSheetLink_Changed"/>
+            <Button Name="btnConfirmLink" Click="btnConfirmLink_Click" Content="update"/>
+        </StackPanel>
+        
 
     </Grid>
 </Window>

@@ -25,8 +25,8 @@ namespace SoundsEasyV1
     /// </summary>
     public partial class StudentWindow : Window
     {
-        public ObservableCollection<Student> dataSource = new ObservableCollection<Student>();
-        public ObservableCollection<Student> dataSourceFiltered = new ObservableCollection<Student>();
+        //public ObservableCollection<Student> dataSourceStudent = new ObservableCollection<Student>();
+        public ObservableCollection<Student> dataSourceStudentFiltered = new ObservableCollection<Student>();
         
 
         StudentWindow? thisWindow = null;
@@ -47,7 +47,8 @@ namespace SoundsEasyV1
 
             gsp = new GoogleSheetParameters() { RangeColumnStart = 1, RangeRowStart = 1, RangeColumnEnd = 5, RangeRowEnd = 100, FirstRowIsHeaders = true, SheetName = studSheetName };
 
-            LoadData();
+            LoadDataFilter();
+            //LoadData();
         }
 
         public void Init(ref StudentWindow windowObj)
@@ -55,11 +56,12 @@ namespace SoundsEasyV1
             thisWindow = windowObj;
         }
 
+        /*
         public void LoadData()
         {
 
             //clear data source list
-            dataSource.Clear();
+            MainWindow.dataSourceStudent.Clear();
             isLoading = true;
 
             //set pop up size
@@ -79,20 +81,20 @@ namespace SoundsEasyV1
 
             
 
-        }
+        }*/
 
         public void LoadDataFilter()
         {
-            dataSourceFiltered.Clear();
-            for (int i = 0; i < dataSource.Count; i++)
+            dataSourceStudentFiltered.Clear();
+            for (int i = 0; i < MainWindow.dataSourceStudent.Count; i++)
             {
-                if (checkFilter(dataSource[i]))
+                if (checkFilter(MainWindow.dataSourceStudent[i]))
                 {
-                    dataSourceFiltered.Add(dataSource[i]);
+                    dataSourceStudentFiltered.Add(MainWindow.dataSourceStudent[i]);
                 }
 
             }
-            dataGridStudent.ItemsSource = dataSourceFiltered;
+            dataGridStudent.ItemsSource = dataSourceStudentFiltered;
 
         }
 
@@ -122,7 +124,7 @@ namespace SoundsEasyV1
             return true;
         }
 
-
+        /* code no longer necessary
         //copied files from InstrumentWindow.xaml.cs, changed to apply to Student Window from here on
         private void worker_ProgressChanged(object? sender, ProgressChangedEventArgs e)
         {
@@ -137,7 +139,7 @@ namespace SoundsEasyV1
         {
             var worker = sender as BackgroundWorker;
 
-            gsh.GetStudentDataFromSheet(gsp, ref dataSource, ref thisWindow, ref worker);
+            gsh.GetStudentDataFromSheet(gsp, ref MainWindow.dataSourceStudent, ref thisWindow, ref worker);
 
             //LoadSheets();
         }
@@ -146,17 +148,17 @@ namespace SoundsEasyV1
         {
             progressStudentLoad.Visibility = Visibility.Hidden;
             progressTextStudent.Visibility = Visibility.Hidden;
-            dataGridStudent.ItemsSource = dataSource;
+            dataGridStudent.ItemsSource = MainWindow.dataSourceStudent;
             isLoading = false;
 
             LoadDataFilter();
         }
-
+        
         public void LoadSheets()
         {
-            //dataGridStudent.ItemsSource = dataSource;
+            //dataGridStudent.ItemsSource = dataSourceStudent;
         }
-
+        */
         //when a row in the data is selected:
         private void StudentRow_Click(object sender, MouseButtonEventArgs e)
         {
@@ -195,8 +197,8 @@ namespace SoundsEasyV1
         {
             App.Current.Dispatcher.Invoke((Action)delegate // <--- HERE
             {
-                dataSource.Add(i);
-                Debug.WriteLine(dataSource.Count);
+                MainWindow.dataSourceStudent.Add(i);
+                Debug.WriteLine(MainWindow.dataSourceStudent.Count);
 
             });
         }
@@ -257,11 +259,11 @@ namespace SoundsEasyV1
             }
             studRow.Cells.Add(new GoogleSheetCell { CellValue = stud.grade.ToString() });
 
-            stud.id = dataSource.Count + 1;
+            stud.id = MainWindow.dataSourceStudent.Count + 1;
 
             studRow.Cells.Add(new GoogleSheetCell { CellValue = "good" });
 
-            dataSource.Add(stud);
+            MainWindow.dataSourceStudent.Add(stud);
             LoadDataFilter();
 
             Debug.WriteLine("cols " + studRow.Cells.Count);
@@ -269,7 +271,7 @@ namespace SoundsEasyV1
             //the function requires a list of rows
             var rowsToAdd = new List<GoogleSheetRow>() { studRow };
             //add cells request with a built-in construction of a googlesheetparameter
-            gsh.AddCells(new GoogleSheetParameters { SheetName = studSheetName, RangeColumnStart = 1, RangeRowStart = dataSource.Count + 1 }, rowsToAdd);
+            gsh.AddCells(new GoogleSheetParameters { SheetName = studSheetName, RangeColumnStart = 1, RangeRowStart = MainWindow.dataSourceStudent.Count + 1 }, rowsToAdd);
             return true;
 
         }

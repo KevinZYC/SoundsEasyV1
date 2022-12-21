@@ -31,8 +31,8 @@ namespace SoundsEasyV1
     public partial class InstrumentWindow : Window
     {
         List<double> widthRatios = new List<double> { 1, 1, 1, 1.3, 0.7, 1, 0.7 };
-        ObservableCollection<Instrument> dataSource = new ObservableCollection<Instrument>();
-        ObservableCollection<Instrument> dataSourceFiltered = new ObservableCollection<Instrument>();
+        //ObservableCollection<Instrument> dataSourceInstrument = new ObservableCollection<Instrument>();
+        ObservableCollection<Instrument> dataSourceInstrumentFiltered = new ObservableCollection<Instrument>();
         InstrumentWindow? thisWindow = null;
 
         bool isLoading = false;
@@ -40,7 +40,7 @@ namespace SoundsEasyV1
         private GoogleSheetsHelper? gsh = null;
         private GoogleSheetParameters? gsp = null;
 
-        double popupSize = 0.3;
+        double popupSize = 0.5;
 
         int selected = -1;
 
@@ -58,17 +58,17 @@ namespace SoundsEasyV1
             gsh = new GoogleSheetsHelper("fleet-automata-366622-ba1a276c41b4.json", MainWindow.sheetCode);
 
             //default settings for googlesheets parameters
-            gsp = new GoogleSheetParameters() { RangeColumnStart = 1, RangeRowStart = 1, RangeColumnEnd = 7, RangeRowEnd = 100, FirstRowIsHeaders = true, SheetName = insSheetName };
+            gsp = new GoogleSheetParameters() { RangeColumnStart = 1, RangeRowStart = 1, RangeColumnEnd = 7, RangeRowEnd = 999, FirstRowIsHeaders = true, SheetName = insSheetName };
 
             Debug.WriteLine("started");
 
-            //dataGridInstrument.ItemsSource = dataSource;
+            //dataGridInstrument.ItemsSource = dataSourceInstrument;
 
             //set pop up size
             popupAddInstrument.Height = SystemParameters.PrimaryScreenHeight * popupSize;
             popupAddInstrument.Width = SystemParameters.PrimaryScreenWidth * popupSize;
 
-            LoadData();
+            //LoadData();
 
 
             Loaded += delegate
@@ -76,7 +76,7 @@ namespace SoundsEasyV1
                 // access ActualWidth and ActualHeight here
             };
 
-
+            LoadDataFilter();
 
         }
 
@@ -86,21 +86,6 @@ namespace SoundsEasyV1
             popupAddInstrument.Arrange(new Rect(0, 0, popupAddInstrument.DesiredSize.Width, popupAddInstrument.DesiredSize.Height));
             Debug.WriteLine("loaded window");
 
-            /*
-            scaleTextDimensions(txtAddInstrumentType);
-            scaleTextDimensions(txtAddInstrumentMake);
-            scaleTextDimensions(txtAddInstrumentCase);
-            scaleTextDimensions(txtAddInstrumentSerial);
-            scaleTextDimensions(txtAddInstrumentStudentID);
-
-            scaleTextDimensions(hintInsType);
-            scaleTextDimensions(hintInsMake);
-            scaleTextDimensions(hintInsCase);
-            scaleTextDimensions(hintInsSerial);
-            scaleTextDimensions(hintInsSID);*/
-
-            scaleText(txtAddInstrumentMake);
-            scaleText(hintInsMake);
             
         }
 
@@ -116,17 +101,30 @@ namespace SoundsEasyV1
 
         public void runScaleText(object sender, RoutedEventArgs e)
         {
-            if(sender.GetType() == typeof(TextBox))
+            
+            if (sender.GetType() == typeof(TextBox))
             {
-                
                 var obj = sender as TextBox;
+                
+                if(obj.ActualHeight == 0)
+                {
+                    Debug.WriteLine("  failed run scale text     ");
+                    return;
+                }
+                
                 obj.FontSize = obj.ActualHeight / 1.75;
                 Debug.WriteLine("scale text" + obj.ActualHeight);
+
             }
             if (sender.GetType() == typeof(TextBlock))
             {
 
                 var obj = sender as TextBlock;
+                if (obj.ActualHeight == 0)
+                {
+                    Debug.WriteLine("  failed run scale text     ");
+                    return;
+                }
                 obj.FontSize = obj.ActualHeight / 1.75;
                 Debug.WriteLine("scale text" + obj.ActualHeight);
             }
@@ -187,12 +185,14 @@ namespace SoundsEasyV1
         }
         */
 
+
+        /* unused code for loading data
         //load entire dataset
         public void LoadData()
         {
             
             
-            dataSource.Clear();
+            dataSourceInstrument.Clear();
             isLoading = true;
             gsp = new GoogleSheetParameters() { RangeColumnStart = 1, RangeRowStart = 1, RangeColumnEnd = 7, RangeRowEnd = 100, FirstRowIsHeaders = true, SheetName = insSheetName };
             //run data loading in background
@@ -206,7 +206,7 @@ namespace SoundsEasyV1
 
             
         }
-
+        */
         public struct InstrumentOption
         {
             public string Type { get; set; }
@@ -216,16 +216,16 @@ namespace SoundsEasyV1
         //takes specific items from the overall dataset
         public void LoadDataFilter()
         {
-            dataSourceFiltered.Clear();
-            for (int i = 0; i < dataSource.Count; i++)
+            dataSourceInstrumentFiltered.Clear();
+            for (int i = 0; i < MainWindow.dataSourceInstrument.Count; i++)
             {
-                if (checkFilter(dataSource[i]))
+                if (checkFilter(MainWindow.dataSourceInstrument[i]))
                 {
-                    dataSourceFiltered.Add(dataSource[i]);
+                    dataSourceInstrumentFiltered.Add(MainWindow.dataSourceInstrument[i]);
                 }
                 
             }
-            if(dataSourceFiltered.Count == 0)
+            if(dataSourceInstrumentFiltered.Count == 0)
             {
                 string messageBoxText = "No matching entries found";
                 string caption = "Did you make a typo?";
@@ -235,7 +235,7 @@ namespace SoundsEasyV1
 
                 result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
             }
-            dataGridInstrument.ItemsSource=dataSourceFiltered;
+            dataGridInstrument.ItemsSource=dataSourceInstrumentFiltered;
 
             loadInstrumentOptions();
 
@@ -243,10 +243,11 @@ namespace SoundsEasyV1
             //dataGridInstrument.ColumnWidth = new DataGridLength(1, DataGridLengthUnitType.Star);
         }
 
+        
         private void loadInstrumentOptions()
         {
             HashSet<string> s = new HashSet<string>();
-            foreach (Instrument i in dataSourceFiltered)
+            foreach (Instrument i in dataSourceInstrumentFiltered)
             {
                 s.Add(i.type);
                 Debug.WriteLine(i.type);
@@ -261,7 +262,7 @@ namespace SoundsEasyV1
 
             dataInstrumentOptions.ItemsSource = tempSource;
         }
-
+        /* unused code for loading data
         private void worker_ProgressChanged(object? sender, ProgressChangedEventArgs e)
         {
             progressInstrumentLoad.Visibility = Visibility.Visible;
@@ -275,7 +276,7 @@ namespace SoundsEasyV1
         {
             var worker = sender as BackgroundWorker;
             
-            gsh.GetInstrumentDataFromSheet(gsp, ref dataSource, ref thisWindow, ref worker);
+            gsh.GetInstrumentDataFromSheet(gsp, ref dataSourceInstrument, ref thisWindow, ref worker);
 
             //LoadSheets();
         }
@@ -284,7 +285,7 @@ namespace SoundsEasyV1
         {
             progressInstrumentLoad.Visibility = Visibility.Hidden;
             progressTextInstrument.Visibility= Visibility.Hidden;
-            dataGridInstrument.ItemsSource = dataSource;
+            dataGridInstrument.ItemsSource = dataSourceInstrument;
             isLoading = false;
             LoadDataFilter();
 
@@ -292,9 +293,9 @@ namespace SoundsEasyV1
 
         public void LoadSheets()
         {
-            //dataGridInstrument.ItemsSource = dataSource;
+            //dataGridInstrument.ItemsSource = dataSourceInstrument;
         }
-
+        */
         //function to pass into xaml to distribute widths
         public void SetMinWidths(object source, EventArgs e)
         {
@@ -340,18 +341,18 @@ namespace SoundsEasyV1
 
         private void btnRepairChange_Click(object sender, RoutedEventArgs e)
         {
-            if(selected >= 0 && selected < dataSource.Count && dataGridInstrument.SelectedItem != null)
+            if(selected >= 0 && selected < MainWindow.dataSourceInstrument.Count && dataGridInstrument.SelectedItem != null)
             {
-                if(dataSource[selected-1].repairStatus == "good")
+                if(MainWindow.dataSourceInstrument[selected-1].repairStatus == "good")
                 {
-                    dataSource[selected-1].repairStatus = "broken";
+                    MainWindow.dataSourceInstrument[selected-1].repairStatus = "broken";
                     Debug.WriteLine(dataGridInstrument.SelectedIndex + "  " + selected);
-                    dataSourceFiltered[dataGridInstrument.SelectedIndex].repairStatus = "broken";
+                    dataSourceInstrumentFiltered[dataGridInstrument.SelectedIndex].repairStatus = "broken";
                 } else
                 {
-                    dataSource[selected-1].repairStatus = "good";
+                    MainWindow.dataSourceInstrument[selected-1].repairStatus = "good";
                     Debug.WriteLine(dataGridInstrument.SelectedIndex + "  " + selected);
-                    dataSourceFiltered[dataGridInstrument.SelectedIndex].repairStatus = "good";
+                    dataSourceInstrumentFiltered[dataGridInstrument.SelectedIndex].repairStatus = "good";
                 }
                 
             }
@@ -359,11 +360,11 @@ namespace SoundsEasyV1
 
         private void btnRemoveInstrument_Click(object sender, RoutedEventArgs e)
         {
-            if (selected >= 0 && selected <= dataSource.Count && dataGridInstrument.SelectedItem!=null)
+            if (selected >= 0 && selected <= MainWindow.dataSourceInstrument.Count && dataGridInstrument.SelectedItem!=null)
             {
-                dataSource.RemoveAt(selected - 1);
+                MainWindow.dataSourceInstrument.RemoveAt(selected - 1);
                 Debug.WriteLine(dataGridInstrument.SelectedIndex + "  " + selected);
-                dataSourceFiltered.RemoveAt(dataGridInstrument.SelectedIndex);
+                dataSourceInstrumentFiltered.RemoveAt(dataGridInstrument.SelectedIndex);
                 gsh.RemoveRow(selected, selected+1);
             } else if(dataGridInstrument.SelectedItem != null)
             {
@@ -466,12 +467,12 @@ namespace SoundsEasyV1
 
            
 
-            cur.id = dataSource.Count + 1;
+            cur.id = MainWindow.dataSourceInstrument.Count + 1;
 
             cur.repairStatus = "good";
             curRow.Cells.Add(new GoogleSheetCell { CellValue = "good" });
 
-            dataSource.Add(cur);
+            MainWindow.dataSourceInstrument.Add(cur);
             LoadDataFilter();
             
             Debug.WriteLine("cols " + curRow.Cells.Count);
@@ -479,7 +480,7 @@ namespace SoundsEasyV1
             //the function requires a list of rows
             var rowsToAdd = new List<GoogleSheetRow>() { curRow };
             //add cells request with a built-in construction of a googlesheetparameter
-            gsh.AddCells(new GoogleSheetParameters { SheetName = insSheetName, RangeColumnStart = 1, RangeRowStart = dataSource.Count + 1 }, rowsToAdd);
+            gsh.AddCells(new GoogleSheetParameters { SheetName = insSheetName, RangeColumnStart = 1, RangeRowStart = MainWindow.dataSourceInstrument.Count + 1 }, rowsToAdd);
             return true;
 
         }
@@ -498,7 +499,7 @@ namespace SoundsEasyV1
         {
             App.Current.Dispatcher.Invoke((Action)delegate // <--- HERE
             {
-                dataSource.Add(i);
+                MainWindow.dataSourceInstrument.Add(i);
 
             });
         }
