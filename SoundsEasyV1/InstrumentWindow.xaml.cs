@@ -319,6 +319,13 @@ namespace SoundsEasyV1
                 {
                     selected = target.id;
                     Debug.WriteLine(selected);
+                    if(target.studentID == "none")
+                    {
+                        btnManageAssign.Content = "Assign Instrument";
+                    } else
+                    {
+                        btnManageAssign.Content = "Unassign Instrument";
+                    }
                 }
                 
                 
@@ -354,7 +361,24 @@ namespace SoundsEasyV1
                     Debug.WriteLine(dataGridInstrument.SelectedIndex + "  " + selected);
                     dataSourceInstrumentFiltered[dataGridInstrument.SelectedIndex].repairStatus = "good";
                 }
+
+                updateRowToSheet(selected);
                 
+            }
+        }
+
+        private void btnManageAssign_Click(object sender, RoutedEventArgs e)
+        {
+            if (selected >= 0 && selected < MainWindow.dataSourceInstrument.Count && MainWindow.dataSourceInstrument[selected-1].studentID!="none")
+            {
+                MainWindow.dataSourceInstrument[selected - 1].studentID = "none";
+                MainWindow.dataSourceInstrument[selected - 1].grade = -1;
+
+                dataSourceInstrumentFiltered[dataGridInstrument.SelectedIndex - 1].studentID = "none";
+                dataSourceInstrumentFiltered[dataGridInstrument.SelectedIndex - 1].grade = -1;
+
+                updateRowToSheet(selected);
+
             }
         }
 
@@ -463,6 +487,7 @@ namespace SoundsEasyV1
             else
             {
                 cur.studentID = "none";
+                curRow.Cells.Add(new GoogleSheetCell { CellValue = "none" });
             }
 
            
@@ -502,6 +527,25 @@ namespace SoundsEasyV1
                 MainWindow.dataSourceInstrument.Add(i);
 
             });
+        }
+
+        
+        void updateRowToSheet(int index)
+        {
+            var obj = MainWindow.dataSourceInstrument[index-1];
+
+            GoogleSheetRow curRow = new GoogleSheetRow();
+
+            curRow.Cells.Add(new GoogleSheetCell { CellValue = obj.type.ToString() });
+            curRow.Cells.Add(new GoogleSheetCell { CellValue = obj.make.ToString() });
+            curRow.Cells.Add(new GoogleSheetCell { CellValue = obj.caseNum.ToString() });
+            curRow.Cells.Add(new GoogleSheetCell { CellValue = obj.serialNum.ToString() });
+            curRow.Cells.Add(new GoogleSheetCell { CellValue = obj.grade.ToString() });
+            curRow.Cells.Add(new GoogleSheetCell { CellValue = obj.studentID.ToString() });
+            curRow.Cells.Add(new GoogleSheetCell { CellValue = obj.repairStatus.ToString() });
+
+            var rowsToAdd = new List<GoogleSheetRow>() { curRow };
+            gsh.AddCells(new GoogleSheetParameters { SheetName = insSheetName, RangeColumnStart = 1, RangeRowStart = index + 1 }, rowsToAdd);
         }
 
         //pulls the filter text box's contents and check if an instrument fits the filter

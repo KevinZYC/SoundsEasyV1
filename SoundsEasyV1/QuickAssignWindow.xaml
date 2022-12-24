@@ -6,7 +6,25 @@
         xmlns:local="clr-namespace:SoundsEasyV1"
         mc:Ignorable="d"
         Title="QuickAssignWindow" WindowState="Maximized" Height="540" Width="960">
-    <Grid>
-        
+    <Grid Background="WhiteSmoke">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="1" BorderThickness="2" BorderBrush="LightGray" Background="White" CornerRadius="15" Margin="10,3,10,3">
+            <Grid Background="Transparent">
+                
+            </Grid>
+        </Border>
+
+        <Border Grid.Row="3" BorderThickness="2" BorderBrush="LightGray" Background="White" CornerRadius="15" Margin="10,3,10,3">
+            <Grid Background="Transparent">
+
+            </Grid>
+        </Border>
     </Grid>
 </Window>

@@ -29,6 +29,9 @@ namespace SoundsEasyV1
         public static string sheetCode = "";
         static bool sheetCodeValid = false;
 
+        public static int targetInstrumentID;
+        public static int targetStudentID;
+
         public static ObservableCollection<Instrument> dataSourceInstrument = new ObservableCollection<Instrument>();
         public static ObservableCollection<Student> dataSourceStudent = new ObservableCollection<Student>();
 
@@ -53,7 +56,7 @@ namespace SoundsEasyV1
                 loadDataInstrument();
                 loadDataStudent();
             }
-            
+
         }
 
         void txtSheetLink_Changed(object sender, TextChangedEventArgs e)
@@ -118,6 +121,7 @@ namespace SoundsEasyV1
         //what happens when quick assign button is clicked 
         private void btnQuickAssign_Click(object sender, RoutedEventArgs e)
         {
+            
             QuickAssignWindow objQuickWindow = new QuickAssignWindow();
             objQuickWindow.Show();
         }

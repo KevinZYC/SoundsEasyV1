@@ -5,29 +5,50 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SoundsEasyV1"
         mc:Ignorable="d"
+        Background="LightBlue"
         Title="Instrument Data" WindowState="Maximized" Height="540" Width="960">
-    <Grid>
+    <Grid Margin="0,0,0,0" Background="WhiteSmoke">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="5*"/>
             <RowDefinition Height="0.3*"/>
             <RowDefinition Height="0.3*"/>
-            <RowDefinition Height="1*"/>
+            <RowDefinition Height="0.5*"/>
         </Grid.RowDefinitions>
+
+        <Rectangle Grid.Row="0" Fill="WhiteSmoke" Panel.ZIndex="-999"/>
+        
+        <Rectangle Grid.Row="4" Fill="White" Panel.ZIndex="-999"/>
+
         <ProgressBar x:Name="progressInstrumentLoad" HorizontalAlignment="Stretch" Height="20" Margin="30,0,30,0" Grid.Row="3" VerticalAlignment="Center" Panel.ZIndex="5" Background="#FFE2E2E2"/>
 
-        <DataGrid x:Name="dataGridInstrument" BorderBrush="LightGray" VerticalGridLinesBrush="WhiteSmoke" HorizontalGridLinesBrush="WhiteSmoke" Background="White" GridLinesVisibility="All" RowBackground="White" SelectionMode="Single" Grid.Row="1" AutoGenerateColumns="True" ColumnWidth="*" ScrollViewer.CanContentScroll="True" UseLayoutRounding="True" ColumnHeaderHeight="40" MouseUp="InstrumentRow_Click" RowHeight="30" IsReadOnly="True" FontFamily="Microsoft JhengHei UI">
+        <DataGrid x:Name="dataGridInstrument" BorderThickness="0,0,0,0" Margin="15,0,15,10" HeadersVisibility="Column" BorderBrush="LightGray" VerticalGridLinesBrush="WhiteSmoke" HorizontalGridLinesBrush="WhiteSmoke" Background="WhiteSmoke" GridLinesVisibility="None" RowBackground="White" SelectionMode="Single" Grid.Row="1" AutoGenerateColumns="True" ColumnWidth="*" ScrollViewer.CanContentScroll="True" UseLayoutRounding="True" ColumnHeaderHeight="40" MouseUp="InstrumentRow_Click" RowHeight="35" IsReadOnly="True" FontFamily="Microsoft JhengHei UI">
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="{x:Type DataGridColumnHeader}">
-                    <Setter Property="Background"  Value="White"/>
+                    <Setter Property="Background"  Value="WhiteSmoke"/>
                     <Setter Property="BorderBrush" Value="LightGray"/>
-                    <Setter Property="BorderThickness" Value="0,1,1,1"/>
+                    <Setter Property="BorderThickness" Value="0,0,0,2"/>
+                    <Setter Property="Padding" Value="5,5,5,5"/>
+                    <Setter Property="VerticalContentAlignment" Value="Bottom"/>
+                    <Setter Property="Margin" Value="0,0,0,15"/>
+                    <Setter Property="FontSize" Value="16"/>
+                    <Setter Property="Foreground" Value="Gray"/>
                 </Style>
             </DataGrid.ColumnHeaderStyle>
             <DataGrid.Resources>
                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" 
-                   Color="MediumSeaGreen"/>
+                   Color="LightGray"/>
             </DataGrid.Resources>
+
+            <DataGrid.CellStyle>
+                <Style TargetType="{x:Type DataGridCell}">
+                    <Setter Property="BorderThickness" Value="1,1,1,1"/>
+                    <Setter Property="BorderBrush" Value="WhiteSmoke"/>
+                    <Setter Property="TextBlock.Padding" Value="5,5,5,5"/>
+                    <Setter Property="TextBlock.VerticalAlignment" Value="Stretch"/>
+                    <Setter Property="TextBlock.TextAlignment" Value="Left" />
+                </Style>
+            </DataGrid.CellStyle>
 
         </DataGrid>
         <Grid Grid.Row="4">
@@ -69,7 +90,7 @@
                     </Style>
                 </ToggleButton.Resources>
             </ToggleButton>
-            <Button Grid.Column="7" Content="" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" FontStretch="ExtraExpanded">
+            <Button x:Name="btnManageAssign" Click="btnManageAssign_Click" Grid.Column="7" Content="Unassign" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" FontStretch="ExtraExpanded">
                 <Button.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="10"/>
@@ -138,7 +159,7 @@
 
         <TextBlock x:Name="progressTextInstrument" HorizontalAlignment="Center" Grid.Row="3" TextWrapping="Wrap" Text="Loading Instrument Data..." VerticalAlignment="Center" Panel.ZIndex="5" FontSize="14"/>
 
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="2" Margin="15,0,15,0">
             <Grid.RowDefinitions>
                 
             </Grid.RowDefinitions>
