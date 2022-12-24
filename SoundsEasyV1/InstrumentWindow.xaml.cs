@@ -341,7 +341,7 @@ namespace SoundsEasyV1
 
         private void btnRepairChange_Click(object sender, RoutedEventArgs e)
         {
-            if(selected >= 0 && selected < MainWindow.dataSourceInstrument.Count && dataGridInstrument.SelectedItem != null)
+            if(selected >= 0 && selected <= MainWindow.dataSourceInstrument.Count && dataGridInstrument.SelectedItem != null)
             {
                 if(MainWindow.dataSourceInstrument[selected-1].repairStatus == "good")
                 {
