@@ -253,7 +253,7 @@ namespace SoundsEasyV1
         private void loadInstrumentOptions()
         {
             HashSet<string> s = new HashSet<string>();
-            foreach (Instrument i in dataSourceInstrumentFiltered)
+            foreach (Instrument i in MainWindow.dataSourceInstrument)
             {
                 s.Add(i.type);
                 Debug.WriteLine(i.type);
