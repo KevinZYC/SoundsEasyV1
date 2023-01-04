@@ -16,8 +16,33 @@
         </Grid.RowDefinitions>
         <ProgressBar x:Name="progressStudentLoad" HorizontalAlignment="Stretch" Height="20" Margin="30,0,30,0" Grid.Row="3" VerticalAlignment="Center" Panel.ZIndex="5" Background="#FFE2E2E2"/>
 
-        <DataGrid x:Name="dataGridStudent" Grid.Row="1" AutoGenerateColumns="True" MouseUp="StudentRow_Click" ColumnWidth="1*" ScrollViewer.CanContentScroll="True" UseLayoutRounding="True" ColumnHeaderHeight="40" RowHeight="30" IsReadOnly="True" SelectionMode="Single">
+        <DataGrid x:Name="dataGridStudent" Grid.Row="1" AutoGenerateColumns="True" HeadersVisibility="Column" GridLinesVisibility="None" MouseUp="StudentRow_Click" ColumnWidth="1*" ScrollViewer.CanContentScroll="True" UseLayoutRounding="True" ColumnHeaderHeight="40" RowHeight="30" IsReadOnly="True" SelectionMode="Single">
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="{x:Type DataGridColumnHeader}">
+                    <Setter Property="Background"  Value="WhiteSmoke"/>
+                    <Setter Property="BorderBrush" Value="LightGray"/>
+                    <Setter Property="BorderThickness" Value="0,0,0,2"/>
+                    <Setter Property="Padding" Value="5,5,5,5"/>
+                    <Setter Property="VerticalContentAlignment" Value="Bottom"/>
+                    <Setter Property="Margin" Value="0,0,0,15"/>
+                    <Setter Property="FontSize" Value="16"/>
+                    <Setter Property="Foreground" Value="Gray"/>
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+            <DataGrid.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" 
+                   Color="LightGray"/>
+            </DataGrid.Resources>
 
+            <DataGrid.CellStyle>
+                <Style TargetType="{x:Type DataGridCell}">
+                    <Setter Property="BorderThickness" Value="1,1,1,1"/>
+                    <Setter Property="BorderBrush" Value="WhiteSmoke"/>
+                    <Setter Property="TextBlock.Padding" Value="5,5,5,5"/>
+                    <Setter Property="TextBlock.VerticalAlignment" Value="Stretch"/>
+                    <Setter Property="TextBlock.TextAlignment" Value="Left" />
+                </Style>
+            </DataGrid.CellStyle>
         </DataGrid>
         <Grid Grid.Row="4">
             <Grid.RowDefinitions>
