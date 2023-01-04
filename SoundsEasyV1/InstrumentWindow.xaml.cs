@@ -33,6 +33,7 @@ namespace SoundsEasyV1
         List<double> widthRatios = new List<double> { 1, 1, 1, 1.3, 0.7, 1, 0.7 };
         //ObservableCollection<Instrument> dataSourceInstrument = new ObservableCollection<Instrument>();
         ObservableCollection<Instrument> dataSourceInstrumentFiltered = new ObservableCollection<Instrument>();
+        ObservableCollection<Student> dataAssignOptions = new ObservableCollection<Student>();
         InstrumentWindow? thisWindow = null;
 
         bool isLoading = false;
@@ -43,6 +44,8 @@ namespace SoundsEasyV1
         double popupSize = 0.5;
 
         int selected = -1;
+
+        Student? recipient;
 
         string insSheetName = "Instruments";
 
@@ -67,6 +70,9 @@ namespace SoundsEasyV1
             //set pop up size
             popupAddInstrument.Height = SystemParameters.PrimaryScreenHeight * popupSize;
             popupAddInstrument.Width = SystemParameters.PrimaryScreenWidth * popupSize;
+
+            popupAssignInstrument.Height = SystemParameters.PrimaryScreenHeight * popupSize;
+            popupAssignInstrument.Width = SystemParameters.PrimaryScreenWidth * popupSize;
 
             //LoadData();
 
@@ -321,7 +327,7 @@ namespace SoundsEasyV1
                     Debug.WriteLine(selected);
                     if(target.studentID == "none")
                     {
-                        btnManageAssign.Content = "Assign Instrument";
+                        btnManageAssign.Content = "Assign to Student";
                     } else
                     {
                         btnManageAssign.Content = "Unassign Instrument";
@@ -340,6 +346,20 @@ namespace SoundsEasyV1
                 if (dataGrid.SelectedItem is InstrumentOption target)
                 {
                     txtAddInstrumentType.Text = target.Type;
+                }
+
+
+            }
+        }
+
+        private void dataAssignInstrument_Click(object sender, MouseButtonEventArgs e)
+        {
+            var dataGrid = sender as DataGrid;
+            if (dataGrid != null)
+            {
+                if (dataGrid.SelectedItem is Student)
+                {
+                    recipient = dataGrid.SelectedItem as Student;
                 }
 
 
@@ -369,16 +389,23 @@ namespace SoundsEasyV1
 
         private void btnManageAssign_Click(object sender, RoutedEventArgs e)
         {
-            if (selected >= 0 && selected < MainWindow.dataSourceInstrument.Count && MainWindow.dataSourceInstrument[selected-1].studentID!="none")
+            if (selected >= 0 && selected <= MainWindow.dataSourceInstrument.Count && MainWindow.dataSourceInstrument[selected-1].studentID!="none")
             {
                 MainWindow.dataSourceInstrument[selected - 1].studentID = "none";
                 MainWindow.dataSourceInstrument[selected - 1].grade = -1;
 
-                dataSourceInstrumentFiltered[dataGridInstrument.SelectedIndex - 1].studentID = "none";
-                dataSourceInstrumentFiltered[dataGridInstrument.SelectedIndex - 1].grade = -1;
+                dataSourceInstrumentFiltered[dataGridInstrument.SelectedIndex].studentID = "none";
+                dataSourceInstrumentFiltered[dataGridInstrument.SelectedIndex].grade = -1;
 
                 updateRowToSheet(selected);
 
+            } else if(selected >= 0 && selected <= MainWindow.dataSourceInstrument.Count && MainWindow.dataSourceInstrument[selected - 1].studentID == "none")
+            {
+                if (!popupAssignInstrument.IsOpen)
+                {
+                    dataAssignInstrument.ItemsSource = dataAssignOptions;
+                    popupAssignInstrument.IsOpen = true;
+                }
             }
         }
 
@@ -579,10 +606,76 @@ namespace SoundsEasyV1
             {
                 return false;
             }
+            
+            return true;
+        }
+
+        //handling the data stuff in the assignment popup
+        //when search button is clicked gives a list of students to choose from
+        private void btnLoadInsAssign_Click(object sender, RoutedEventArgs e)
+        {
+            dataAssignOptions.Clear();
+            foreach(Student st in MainWindow.dataSourceStudent)
+            {
+                if (checkAssignFilter(st))
+                {
+                    dataAssignOptions.Add(st);
+                }
+            }
+        }
+
+        private bool checkAssignFilter(Student s)
+        {
+            if (s.fname != filterAssignFName.Text && filterAssignFName.Text.Length > 0)
+            {
+                return false;
+            }
+            if (s.lname != filterAssignLName.Text && filterAssignLName.Text.Length > 0)
+            {
+                return false;
+            }
+            if (s.course != filterAssignCourse.Text && filterAssignCourse.Text.Length > 0)
+            {
+                return false;
+            }
+            if (s.grade.ToString() != filterAssignGrade.Text && filterAssignGrade.Text.Length > 0)
+            {
+                return false;
+            }
+            if (s.email != filterAssignEmail.Text && filterAssignEmail.Text.Length > 0)
+            {
+                return false;
+            }
 
             return true;
         }
 
+        //when confirmed assignment, set instrument's owner properties and update row to sheet
+        private void btnConfirmAssign_Click(object sender, RoutedEventArgs e)
+        {
+            if (recipient != null)
+            {
+                //Debug.WriteLine("not null");
+                if (selected >= 0 && selected <= MainWindow.dataSourceInstrument.Count && MainWindow.dataSourceInstrument[selected - 1].studentID == "none")
+                {
+                    //Debug.WriteLine("ran assigned");
+                    MainWindow.dataSourceInstrument[selected - 1].studentID = recipient.email;
+                    MainWindow.dataSourceInstrument[selected - 1].grade = recipient.grade;
+
+                    dataSourceInstrumentFiltered[dataGridInstrument.SelectedIndex].studentID = recipient.email;
+                    dataSourceInstrumentFiltered[dataGridInstrument.SelectedIndex].grade = recipient.grade;
+
+                    updateRowToSheet(selected);
+
+                }
+            }
+        }
+
+        //when cancelled, exit the popup
+        private void btnCancelAssign_Click(object sender, RoutedEventArgs e)
+        {
+            popupAssignInstrument.IsOpen = false;
+        }
 
         //handling hint texts
         void hintChangeInsType(object sender, TextChangedEventArgs e)
