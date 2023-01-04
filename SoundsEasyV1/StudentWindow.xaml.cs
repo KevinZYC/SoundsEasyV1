@@ -32,6 +32,8 @@ namespace SoundsEasyV1
         StudentWindow? thisWindow = null;
         int selected = -1;
 
+        double popupSize = 0.5;
+
         bool isLoading = false;
 
         private GoogleSheetsHelper? gsh = null;
@@ -47,6 +49,9 @@ namespace SoundsEasyV1
 
             gsp = new GoogleSheetParameters() { RangeColumnStart = 1, RangeRowStart = 1, RangeColumnEnd = 5, RangeRowEnd = 100, FirstRowIsHeaders = true, SheetName = studSheetName };
 
+            popupAddStudent.Height = SystemParameters.PrimaryScreenHeight * popupSize;
+            popupAddStudent.Width = SystemParameters.PrimaryScreenWidth * popupSize;
+
             LoadDataFilter();
             //LoadData();
         }
@@ -55,6 +60,38 @@ namespace SoundsEasyV1
         {
             thisWindow = windowObj;
         }
+
+        public void runScaleText(object sender, RoutedEventArgs e)
+        {
+
+            if (sender.GetType() == typeof(TextBox))
+            {
+                var obj = sender as TextBox;
+
+                if (obj.ActualHeight == 0)
+                {
+                    Debug.WriteLine("  failed run scale text     ");
+                    return;
+                }
+
+                obj.FontSize = obj.ActualHeight / 1.75;
+                Debug.WriteLine("scale text" + obj.ActualHeight);
+
+            }
+            if (sender.GetType() == typeof(TextBlock))
+            {
+
+                var obj = sender as TextBlock;
+                if (obj.ActualHeight == 0)
+                {
+                    Debug.WriteLine("  failed run scale text     ");
+                    return;
+                }
+                obj.FontSize = obj.ActualHeight / 1.75;
+                Debug.WriteLine("scale text" + obj.ActualHeight);
+            }
+        }
+
 
         /*
         public void LoadData()

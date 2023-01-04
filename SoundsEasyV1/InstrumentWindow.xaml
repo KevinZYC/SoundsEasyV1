@@ -90,7 +90,7 @@
                     </Style>
                 </ToggleButton.Resources>
             </ToggleButton>
-            <Button x:Name="btnManageAssign" Click="btnManageAssign_Click" Grid.Column="7" Content="Assign to Student" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" FontStretch="ExtraExpanded">
+            <Button x:Name="btnManageAssign"  Background="#48aa69" Foreground="WhiteSmoke" Click="btnManageAssign_Click" Grid.Column="7" Content="Assign to Student" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" FontStretch="ExtraExpanded">
                 <Button.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="10"/>
