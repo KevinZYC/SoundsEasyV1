@@ -22,6 +22,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
+using System.Windows.Controls.Primitives;
 
 namespace SoundsEasyV1
 {
@@ -132,6 +133,30 @@ namespace SoundsEasyV1
                     return;
                 }
                 obj.FontSize = obj.ActualHeight / 1.75;
+                Debug.WriteLine("scale text" + obj.ActualHeight);
+            }
+            if (sender.GetType() == typeof(Button))
+            {
+
+                var obj = sender as Button;
+                if (obj.ActualHeight == 0)
+                {
+                    Debug.WriteLine("  failed run scale text     ");
+                    return;
+                }
+                obj.FontSize = obj.ActualHeight / 3.5;
+                Debug.WriteLine("scale text" + obj.ActualHeight);
+            }
+            if (sender.GetType() == typeof(ToggleButton))
+            {
+
+                var obj = sender as ToggleButton;
+                if (obj.ActualHeight == 0)
+                {
+                    Debug.WriteLine("  failed run scale text     ");
+                    return;
+                }
+                obj.FontSize = obj.ActualHeight / 3.5;
                 Debug.WriteLine("scale text" + obj.ActualHeight);
             }
         }
