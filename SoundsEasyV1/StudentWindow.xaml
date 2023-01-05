@@ -90,7 +90,7 @@
                     </DataGrid>
                     <TextBlock Name="txtSInfo" Loaded="runScaleText" Text = "Student Information" Grid.Row="1" Grid.Column="1" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                     <TextBlock Name="txtSelectCl" Loaded="runScaleText" Text = "Select Class" Grid.Row="1" Grid.Column="0" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                    <TextBlock Name="txtGr" Loaded="runScaleText" Text = "Grade" Grid.Row="5" Grid.Column="1" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
+                    <TextBlock Name="txtGr" Loaded="runScaleText" Text = "Grade" Grid.Row="5" Grid.Column="1" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                     <TextBox Name="txtAddFirstName" Loaded="runScaleText" TextChanged="hintChangeFirstName" Text="" Background="LightGray" Grid.Row="2" FontSize="17" Grid.Column="1" Margin="10" TextAlignment="Left"/>
                     <TextBox Name="txtAddLastName" Loaded="runScaleText" TextChanged="hintChangeLastName" Text="" Background="LightGray" Grid.Row="3" FontSize="20" Grid.Column="1" Margin="10" TextAlignment="Left"/>
                     <TextBox Name="txtAddEmail" Loaded="runScaleText" TextChanged="hintChangeEmail" Text="" Background="LightGray" Grid.Row="4" FontSize="20" Grid.Column="1" Margin="10" TextAlignment="Left"/>
