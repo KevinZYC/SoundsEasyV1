@@ -267,6 +267,14 @@ namespace SoundsEasyV1
 
         }
 
+        private void addStudentButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (addStudentEntry())
+            {
+                resetPopup();
+            }
+        }
+
         public void addData(Student i)
         {
             App.Current.Dispatcher.Invoke((Action)delegate // <--- HERE
@@ -302,10 +310,11 @@ namespace SoundsEasyV1
             {
                 return false;
             }
-            if (txtAddEmail.Text.Length > 0)
+            
+            if (dataClassOptions.SelectedItem is StudentOption current)
             {
-                stud.email = txtAddEmail.Text;
-                studRow.Cells.Add(new GoogleSheetCell { CellValue = txtAddEmail.Text });
+                stud.course = current.Course;
+                studRow.Cells.Add(new GoogleSheetCell { CellValue = stud.course });
             }
             else
             {
@@ -333,6 +342,15 @@ namespace SoundsEasyV1
             }
             studRow.Cells.Add(new GoogleSheetCell { CellValue = stud.grade.ToString() });
 
+            if (txtAddEmail.Text.Length > 0)
+            {
+                stud.email = txtAddEmail.Text;
+                studRow.Cells.Add(new GoogleSheetCell { CellValue = txtAddEmail.Text });
+            }
+            else
+            {
+                return false;
+            }
             stud.id = MainWindow.dataSourceStudent.Count + 1;
 
             studRow.Cells.Add(new GoogleSheetCell { CellValue = "good" });
@@ -349,6 +367,8 @@ namespace SoundsEasyV1
             return true;
 
         }
+
+
         private void resetPopup()
         {
             txtAddFirstName.Clear();
