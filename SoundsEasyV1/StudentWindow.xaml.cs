@@ -27,7 +27,7 @@ namespace SoundsEasyV1
     {
         //public ObservableCollection<Student> dataSourceStudent = new ObservableCollection<Student>();
         public ObservableCollection<Student> dataSourceStudentFiltered = new ObservableCollection<Student>();
-        
+
 
         StudentWindow? thisWindow = null;
         int selected = -1;
@@ -120,6 +120,12 @@ namespace SoundsEasyV1
 
         }*/
 
+        public struct StudentOption
+        {
+            public string Course { get; set; }
+
+        }
+
         public void LoadDataFilter()
         {
             dataSourceStudentFiltered.Clear();
@@ -129,11 +135,42 @@ namespace SoundsEasyV1
                 {
                     dataSourceStudentFiltered.Add(MainWindow.dataSourceStudent[i]);
                 }
+                if (dataSourceStudentFiltered.Count == 0)
+                {
+                    string messageBoxText = "No matching entries found, please try again.";
+                    string caption = "Did you make a typo?";
+                    MessageBoxButton button = MessageBoxButton.OK;
+                    MessageBoxImage icon = MessageBoxImage.Warning;
+                    MessageBoxResult result;
 
+                    result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
+                }
             }
             dataGridStudent.ItemsSource = dataSourceStudentFiltered;
 
+            loadStudentOptions();
+
         }
+
+        private void loadStudentOptions()
+        {
+            HashSet<string> s = new HashSet<string>();
+            foreach(Student stu in MainWindow.dataSourceStudent)
+            {
+                s.Add(stu.course);
+                Debug.WriteLine(stu.course);
+            }
+
+            List<StudentOption> tempSource = new List<StudentOption>();
+
+            foreach(string val in s)
+            {
+                tempSource.Add(new StudentOption { Course = val });
+            }
+
+            dataClassOptions.ItemsSource = tempSource;
+        }
+
 
         private bool checkFilter(Student s)
         {
