@@ -6,17 +6,17 @@
         xmlns:local="clr-namespace:SoundsEasyV1"
         mc:Ignorable="d"
         Title="StudentWindow" WindowState="Maximized" Height="540" Width="960">
-    <Grid>
+    <Grid Background="WhiteSmoke">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="5*"/>
             <RowDefinition Height="0.3*"/>
             <RowDefinition Height="0.001*"/>
-            <RowDefinition Height="1*"/>
+            <RowDefinition Height="0.8*"/>
         </Grid.RowDefinitions>
         <ProgressBar x:Name="progressStudentLoad" HorizontalAlignment="Stretch" Height="20" Margin="30,0,30,0" Grid.Row="3" VerticalAlignment="Center" Panel.ZIndex="5" Background="#FFE2E2E2"/>
 
-        <DataGrid x:Name="dataGridStudent" Grid.Row="1" AutoGenerateColumns="True" HeadersVisibility="Column" GridLinesVisibility="None" MouseUp="StudentRow_Click" ColumnWidth="1*" ScrollViewer.CanContentScroll="True" UseLayoutRounding="True" ColumnHeaderHeight="40" RowHeight="30" IsReadOnly="True" SelectionMode="Single">
+        <DataGrid x:Name="dataGridStudent" Grid.Row="1" Margin="15,0,15,0" BorderThickness="0" AutoGenerateColumns="True" HeadersVisibility="Column" GridLinesVisibility="None" MouseUp="StudentRow_Click" ColumnWidth="1*" ScrollViewer.CanContentScroll="True" UseLayoutRounding="True" ColumnHeaderHeight="40" RowHeight="30" IsReadOnly="True" SelectionMode="Single">
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="{x:Type DataGridColumnHeader}">
                     <Setter Property="Background"  Value="WhiteSmoke"/>
@@ -59,10 +59,79 @@
                 <ColumnDefinition Width="4*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            
-            <Button Grid.Column="3" Content="View Assigned" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" FontStretch="ExtraExpanded"/>
-            <Button Grid.Column="5" Content="Modify Student" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" FontStretch="ExtraExpanded"/>
-            <ToggleButton Grid.Column="1" Content="Add Student" Name="btnAddStudent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1"/>
+
+            <Button Grid.Column="3" Content="View Assigned" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" FontStretch="ExtraExpanded">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="#baf2b6"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="1">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#cef5cb"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button Grid.Column="5" Content="Modify Student" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" FontStretch="ExtraExpanded">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="#baf2b6"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="1">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#cef5cb"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <ToggleButton Grid.Column="1" Content="Add Student" Name="btnAddStudent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1">
+                <ToggleButton.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                    <Style TargetType="{x:Type ToggleButton}">
+                        <Setter Property="Background" Value="#baf2b6"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                    <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="1">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#cef5cb"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ToggleButton.Resources>
+            </ToggleButton>
         </Grid>
         <Popup Name="popupAddStudent" IsOpen="{Binding IsChecked, ElementName=btnAddStudent}" Placement="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="50" Grid.Row="1">
             <Border BorderThickness="1" BorderBrush="#FF888888" Background="#FF888888">
