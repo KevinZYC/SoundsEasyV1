@@ -391,9 +391,9 @@ namespace SoundsEasyV1
         void hintChangeLastName(object sender, TextChangedEventArgs e)
         {
             hintFirstName.Visibility = Visibility.Visible;
-            if (txtAddFirstName.Text != "")
+            if (txtAddLastName.Text != "")
             {
-                hintFirstName.Visibility = Visibility.Hidden;
+                hintLastName.Visibility = Visibility.Hidden;
             }
         }
 
