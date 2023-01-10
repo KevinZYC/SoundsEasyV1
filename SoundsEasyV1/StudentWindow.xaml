@@ -60,7 +60,7 @@
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
 
-            <ToggleButton Grid.Column="3" Content="View Assigned" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" FontStretch="ExtraExpanded">
+            <ToggleButton Name="btnViewAssigned" Grid.Column="3" Content="View Assigned" HorizontalAlignment="Stretch" IsChecked="False" Grid.Row="1" VerticalAlignment="Stretch" FontStretch="ExtraExpanded" Click="btnViewStudAssign_Click">
                 <ToggleButton.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="10"/>
@@ -176,6 +176,13 @@
                     <Button Name="addStudentButton" Content=" Add Student " Grid.Column="1" Grid.Row="7" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="addStudentButton_Click"/>
                 </Grid>
             </Border>
+        </Popup>
+        <Popup Name="popupOwnedInstruments" IsOpen="{Binding IsChecked, ElementName=btnViewAssigned}" Placement="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <DataGrid Name="dataOwnedInstruments" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ColumnWidth="*">
+                    
+                </DataGrid>
+            </Grid>
         </Popup>
         
         <TextBlock x:Name="progressTextStudent" HorizontalAlignment="Center" Grid.Row="3" TextWrapping="Wrap" Text="Set Filters and Click Load Instruments" VerticalAlignment="Center" Panel.ZIndex="5" FontSize="14"/>

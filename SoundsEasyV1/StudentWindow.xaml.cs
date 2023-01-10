@@ -52,6 +52,14 @@ namespace SoundsEasyV1
             popupAddStudent.Height = SystemParameters.PrimaryScreenHeight * popupSize;
             popupAddStudent.Width = SystemParameters.PrimaryScreenWidth * popupSize;
 
+            popupAddStudent.Height = SystemParameters.PrimaryScreenHeight * popupSize;
+            popupAddStudent.Height = SystemParameters.PrimaryScreenHeight * popupSize;
+
+            Loaded += delegate
+            {
+                
+            };
+
             LoadDataFilter();
             //LoadData();
         }
@@ -375,6 +383,28 @@ namespace SoundsEasyV1
             txtAddLastName.Clear();
             txtAddEmail.Clear();
             popupAddStudent.IsOpen = false;
+        }
+
+        private void btnViewStudAssign_Click(object sender, RoutedEventArgs e)
+        {
+            if (selected<0)
+            {
+                return;
+            }
+            
+            List<Instrument> insAssignToStud = new List<Instrument>();
+            foreach(var instrument in MainWindow.dataSourceInstrument)
+            {
+                Student current = MainWindow.dataSourceStudent[selected - 1];
+                if(current.email.ToUpper() == instrument.studentID.ToUpper())
+                {
+                    insAssignToStud.Add(instrument);
+                }
+            }
+            popupOwnedInstruments.Width = SystemParameters.PrimaryScreenWidth * 0.5;
+            popupOwnedInstruments.Height = SystemParameters.PrimaryScreenHeight * 0.5;
+            dataOwnedInstruments.ItemsSource = insAssignToStud;
+
         }
 
 

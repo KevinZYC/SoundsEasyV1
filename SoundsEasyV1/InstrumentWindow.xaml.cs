@@ -258,7 +258,7 @@ namespace SoundsEasyV1
             }
             if(dataSourceInstrumentFiltered.Count == 0)
             {
-                string messageBoxText = "No matching entries found";
+                string messageBoxText = "No matching entries found, please try again.";
                 string caption = "Did you make a typo?";
                 MessageBoxButton button = MessageBoxButton.OK;
                 MessageBoxImage icon = MessageBoxImage.Warning;
