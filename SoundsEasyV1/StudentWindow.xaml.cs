@@ -438,6 +438,8 @@ namespace SoundsEasyV1
 
         private void loadOwnedInstruments(Student current)
         {
+            txtOwnedInsTitle.Text = "Instruments assigned to " + current.fname.ToUpper() + " " + current.lname.ToUpper();
+
             List<Instrument> insAssignToStud = new List<Instrument>();
             foreach (var instrument in MainWindow.dataSourceInstrument)
             {
@@ -475,6 +477,8 @@ namespace SoundsEasyV1
 
         private void loadAvailableInstruments()
         {
+            txtOwnedInsTitle.Text = "Adding New Instrument";
+
             List<Instrument> insAvailable = new List<Instrument>();
             foreach (var instrument in MainWindow.dataSourceInstrument)
             {
@@ -494,7 +498,7 @@ namespace SoundsEasyV1
         {
             if (!isAddingIns)
             {
-                txtOwnedInsTitle.Text = "Adding New Instrument";
+                
                 loadAvailableInstruments();
                 isAddingIns = true;
             } else if(dataOwnedInstruments.SelectedItem is Instrument insToAdd)
