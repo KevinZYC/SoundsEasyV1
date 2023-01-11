@@ -21,16 +21,14 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MinWidth="500" MinHeight="100">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1.75*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1.75*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1.75*"/>
-            </Grid.ColumnDefinitions>
-            <Button x:Name="btnInstrumentPage" Grid.Column="0" Content="Instrument Page" Background="#FFDDDDDD" Click="btnInstrumentPage_Click"/>
-            <Button x:Name="btnStudentPage" Content="Student Page" Grid.Column="2" MinWidth="100" MinHeight="100" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="btnStudentPage_Click"/>
-            <Button x:Name ="btnQuickAssign" Content="Quick Assign" Grid.Column="4" MinWidth="100" MinHeight="100" Click="btnQuickAssign_Click"/>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="0.2*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Button x:Name="btnInstrumentPage" Grid.Row="0" Content="Instrument Page" Background="#FFDDDDDD" Click="btnInstrumentPage_Click"/>
+            <Button x:Name="btnStudentPage" Content="Student Page" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="btnStudentPage_Click"/>
+           
             
         </Grid>
         <Grid Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
