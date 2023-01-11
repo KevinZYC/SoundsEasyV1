@@ -48,7 +48,7 @@ namespace SoundsEasyV1
 
         Student? recipient;
 
-        string insSheetName = "Instruments";
+        public static string insSheetName = "Instruments";
 
 
         public InstrumentWindow()

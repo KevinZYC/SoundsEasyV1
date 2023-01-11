@@ -36,10 +36,12 @@ namespace SoundsEasyV1
 
         bool isLoading = false;
 
+        bool isAddingIns = false;
+
         private GoogleSheetsHelper? gsh = null;
         private GoogleSheetParameters? gsp = null;
 
-        string studSheetName = "Students";
+        public static string studSheetName = "Students";
 
         public StudentWindow()
         {
@@ -96,6 +98,30 @@ namespace SoundsEasyV1
                     return;
                 }
                 obj.FontSize = obj.ActualHeight / 1.75;
+                Debug.WriteLine("scale text" + obj.ActualHeight);
+            }
+            if (sender.GetType() == typeof(Button))
+            {
+
+                var obj = sender as Button;
+                if (obj.ActualHeight == 0)
+                {
+                    Debug.WriteLine("  failed run scale text     ");
+                    return;
+                }
+                obj.FontSize = obj.ActualHeight / 3.5;
+                Debug.WriteLine("scale text" + obj.ActualHeight);
+            }
+            if (sender.GetType() == typeof(ToggleButton))
+            {
+
+                var obj = sender as ToggleButton;
+                if (obj.ActualHeight == 0)
+                {
+                    Debug.WriteLine("  failed run scale text     ");
+                    return;
+                }
+                obj.FontSize = obj.ActualHeight / 3.5;
                 Debug.WriteLine("scale text" + obj.ActualHeight);
             }
         }
@@ -361,8 +387,6 @@ namespace SoundsEasyV1
             }
             stud.id = MainWindow.dataSourceStudent.Count + 1;
 
-            studRow.Cells.Add(new GoogleSheetCell { CellValue = "good" });
-
             MainWindow.dataSourceStudent.Add(stud);
             LoadDataFilter();
 
@@ -391,19 +415,121 @@ namespace SoundsEasyV1
             {
                 return;
             }
-            
-            List<Instrument> insAssignToStud = new List<Instrument>();
-            foreach(var instrument in MainWindow.dataSourceInstrument)
+
+            popupOwnedInstruments.Width = SystemParameters.PrimaryScreenWidth * 0.5;
+            popupOwnedInstruments.Height = SystemParameters.PrimaryScreenHeight * 0.5;
+
+            if (popupOwnedInstruments.IsOpen)
             {
-                Student current = MainWindow.dataSourceStudent[selected - 1];
-                if(current.email.ToUpper() == instrument.studentID.ToUpper())
+                popupOwnedInstruments.IsOpen = false;
+                dataGridStudent.IsHitTestVisible = true;
+            } else
+            {
+                popupOwnedInstruments.IsOpen = true;
+                dataGridStudent.IsHitTestVisible = false;
+            }
+
+            Student current = MainWindow.dataSourceStudent[selected - 1];
+            loadOwnedInstruments(current);
+            
+            txtOwnedInsTitle.Text = "Instruments assigned to " + current.fname.ToUpper() + " " + current.lname.ToUpper();
+            isAddingIns = false; // bool to check if the popup is in addition mode
+        }
+
+        private void loadOwnedInstruments(Student current)
+        {
+            List<Instrument> insAssignToStud = new List<Instrument>();
+            foreach (var instrument in MainWindow.dataSourceInstrument)
+            {
+
+                if (current.email.ToUpper() == instrument.studentID.ToUpper())
                 {
                     insAssignToStud.Add(instrument);
                 }
             }
-            popupOwnedInstruments.Width = SystemParameters.PrimaryScreenWidth * 0.5;
-            popupOwnedInstruments.Height = SystemParameters.PrimaryScreenHeight * 0.5;
             dataOwnedInstruments.ItemsSource = insAssignToStud;
+
+            btnAddOwnedIns.Content = "Assign New Instrument";
+            btnRemoveOwnedIns.Content = "Unassign Instrument";
+        }
+
+        void updateInstrumentToSheet(int index)
+        {
+            Debug.WriteLine("run update ins");
+            
+            var obj = MainWindow.dataSourceInstrument[index - 1];
+
+            GoogleSheetRow curRow = new GoogleSheetRow();
+
+            curRow.Cells.Add(new GoogleSheetCell { CellValue = obj.type.ToString() });
+            curRow.Cells.Add(new GoogleSheetCell { CellValue = obj.make.ToString() });
+            curRow.Cells.Add(new GoogleSheetCell { CellValue = obj.caseNum.ToString() });
+            curRow.Cells.Add(new GoogleSheetCell { CellValue = obj.serialNum.ToString() });
+            curRow.Cells.Add(new GoogleSheetCell { CellValue = obj.grade.ToString() });
+            curRow.Cells.Add(new GoogleSheetCell { CellValue = obj.studentID.ToString() });
+            curRow.Cells.Add(new GoogleSheetCell { CellValue = obj.repairStatus.ToString() });
+
+            var rowsToAdd = new List<GoogleSheetRow>() { curRow };
+            gsh.AddCells(new GoogleSheetParameters { SheetName = InstrumentWindow.insSheetName, RangeColumnStart = 1, RangeRowStart = index + 1 }, rowsToAdd);
+        }
+
+        private void loadAvailableInstruments()
+        {
+            List<Instrument> insAvailable = new List<Instrument>();
+            foreach (var instrument in MainWindow.dataSourceInstrument)
+            {
+
+                if (instrument.studentID == null || instrument.studentID.ToUpper() == "NONE")
+                {
+                    insAvailable.Add(instrument);
+                }
+            }
+            dataOwnedInstruments.ItemsSource = insAvailable;
+
+            btnAddOwnedIns.Content = "Confirm Assignment";
+            btnRemoveOwnedIns.Content = "Cancel";
+        }
+
+        private void btnAddOwnedIns_Click(object sender, RoutedEventArgs e)
+        {
+            if (!isAddingIns)
+            {
+                txtOwnedInsTitle.Text = "Adding New Instrument";
+                loadAvailableInstruments();
+                isAddingIns = true;
+            } else if(dataOwnedInstruments.SelectedItem is Instrument insToAdd)
+            {
+                Student current = MainWindow.dataSourceStudent[selected - 1];
+
+                MainWindow.dataSourceInstrument[insToAdd.id - 1].grade = current.grade;
+                MainWindow.dataSourceInstrument[insToAdd.id - 1].studentID = current.email;
+
+                updateInstrumentToSheet(insToAdd.id);
+
+                isAddingIns=false;
+
+                loadOwnedInstruments(current);
+            }
+            
+        }
+
+        private void btnRemoveOwnedIns_Click(object sender, RoutedEventArgs e)
+        {
+            Student current = MainWindow.dataSourceStudent[selected - 1];
+
+            if (isAddingIns)
+            {
+                loadOwnedInstruments(current);
+                isAddingIns = false;
+            } else if (dataOwnedInstruments.SelectedItem is Instrument insToAdd)
+            {
+                MainWindow.dataSourceInstrument[insToAdd.id - 1].grade = -1;
+                MainWindow.dataSourceInstrument[insToAdd.id - 1].studentID = "none";
+
+                updateInstrumentToSheet(insToAdd.id);
+
+                loadOwnedInstruments(current);
+            }
 
         }
 
