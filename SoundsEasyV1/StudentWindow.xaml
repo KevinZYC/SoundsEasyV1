@@ -178,9 +178,34 @@
             </Border>
         </Popup>
         <Popup Name="popupOwnedInstruments" IsOpen="{Binding IsChecked, ElementName=btnViewAssigned}" Placement="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <DataGrid Name="dataOwnedInstruments" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ColumnWidth="*">
-                    
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="WhiteSmoke">
+                <DataGrid Name="dataOwnedInstruments" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" GridLinesVisibility="None" ColumnWidth="*" RowHeight="35" IsReadOnly="True" SelectionMode="Single" HeadersVisibility="Column" Margin="15" BorderThickness="0">
+                    <DataGrid.ColumnHeaderStyle>
+                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="Background"  Value="WhiteSmoke"/>
+                            <Setter Property="BorderBrush" Value="LightGray"/>
+                            <Setter Property="BorderThickness" Value="0,0,0,2"/>
+                            <Setter Property="Padding" Value="5,5,5,5"/>
+                            <Setter Property="VerticalContentAlignment" Value="Bottom"/>
+                            <Setter Property="Margin" Value="0,0,0,15"/>
+                            <Setter Property="FontSize" Value="13"/>
+                            <Setter Property="Foreground" Value="Gray"/>
+                        </Style>
+                    </DataGrid.ColumnHeaderStyle>
+                    <DataGrid.Resources>
+                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" 
+                   Color="LightGray"/>
+                    </DataGrid.Resources>
+
+                    <DataGrid.CellStyle>
+                        <Style TargetType="{x:Type DataGridCell}">
+                            <Setter Property="BorderThickness" Value="1,1,1,1"/>
+                            <Setter Property="BorderBrush" Value="WhiteSmoke"/>
+                            <Setter Property="TextBlock.Padding" Value="5,5,5,5"/>
+                            <Setter Property="TextBlock.VerticalAlignment" Value="Stretch"/>
+                            <Setter Property="TextBlock.TextAlignment" Value="Left" />
+                        </Style>
+                    </DataGrid.CellStyle>
                 </DataGrid>
             </Grid>
         </Popup>
