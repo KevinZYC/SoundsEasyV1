@@ -84,8 +84,9 @@
             </Grid.ColumnDefinitions>
             <TextBox x:Name="txtSheetLink" Grid.Column="0" Text="https://docs.google.com/spreadsheets/d/1POh7lSt7QyI45I_16I3An1iTWSc4PsV0rcYP5ExPKhg/edit#gid=0" Background="WhiteSmoke" HorizontalAlignment="Stretch" TextChanged="txtSheetLink_Changed" Margin="10"/>
             <Button Name="btnConfirmLink" Grid.Column="1" Click="btnConfirmLink_Click" Content="  update  " Margin="10"/>
+            
         </Grid>
-        <Image Grid.Column="1" Margin="210,44,210,24" Source="/logo.jpg" Stretch="Fill"/>
+        <Image Source="\ImageSources\logo.jpg" Grid.Column="1" Margin="22,20,22,19"/>
 
 
     </Grid>
