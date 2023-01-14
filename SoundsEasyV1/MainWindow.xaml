@@ -27,52 +27,52 @@
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
             <Button x:Name="btnInstrumentPage" Grid.Row="0" Content="Instrument Page" Click="btnInstrumentPage_Click">
-            <Button.Resources>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="10"/>
-                </Style>
-                <Style TargetType="{x:Type Button}">
-                    <Setter Property="Background" Value="#baf2b6"/>
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="{x:Type Button}">
-                                <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="1">
-                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Border>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="#cef5cb"/>
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </Button.Resources>
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="#baf2b6"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="1">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#cef5cb"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Resources>
             </Button>
             <Button x:Name="btnStudentPage" Content="Student Page" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="btnStudentPage_Click">
-            <Button.Resources>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="10"/>
-                </Style>
-                <Style TargetType="{x:Type Button}">
-                    <Setter Property="Background" Value="#baf2b6"/>
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="{x:Type Button}">
-                                <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="1">
-                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Border>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="#cef5cb"/>
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </Button.Resources>
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="#baf2b6"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="1">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#cef5cb"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Resources>
             </Button>
 
 
@@ -85,7 +85,8 @@
             <TextBox x:Name="txtSheetLink" Grid.Column="0" Text="https://docs.google.com/spreadsheets/d/1POh7lSt7QyI45I_16I3An1iTWSc4PsV0rcYP5ExPKhg/edit#gid=0" Background="WhiteSmoke" HorizontalAlignment="Stretch" TextChanged="txtSheetLink_Changed" Margin="10"/>
             <Button Name="btnConfirmLink" Grid.Column="1" Click="btnConfirmLink_Click" Content="  update  " Margin="10"/>
         </Grid>
-        
+        <Image Grid.Column="1" Margin="210,44,210,24" Source="/logo.jpg" Stretch="Fill"/>
+
 
     </Grid>
 </Window>
