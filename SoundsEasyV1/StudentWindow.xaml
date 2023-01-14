@@ -134,8 +134,8 @@
             </ToggleButton>
         </Grid>
         <Popup Name="popupAddStudent" IsOpen="{Binding IsChecked, ElementName=btnAddStudent}" Placement="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="50" Grid.Row="1">
-            <Border BorderThickness="1" BorderBrush="#FF888888" Background="#FF888888">
-                <Grid Background="White" Margin="30">
+            <Border BorderThickness="0" BorderBrush="#FF888888" Background="#FF888888">
+                <Grid Background="White" Margin="0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*"/>
                         <RowDefinition Height="0.4*"/>
