@@ -86,7 +86,7 @@
             <Button Name="btnConfirmLink" Grid.Column="1" Click="btnConfirmLink_Click" Content="  update  " Margin="10"/>
             
         </Grid>
-        <Image Source="\ImageSources\logo.jpg" Grid.Column="1" Margin="22,20,22,19"/>
+        <Image Source="\ImageSources\logo.jpg" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="22,20,22,19"/>
 
 
     </Grid>
