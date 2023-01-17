@@ -550,7 +550,7 @@ namespace SoundsEasyV1
 
         void hintChangeLastName(object sender, TextChangedEventArgs e)
         {
-            hintFirstName.Visibility = Visibility.Visible;
+            hintLastName.Visibility = Visibility.Visible;
             if (txtAddLastName.Text != "")
             {
                 hintLastName.Visibility = Visibility.Hidden;
