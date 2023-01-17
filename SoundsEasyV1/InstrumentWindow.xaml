@@ -78,7 +78,7 @@
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="3" Foreground="DarkSlateGray" Content="Repair Change" Click ="btnRepairChange_Click" Loaded="runScaleText" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" FontStretch="ExtraExpanded">
+            <Button Grid.Column="3" Foreground="DarkSlateGray" Content="Repair Change" Click ="btnRepairChange_Click" Loaded="runScaleText" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" FontStretch="ExtraExpanded" FontFamily="Segoe UI Semilight">
                 <Button.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="10"/>
@@ -104,7 +104,7 @@
             </Button>
 
 
-            <Button Grid.Column="5" Foreground="DarkSlateGray" Content="Delete Instrument" Click="btnRemoveInstrument_Click" Loaded="runScaleText" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" FontStretch="ExtraExpanded">
+            <Button Grid.Column="5" Foreground="DarkSlateGray" Content="Delete Instrument" Click="btnRemoveInstrument_Click" Loaded="runScaleText" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" FontStretch="ExtraExpanded" FontFamily="Segoe UI Semilight">
                 <Button.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="10"/>
@@ -130,7 +130,7 @@
             </Button>
 
 
-            <ToggleButton Grid.Column="1" Foreground="DarkSlateGray" Content="Add Instrument" HorizontalContentAlignment="Center" Loaded="runScaleText" VerticalContentAlignment="Center" Name="btnAddInstrument" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1">
+            <ToggleButton Grid.Column="1" Foreground="DarkSlateGray" Content="Add Instrument" HorizontalContentAlignment="Center" Loaded="runScaleText" VerticalContentAlignment="Center" Name="btnAddInstrument" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" FontFamily="Segoe UI Semilight">
                 <ToggleButton.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="10"/>
@@ -156,7 +156,7 @@
             </ToggleButton>
 
 
-            <Button x:Name="btnManageAssign" Foreground="DarkSlateGray"  Click="btnManageAssign_Click" Grid.Column="7" Content="Assign to Student" Loaded="runScaleText" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" FontStretch="ExtraExpanded">
+            <Button x:Name="btnManageAssign" Foreground="DarkSlateGray"  Click="btnManageAssign_Click" Grid.Column="7" Content="Assign to Student" Loaded="runScaleText" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" FontStretch="ExtraExpanded" FontFamily="Segoe UI Semilight">
                 <Button.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="10"/>
@@ -185,8 +185,8 @@
         
         
         
-        <Popup Name="popupAddInstrument" IsOpen="{Binding IsChecked, ElementName=btnAddInstrument}" Loaded="popupAddInstrument_Loaded" Placement="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="50" Grid.Row="1" Opacity="0" AllowsTransparency="True">
-            <Border BorderThickness="5" CornerRadius="15" BorderBrush="#FF888888" Background="White">
+        <Popup Name="popupAddInstrument" IsOpen="{Binding IsChecked, ElementName=btnAddInstrument}" Placement="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="50" Grid.Row="1" Opacity="0" AllowsTransparency="True">
+            <Border BorderThickness="2" CornerRadius="15" BorderBrush="MediumSeaGreen" Background="White">
                 <Grid Background="Transparent">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="2*"/>
@@ -206,11 +206,40 @@
                     </Grid.ColumnDefinitions>
                     <TextBlock Name="myPopupText" Loaded="runScaleText" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="Add Instrument" Grid.Row="0" TextAlignment="Center" Grid.Column="0" Grid.ColumnSpan="2"  Foreground="Black" Margin="7.5"/>
 
-                    <DataGrid Name="dataInstrumentOptions" IsReadOnly="True" SelectionMode="Single" RowBackground="WhiteSmoke" AlternatingRowBackground="White" ColumnWidth="*" RowHeight="30" Background="White" Grid.Row="1" Grid.Column="0" Grid.RowSpan="8" MouseUp="dataInstrumentOptions_Click" Margin="10,10,10,40" BorderBrush="White">
+                    <DataGrid Name="dataInstrumentOptions" IsReadOnly="True" SelectionMode="Single" GridLinesVisibility="None" HeadersVisibility="Column" ColumnWidth="*" RowHeight="30" Background="White" Grid.Row="1" Grid.Column="0" Grid.RowSpan="8" MouseUp="dataInstrumentOptions_Click" Margin="10,10,10,40" BorderBrush="White">
+                        <DataGrid.ColumnHeaderStyle>
+                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                <Setter Property="Background"  Value="WhiteSmoke"/>
+                                <Setter Property="BorderBrush" Value="LightGray"/>
+                                <Setter Property="BorderThickness" Value="0,0,0,2"/>
+                                <Setter Property="Padding" Value="5,5,5,5"/>
+                                <Setter Property="VerticalContentAlignment" Value="Bottom"/>
+                                <Setter Property="Margin" Value="0,0,0,15"/>
+                                <Setter Property="FontSize" Value="16"/>
+                                <Setter Property="Foreground" Value="Gray"/>
+                            </Style>
+                        </DataGrid.ColumnHeaderStyle>
                         <DataGrid.Resources>
-                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" 
-                                Color="MediumSeaGreen"/>
+                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#f2fdea"/>
                         </DataGrid.Resources>
+
+                        <DataGrid.CellStyle>
+                            <Style TargetType="{x:Type DataGridCell}">
+                                <Setter Property="BorderThickness" Value="1,1,1,1"/>
+                                <Setter Property="BorderBrush" Value="WhiteSmoke"/>
+                                <Setter Property="TextBlock.Padding" Value="5,5,5,5"/>
+                                <Setter Property="TextBlock.VerticalAlignment" Value="Stretch"/>
+                                <Setter Property="TextBlock.TextAlignment" Value="Left" />
+                                <Style.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="Foreground" Value="DarkGray"/>
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="False">
+                                        <Setter Property="Foreground" Value="Black"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.CellStyle>
                     </DataGrid>
                     <TextBlock Name="txtInstInfoSection" Text="Instrument Information" Loaded="runScaleText" Grid.Row="1" Grid.Column="1" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></TextBlock>
                     <TextBox Name="txtAddInstrumentType" TextChanged="hintChangeInsType" Loaded="runScaleText" Text="" Background="LightGray" Grid.Row="8" FontSize="17" Grid.Column="0" Margin="10" TextAlignment="Left"></TextBox>
@@ -269,7 +298,7 @@
         </Grid>
 
         <Popup Name="popupAssignInstrument" IsOpen="False" Placement="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="50" Grid.Row="1" Opacity="0" AllowsTransparency="True">
-            <Border BorderThickness="5" CornerRadius="15" BorderBrush="#FF888888" Background="White">
+            <Border BorderThickness="2" CornerRadius="15" BorderBrush="MediumSeaGreen" Background="White">
                 <Grid Background="Transparent">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*"/>

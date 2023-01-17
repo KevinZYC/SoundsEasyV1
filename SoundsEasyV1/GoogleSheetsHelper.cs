@@ -26,6 +26,7 @@ namespace SoundsEasyV1
     test Google Sheets: 1POh7lSt7QyI45I_16I3An1iTWSc4PsV0rcYP5ExPKhg
      */
 
+    //class with functions that execute different types of data requests
     public class GoogleSheetsHelper
     {
         static string[] Scopes = { SheetsService.Scope.Spreadsheets };
@@ -49,6 +50,7 @@ namespace SoundsEasyV1
             _spreadsheetId = spreadsheetId;
         }
 
+        //CURRENTLY UNUSED: function to pull data from a specific range
         public List<ExpandoObject> GetDataFromSheet(GoogleSheetParameters googleSheetParameters)
         {
             googleSheetParameters = MakeGoogleSheetDataRangeColumnsZeroBased(googleSheetParameters);
@@ -103,7 +105,7 @@ namespace SoundsEasyV1
             return returnValues;
         }
 
-        //I added this myself, it returns the things directly to the instrument window, uses an observablecollection, NO LONGER USES BACKGROUNDWORKER
+        //Function to pull instrument data from a specific range 
         public void GetInstrumentDataFromSheet(GoogleSheetParameters googleSheetParameters, ref ObservableCollection<Instrument> myList)
         {
             googleSheetParameters = MakeGoogleSheetDataRangeColumnsZeroBased(googleSheetParameters);
@@ -124,8 +126,10 @@ namespace SoundsEasyV1
                 }
             }
 
+            
             var response = request.Execute();
 
+            //construct expando objects for each row
             int rowCounter = 0;
             IList<IList<Object>> values = response.Values;
             if (values != null && values.Count > 0)
@@ -150,14 +154,9 @@ namespace SoundsEasyV1
                         expandoDict.Add(columnName, row[columnCounter].ToString());
                         columnCounter++;
                     }
-                    //called for each value pulled
-                    //calls a custom add method so its done in the same thread
-
-                    //target.addData(expToInst(expando,rowCounter));
+                    
                     MainWindow.dataSourceInstrument.Add(expToInst(expando, rowCounter));
                     Debug.WriteLine(rowCounter * (100 / values.Count));
-                    //worker.ReportProgress(rowCounter * (100 / values.Count), String.Format("Loading: {0}%", rowCounter * (100 / values.Count)));
-                    //Thread.Sleep(10);
                     rowCounter++;
                 }
             }
@@ -167,7 +166,7 @@ namespace SoundsEasyV1
         }
 
 
-
+        //function to pull student data from a specific range
         public void GetStudentDataFromSheet(GoogleSheetParameters googleSheetParameters, ref ObservableCollection<Student> myList)
         {
             googleSheetParameters = MakeGoogleSheetDataRangeColumnsZeroBased(googleSheetParameters);
@@ -190,6 +189,7 @@ namespace SoundsEasyV1
 
             var response = request.Execute();
 
+            //construct expando objects for each row
             int rowCounter = 0;
             IList<IList<Object>> values = response.Values;
             if (values != null && values.Count > 0)
@@ -215,12 +215,7 @@ namespace SoundsEasyV1
                         columnCounter++;
                     }
 
-                    //calls a custom add method so its done in the same thread
                     MainWindow.dataSourceStudent.Add(expToStud(expando, rowCounter));
-                    //target.addData(expToStud(expando,rowCounter));
-                    //Debug.WriteLine();
-                    //worker.ReportProgress(rowCounter * (100 / values.Count), String.Format("Loading: {0}%", rowCounter * (100 / values.Count)));
-                    //Thread.Sleep(10);
                     rowCounter++;
                 }
             }
@@ -228,7 +223,7 @@ namespace SoundsEasyV1
 
 
 
-
+        //function to add rows of Google Sheet cells
         public void AddCells(GoogleSheetParameters googleSheetParameters, List<GoogleSheetRow> rows)
         {
             //var requests = new BatchUpdateSpreadsheetRequest { Requests = new List<Request>() };
@@ -273,7 +268,7 @@ namespace SoundsEasyV1
             }
             request.UpdateCells.Rows = listRowData;
 
-            // It's a batch request so you can create more than one request and send them all in one batch. Just use reqs.Requests.Add() to add additional requestsList for the same spreadsheet
+            // It's a batch request so we can create more than one request and send them all in one batch. Just use reqs.Requests.Add() to add additional requestsList for the same spreadsheet
             
             
             requestsList.Requests.Add(request);
@@ -340,8 +335,8 @@ namespace SoundsEasyV1
 
 
 
-        //added myself
-        //expando object to instrument object
+        
+        //expando object to instrument object. Convert to dictionary to read
         private Instrument expToInst(ExpandoObject item, int id)
         {
             var dict = (IDictionary<string, object>)item;
@@ -378,7 +373,7 @@ namespace SoundsEasyV1
 
             return ret;
         }
-
+        //expando to student object. Convert into dictionary to read
         private Student expToStud(ExpandoObject item, int id)
         {
             var dict = (IDictionary<string, object>)item;
@@ -411,6 +406,7 @@ namespace SoundsEasyV1
         }
     }
 
+    //cell, row, and parameters objects
     public class GoogleSheetCell
     {
         public string CellValue { get; set; }

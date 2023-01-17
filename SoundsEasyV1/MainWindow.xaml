@@ -27,7 +27,7 @@
                 <RowDefinition Height="0.2*"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-            <Button x:Name="btnInstrumentPage" Loaded="runScaleText" Grid.Row="0" Content="Instrument Page" Click="btnInstrumentPage_Click" FontFamily="Rockwell">
+            <Button x:Name="btnInstrumentPage" Loaded="runScaleText" Grid.Row="0" Content="Instrument Page" Click="btnInstrumentPage_Click" FontFamily="Segoe UI Semilight">
                 <Button.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="10"/>
@@ -51,7 +51,7 @@
                     </Style>
                 </Button.Resources>
             </Button>
-            <Button x:Name="btnStudentPage" Loaded="runScaleText" Content="Student Page" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="btnStudentPage_Click" FontFamily="Rockwell">
+            <Button x:Name="btnStudentPage" Loaded="runScaleText" Content="Student Page" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="btnStudentPage_Click" FontFamily="Segoe UI Semilight">
                 <Button.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="10"/>

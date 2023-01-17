@@ -11,32 +11,9 @@ using System.Diagnostics;
 //https://stackoverflow.com/questions/40054539/datagrid-itemsource-binding-not-updating-and-binding-in-wpf-not-working this source for notify data changed
 namespace SoundsEasyV1
 {
+    //Student class that implements the INotifyPropertyChanged interface
     public class Instrument : INotifyPropertyChanged
     {
-
-
-        /*
-        public int id { get; set; }
-        public string type { get; set; }
-        public string make { get; set; }
-        public string caseNum { get; set; }
-        public string serialNum { get; set; }
-        public int grade { get; set; }
-        public string studentID { get; set; }
-        public string repairStatus { get; set; }
-
-        
-        public Instrument(int id, string type, string make, string caseNum, string serialNum, int grade, string studentID, string repairStatus)
-        {
-            this.id = id;
-            this.type = type;
-            this.make = make;
-            this.caseNum = caseNum;
-            this.serialNum = serialNum;
-            this.grade = grade;
-            this.studentID = studentID;
-            this.repairStatus = repairStatus;
-        }*/
         //standard declaration for INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
@@ -59,16 +36,6 @@ namespace SoundsEasyV1
         {
             //variables that DONT update should be put here
 
-            /*
-            id = 0;
-            type = "";
-            make = "";
-            caseNum = "";
-            serialNum = "";
-            grade = 0;
-            studentID = "";
-            repairStatus = "";
-            */
         }
         //public constructor
         public static Instrument CreateInstrument()

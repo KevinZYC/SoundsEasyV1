@@ -10,24 +10,7 @@ namespace SoundsEasyV1
 {
     public class Student : INotifyPropertyChanged
     {
-        /* public int id { get; set; }
-         public string fname { get; set; }
-         public string lname { get; set; }
-         public string course { get; set; }
-         public int grade { get; set; }
-         public string email { get; set; }
-
-         public Student(int id, string fname, string lname, string course, int grade, string email)
-         {
-             this.id = id;
-             this.fname = fname;
-             this.lname = lname;
-             this.course = course;
-             this.grade = grade;
-             this.email = email;
-         }
-
- */
+        //Student class that implements the INotifyPropertyChanged interface
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {
@@ -43,14 +26,7 @@ namespace SoundsEasyV1
        
         private Student()
         {
-            /*
-             this.id = id;
-               this.fname = fname;
-               this.lname = lname;
-               this.course = course;
-               this.grade = grade;
-               this.email = email;
-              */
+            
         }
         //public constructor
         public static Student CreateStudent()

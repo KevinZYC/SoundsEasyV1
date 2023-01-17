@@ -19,10 +19,6 @@ using System.Windows.Shapes;
 
 namespace SoundsEasyV1
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    /// 
     
 
     public partial class MainWindow : Window
@@ -33,12 +29,16 @@ namespace SoundsEasyV1
         public static int targetInstrumentID;
         public static int targetStudentID;
 
+        //local databases
         public static ObservableCollection<Instrument> dataSourceInstrument = new ObservableCollection<Instrument>();
         public static ObservableCollection<Student> dataSourceStudent = new ObservableCollection<Student>();
 
         public MainWindow()
         {
+            //constructor
             InitializeComponent();
+
+            //extracts sheet code
             string s = txtSheetLink.Text;
             if (s.Length > 38 && s.Substring(0, 38) == "https://docs.google.com/spreadsheets/d")
             {
@@ -65,10 +65,10 @@ namespace SoundsEasyV1
             
         }
 
-        //what happens when instrument button is clicked
+        //loads instrument window
         private void btnInstrumentPage_Click(object sender, RoutedEventArgs e)
         {
-
+            //validates google sheet link first
             string s = txtSheetLink.Text;
             if (s.Length > 38 && s.Substring(0, 38) == "https://docs.google.com/spreadsheets/d")
             {
@@ -92,9 +92,10 @@ namespace SoundsEasyV1
             
         }
 
-        //what happens when student button is clicked
+        //load student window
         private void btnStudentPage_Click(object sender, RoutedEventArgs e)
         {
+            //validate google sheet link first
             string s = txtSheetLink.Text;
             if (s.Length > 38 && s.Substring(0, 38) == "https://docs.google.com/spreadsheets/d")
             {
@@ -127,6 +128,8 @@ namespace SoundsEasyV1
             objQuickWindow.Show();
         }
 
+
+        //updates the sheet code
         private void btnConfirmLink_Click(object sender, RoutedEventArgs e)
         {
             string s = txtSheetLink.Text;
@@ -142,6 +145,8 @@ namespace SoundsEasyV1
             Debug.WriteLine("inst size " + dataSourceInstrument.Count);
             Debug.WriteLine("stud size " + dataSourceStudent.Count);
         }
+
+        //functions to pull entire dataset from database, done in constructor
         public void loadDataStudent()
         {
             GoogleSheetsHelper gsh = new GoogleSheetsHelper("fleet-automata-366622-ba1a276c41b4.json", MainWindow.sheetCode);
@@ -164,6 +169,7 @@ namespace SoundsEasyV1
             gsh.GetInstrumentDataFromSheet(gsp, ref dataSourceInstrument);
         }
 
+        //function behind auto-text scaling
         public void runScaleText(object sender, RoutedEventArgs e)
         {
 

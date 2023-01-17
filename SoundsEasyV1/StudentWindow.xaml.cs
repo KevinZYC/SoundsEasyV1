@@ -20,12 +20,9 @@ using System.Runtime.ConstrainedExecution;
 
 namespace SoundsEasyV1
 {
-    /// <summary>
-    /// Interaction logic for StudentWindow.xaml
-    /// </summary>
     public partial class StudentWindow : Window
     {
-        //public ObservableCollection<Student> dataSourceStudent = new ObservableCollection<Student>();
+        //filtered data source of the main data grid
         public ObservableCollection<Student> dataSourceStudentFiltered = new ObservableCollection<Student>();
 
 
@@ -38,6 +35,7 @@ namespace SoundsEasyV1
 
         bool isAddingIns = false;
 
+        //declare google sheet related objects
         private GoogleSheetsHelper? gsh = null;
         private GoogleSheetParameters? gsp = null;
 
@@ -45,12 +43,14 @@ namespace SoundsEasyV1
 
         public StudentWindow()
         {
+            //constructor
             InitializeComponent();
 
             gsh = new GoogleSheetsHelper("fleet-automata-366622-ba1a276c41b4.json", MainWindow.sheetCode);
 
             gsp = new GoogleSheetParameters() { RangeColumnStart = 1, RangeRowStart = 1, RangeColumnEnd = 5, RangeRowEnd = 100, FirstRowIsHeaders = true, SheetName = studSheetName };
 
+            //set popup size
             popupAddStudent.Height = SystemParameters.PrimaryScreenHeight * popupSize;
             popupAddStudent.Width = SystemParameters.PrimaryScreenWidth * popupSize;
 
@@ -66,11 +66,13 @@ namespace SoundsEasyV1
             //LoadData();
         }
 
+        //carry over the window's object
         public void Init(ref StudentWindow windowObj)
         {
             thisWindow = windowObj;
         }
 
+        //function for auto text scaling
         public void runScaleText(object sender, RoutedEventArgs e)
         {
 
@@ -127,42 +129,18 @@ namespace SoundsEasyV1
         }
 
 
-        /*
-        public void LoadData()
-        {
-
-            //clear data source list
-            MainWindow.dataSourceStudent.Clear();
-            isLoading = true;
-
-            //set pop up size
-            popupAddStudent.Height = SystemParameters.PrimaryScreenHeight * 0.5;
-            popupAddStudent.Width = SystemParameters.PrimaryScreenWidth * 0.5;
-
-            //set parameters for pull request
-            gsp = new GoogleSheetParameters() { RangeColumnStart = 1, RangeRowStart = 1, RangeColumnEnd = 5, RangeRowEnd = 100, FirstRowIsHeaders = true, SheetName = studSheetName };
-            //run data loading in background
-            BackgroundWorker worker = new BackgroundWorker();
-            worker.RunWorkerCompleted += worker_RunWorkerCompleted;
-            worker.WorkerReportsProgress = true;
-            worker.DoWork += worker_DoWork;
-            worker.ProgressChanged += worker_ProgressChanged;
-            worker.RunWorkerAsync();
-
-
-            
-
-        }*/
-
+        //struct for options in the add student course selection list
         public struct StudentOption
         {
             public string Course { get; set; }
 
         }
 
+        //load data filters
         public void LoadDataFilter()
         {
             dataSourceStudentFiltered.Clear();
+            //linear search to find matching entries
             for (int i = 0; i < MainWindow.dataSourceStudent.Count; i++)
             {
                 if (checkFilter(MainWindow.dataSourceStudent[i]))
@@ -171,6 +149,7 @@ namespace SoundsEasyV1
                 }
                 if (dataSourceStudentFiltered.Count == 0)
                 {
+                    //error message box if no entries found
                     string messageBoxText = "No matching entries found, please try again.";
                     string caption = "Did you make a typo?";
                     MessageBoxButton button = MessageBoxButton.OK;
@@ -186,6 +165,7 @@ namespace SoundsEasyV1
 
         }
 
+        //load all courses found within the database into the options list
         private void loadStudentOptions()
         {
             HashSet<string> s = new HashSet<string>();
@@ -205,7 +185,7 @@ namespace SoundsEasyV1
             dataClassOptions.ItemsSource = tempSource;
         }
 
-
+        //boolean function to check if a single student's information fits the filter
         private bool checkFilter(Student s)
         {
             if (s.fname != txtStudentFName.Text && txtStudentFName.Text.Length > 0)
@@ -232,41 +212,7 @@ namespace SoundsEasyV1
             return true;
         }
 
-        /* code no longer necessary
-        //copied files from InstrumentWindow.xaml.cs, changed to apply to Student Window from here on
-        private void worker_ProgressChanged(object? sender, ProgressChangedEventArgs e)
-        {
-            progressStudentLoad.Visibility = Visibility.Visible;
-            progressStudentLoad.Value = e.ProgressPercentage;
-            progressStudentLoad.Visibility = Visibility.Visible;
-            progressTextStudent.Text = (string)e.UserState;
-
-        }
-
-        private void worker_DoWork(object? sender, DoWorkEventArgs e)
-        {
-            var worker = sender as BackgroundWorker;
-
-            gsh.GetStudentDataFromSheet(gsp, ref MainWindow.dataSourceStudent, ref thisWindow, ref worker);
-
-            //LoadSheets();
-        }
-
-        private void worker_RunWorkerCompleted(object? sender, RunWorkerCompletedEventArgs e)
-        {
-            progressStudentLoad.Visibility = Visibility.Hidden;
-            progressTextStudent.Visibility = Visibility.Hidden;
-            dataGridStudent.ItemsSource = MainWindow.dataSourceStudent;
-            isLoading = false;
-
-            LoadDataFilter();
-        }
         
-        public void LoadSheets()
-        {
-            //dataGridStudent.ItemsSource = dataSourceStudent;
-        }
-        */
         //when a row in the data is selected:
         private void StudentRow_Click(object sender, MouseButtonEventArgs e)
         {
@@ -276,6 +222,7 @@ namespace SoundsEasyV1
                 Student target = dataGrid.SelectedItem as Student;
                 if (target != null)
                 {
+                    //if selection valid, the selected class variable is set to the selection id
                     selected = target.id;
                     Debug.WriteLine(selected);
                 }
@@ -288,6 +235,7 @@ namespace SoundsEasyV1
 
         }
 
+        //click listener for the load data filters function
         private void btnLoadStudents_Click(object sender, RoutedEventArgs e)
         {
             if (!isLoading)
@@ -295,12 +243,14 @@ namespace SoundsEasyV1
 
         }
         
+        //click listener for the x button
         private void popupCloserS_click(object sender, RoutedEventArgs e)
         {
             btnAddStudent.IsChecked = false;
 
         }
 
+        //click listener to confirm adding a student
         private void addStudentButton_Click(object sender, RoutedEventArgs e)
         {
             if (addStudentEntry())
@@ -309,6 +259,7 @@ namespace SoundsEasyV1
             }
         }
 
+        //currently unused function for forcing execution on main thread
         public void addData(Student i)
         {
             App.Current.Dispatcher.Invoke((Action)delegate // <--- HERE
@@ -319,11 +270,15 @@ namespace SoundsEasyV1
             });
         }
 
+        //function to add student entry to the database
         private bool addStudentEntry()
         {
-             Student stud = Student.CreateStudent();
+            //returns true if successful, false if failed. i.e. missing information
+            //create object to be added 
+            Student stud = Student.CreateStudent();
              var studRow = new GoogleSheetRow();
 
+            //attempt to retrieve information from each input field
              if (txtAddFirstName.Text.Length > 0)
              {
                 stud.fname = txtAddFirstName.Text;
@@ -387,12 +342,13 @@ namespace SoundsEasyV1
             }
             stud.id = MainWindow.dataSourceStudent.Count + 1;
 
+            //add to local data source
             MainWindow.dataSourceStudent.Add(stud);
             LoadDataFilter();
 
             Debug.WriteLine("cols " + studRow.Cells.Count);
 
-            //the function requires a list of rows
+            
             var rowsToAdd = new List<GoogleSheetRow>() { studRow };
             //add cells request with a built-in construction of a googlesheetparameter
             gsh.AddCells(new GoogleSheetParameters { SheetName = studSheetName, RangeColumnStart = 1, RangeRowStart = MainWindow.dataSourceStudent.Count + 1 }, rowsToAdd);
@@ -400,7 +356,7 @@ namespace SoundsEasyV1
 
         }
 
-
+        //function to reset popup
         private void resetPopup()
         {
             txtAddFirstName.Clear();
@@ -436,10 +392,12 @@ namespace SoundsEasyV1
             isAddingIns = false; // bool to check if the popup is in addition mode
         }
 
+        //function for the owned instrument popup to load a list of instruments claimed by that student
         private void loadOwnedInstruments(Student current)
         {
             txtOwnedInsTitle.Text = "Instruments assigned to " + current.fname.ToUpper() + " " + current.lname.ToUpper();
 
+            //linear search and add to a list
             List<Instrument> insAssignToStud = new List<Instrument>();
             foreach (var instrument in MainWindow.dataSourceInstrument)
             {
@@ -455,6 +413,7 @@ namespace SoundsEasyV1
             btnRemoveOwnedIns.Content = "Unassign Instrument";
         }
 
+        //function to rewrite a row - update local information to the database
         void updateInstrumentToSheet(int index)
         {
             Debug.WriteLine("run update ins");
@@ -475,10 +434,13 @@ namespace SoundsEasyV1
             gsh.AddCells(new GoogleSheetParameters { SheetName = InstrumentWindow.insSheetName, RangeColumnStart = 1, RangeRowStart = index + 1 }, rowsToAdd);
         }
 
+        //function for the owned instrument popup to load a list of currently unclaimed instrument
         private void loadAvailableInstruments()
         {
+            
             txtOwnedInsTitle.Text = "Adding New Instrument";
 
+            //linear search and add to a list
             List<Instrument> insAvailable = new List<Instrument>();
             foreach (var instrument in MainWindow.dataSourceInstrument)
             {
@@ -494,17 +456,20 @@ namespace SoundsEasyV1
             btnRemoveOwnedIns.Content = "Cancel";
         }
 
+        //left button on the owned instrument popup
         private void btnAddOwnedIns_Click(object sender, RoutedEventArgs e)
         {
             if (!isAddingIns)
             {
-                
+                //The button will switch the popup to "adding mode" and load the list of available instruments
                 loadAvailableInstruments();
                 isAddingIns = true;
             } else if(dataOwnedInstruments.SelectedItem is Instrument insToAdd)
             {
+                //if in adding mode, the button acts as the confirm addition button
                 Student current = MainWindow.dataSourceStudent[selected - 1];
 
+                //set information and update to database
                 MainWindow.dataSourceInstrument[insToAdd.id - 1].grade = current.grade;
                 MainWindow.dataSourceInstrument[insToAdd.id - 1].studentID = current.email;
 
@@ -517,16 +482,19 @@ namespace SoundsEasyV1
             
         }
 
+        //right button on the owned instrument popup
         private void btnRemoveOwnedIns_Click(object sender, RoutedEventArgs e)
         {
             Student current = MainWindow.dataSourceStudent[selected - 1];
 
             if (isAddingIns)
             {
+                //if in adding mode, it is the "cancel button" to get the popup out of adding mode
                 loadOwnedInstruments(current);
                 isAddingIns = false;
             } else if (dataOwnedInstruments.SelectedItem is Instrument insToAdd)
             {
+                //if not in adding mode, it unassigns the selected instrument from the owned list
                 MainWindow.dataSourceInstrument[insToAdd.id - 1].grade = -1;
                 MainWindow.dataSourceInstrument[insToAdd.id - 1].studentID = "none";
 
@@ -565,6 +533,70 @@ namespace SoundsEasyV1
                 hintEmail.Visibility = Visibility.Hidden;
             }
         }
-    }
+
+        //unused code ----------------
+        /*
+       public void LoadData()
+       {
+
+           //clear data source list
+           MainWindow.dataSourceStudent.Clear();
+           isLoading = true;
+
+           //set pop up size
+           popupAddStudent.Height = SystemParameters.PrimaryScreenHeight * 0.5;
+           popupAddStudent.Width = SystemParameters.PrimaryScreenWidth * 0.5;
+
+           //set parameters for pull request
+           gsp = new GoogleSheetParameters() { RangeColumnStart = 1, RangeRowStart = 1, RangeColumnEnd = 5, RangeRowEnd = 100, FirstRowIsHeaders = true, SheetName = studSheetName };
+           //run data loading in background
+           BackgroundWorker worker = new BackgroundWorker();
+           worker.RunWorkerCompleted += worker_RunWorkerCompleted;
+           worker.WorkerReportsProgress = true;
+           worker.DoWork += worker_DoWork;
+           worker.ProgressChanged += worker_ProgressChanged;
+           worker.RunWorkerAsync();
+
+
+
+
+       }*/
+        /* code no longer necessary
+        //copied files from InstrumentWindow.xaml.cs, changed to apply to Student Window from here on
+        private void worker_ProgressChanged(object? sender, ProgressChangedEventArgs e)
+        {
+            progressStudentLoad.Visibility = Visibility.Visible;
+            progressStudentLoad.Value = e.ProgressPercentage;
+            progressStudentLoad.Visibility = Visibility.Visible;
+            progressTextStudent.Text = (string)e.UserState;
+
         }
+
+        private void worker_DoWork(object? sender, DoWorkEventArgs e)
+        {
+            var worker = sender as BackgroundWorker;
+
+            gsh.GetStudentDataFromSheet(gsp, ref MainWindow.dataSourceStudent, ref thisWindow, ref worker);
+
+            //LoadSheets();
+        }
+
+        private void worker_RunWorkerCompleted(object? sender, RunWorkerCompletedEventArgs e)
+        {
+            progressStudentLoad.Visibility = Visibility.Hidden;
+            progressTextStudent.Visibility = Visibility.Hidden;
+            dataGridStudent.ItemsSource = MainWindow.dataSourceStudent;
+            isLoading = false;
+
+            LoadDataFilter();
+        }
+        
+        public void LoadSheets()
+        {
+            //dataGridStudent.ItemsSource = dataSourceStudent;
+        }
+        */
+
+    }
+}
    

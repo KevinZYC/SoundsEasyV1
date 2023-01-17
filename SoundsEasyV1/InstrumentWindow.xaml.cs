@@ -29,16 +29,19 @@ namespace SoundsEasyV1
 {  
     public partial class InstrumentWindow : Window
     {
-        List<double> widthRatios = new List<double> { 1, 1, 1, 1.3, 0.7, 1, 0.7 };
-        //ObservableCollection<Instrument> dataSourceInstrument = new ObservableCollection<Instrument>();
+        //class variables
+
+        //data sources for datagrids
         ObservableCollection<Instrument> dataSourceInstrumentFiltered = new ObservableCollection<Instrument>();
         ObservableCollection<Student> dataAssignOptions = new ObservableCollection<Student>();
         InstrumentWindow? thisWindow = null;
 
-        bool isLoading = false;
-
+        //Sheets operator object and its parameter objects
         private GoogleSheetsHelper? gsh = null;
         private GoogleSheetParameters? gsp = null;
+
+        
+        bool isLoading = false;
 
         double popupSize = 0.5;
 
@@ -48,23 +51,16 @@ namespace SoundsEasyV1
 
         public static string insSheetName = "Instruments";
 
-
+        //constructor
         public InstrumentWindow()
         {
             InitializeComponent();
-            //LoadSheets();
-            //set min widths
-            //dataGridInstrument.Loaded += SetMinWidths;
 
             //initialize googlesheets helper
             gsh = new GoogleSheetsHelper("fleet-automata-366622-ba1a276c41b4.json", MainWindow.sheetCode);
-
-            //default settings for googlesheets parameters
             gsp = new GoogleSheetParameters() { RangeColumnStart = 1, RangeRowStart = 1, RangeColumnEnd = 7, RangeRowEnd = 999, FirstRowIsHeaders = true, SheetName = insSheetName };
 
             Debug.WriteLine("started");
-
-            //dataGridInstrument.ItemsSource = dataSourceInstrument;
 
             //set pop up size
             popupAddInstrument.Height = SystemParameters.PrimaryScreenHeight * popupSize;
@@ -72,28 +68,13 @@ namespace SoundsEasyV1
 
             popupAssignInstrument.Height = SystemParameters.PrimaryScreenHeight * popupSize;
             popupAssignInstrument.Width = SystemParameters.PrimaryScreenWidth * popupSize;
-
-            //LoadData();
-
-
-            Loaded += delegate
-            {
-                // access ActualWidth and ActualHeight here
-            };
-
+            
+            //load empty data filter(all entries)
             LoadDataFilter();
 
         }
 
-        void popupAddInstrument_Loaded(object sender, RoutedEventArgs e)
-        {
-            popupAddInstrument.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
-            popupAddInstrument.Arrange(new Rect(0, 0, popupAddInstrument.DesiredSize.Width, popupAddInstrument.DesiredSize.Height));
-            Debug.WriteLine("loaded window");
-
-            
-        }
-
+        //functions to programmatically add the auto-scale text property
         public void scaleText(TextBox t)
         {
             t.Loaded += new RoutedEventHandler(runScaleText);
@@ -104,9 +85,10 @@ namespace SoundsEasyV1
             t.Loaded += new RoutedEventHandler(runScaleText);
         }
 
+        // function behind the auto-scale text property
         public void runScaleText(object sender, RoutedEventArgs e)
         {
-            
+            //uses the loaded actual height to calculate font size
             if (sender.GetType() == typeof(TextBox))
             {
                 var obj = sender as TextBox;
@@ -159,83 +141,13 @@ namespace SoundsEasyV1
             }
         }
 
+        //carry over the window object itself from MainWindow
         public void Init(ref InstrumentWindow windowObj)
         {
             thisWindow = windowObj;
         }
 
-        /* does not work!!!!!!!
-        public void scaleTextDimensions(TextBox t)
-        {
-            t.FontSize = t.ActualHeight;
-            Debug.WriteLine("Height" + t.ActualHeight);
-        }
-        public void scaleTextDimensions(TextBlock t)
-        {
-            t.FontSize = t.ActualHeight;
-            t.FontSize = t.ActualHeight;
-            Debug.WriteLine("Height" + t.ActualHeight);
-        }
-        public void scaleTextDimensions(Button b)
-        {
-            b.FontSize = b.ActualHeight;
-        }
-        */
-
-        /* currently unused
-        private ObservableCollection<Instrument> CreateObservableCollection(ObservableCollection<ExpandoObject> myObservableCollection)
-        {
-            ObservableCollection<Instrument> ret = new ObservableCollection<Instrument>();
-
-            foreach (var item in myObservableCollection)
-            {
-                var dict = (IDictionary<string, object>)item;
-                var type = dict["Type"] as string;
-                var make = dict["Make"] as string;
-                var caseN = dict["Case Number"] as string;
-                var serial = dict["Serial Number"] as string;
-
-                var grade = -1;
-                try
-                {
-                    grade = Int32.Parse(dict["Grade"] as string);
-                } catch (InvalidCastException e)
-                {
-                    break; //when reaching an item with invalid grade, end data fetching
-                }
-
-                var sID = dict["Student ID"] as string;
-                var repair = dict["Repair Status"] as string;
-
-                ret.Add(new Instrument(type, make, caseN, serial, grade, sID, repair));
-            }
-
-            return ret;
-        }
-        */
-
-
-        /* unused code for loading data
-        //load entire dataset
-        public void LoadData()
-        {
-            
-            
-            dataSourceInstrument.Clear();
-            isLoading = true;
-            gsp = new GoogleSheetParameters() { RangeColumnStart = 1, RangeRowStart = 1, RangeColumnEnd = 7, RangeRowEnd = 100, FirstRowIsHeaders = true, SheetName = insSheetName };
-            //run data loading in background
-            BackgroundWorker worker = new BackgroundWorker();
-            worker.RunWorkerCompleted += worker_RunWorkerCompleted;
-            worker.WorkerReportsProgress = true;
-            worker.DoWork += worker_DoWork;
-            worker.ProgressChanged += worker_ProgressChanged;
-            worker.RunWorkerAsync();
-            
-
-            
-        }
-        */
+        //struct for items in the add instrument type selection menu
         public struct InstrumentOption
         {
             public string Type { get; set; }
@@ -246,6 +158,7 @@ namespace SoundsEasyV1
         public void LoadDataFilter()
         {
             dataSourceInstrumentFiltered.Clear();
+            //iterative linear search is the only option
             for (int i = 0; i < MainWindow.dataSourceInstrument.Count; i++)
             {
                 if (checkFilter(MainWindow.dataSourceInstrument[i]))
@@ -256,6 +169,7 @@ namespace SoundsEasyV1
             }
             if(dataSourceInstrumentFiltered.Count == 0)
             {
+                //generate error message box if no entries found
                 string messageBoxText = "No matching entries found, please try again.";
                 string caption = "Did you make a typo?";
                 MessageBoxButton button = MessageBoxButton.OK;
@@ -265,14 +179,11 @@ namespace SoundsEasyV1
                 result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
             }
             dataGridInstrument.ItemsSource=dataSourceInstrumentFiltered;
-
+            
             loadInstrumentOptions();
-
-
-            //dataGridInstrument.ColumnWidth = new DataGridLength(1, DataGridLengthUnitType.Star);
         }
 
-        
+        //function to pull all existing instrument types as instrument options
         private void loadInstrumentOptions()
         {
             HashSet<string> s = new HashSet<string>();
@@ -291,52 +202,7 @@ namespace SoundsEasyV1
 
             dataInstrumentOptions.ItemsSource = tempSource;
         }
-        /* unused code for loading data
-        private void worker_ProgressChanged(object? sender, ProgressChangedEventArgs e)
-        {
-            progressInstrumentLoad.Visibility = Visibility.Visible;
-            progressInstrumentLoad.Value = e.ProgressPercentage;
-            progressTextInstrument.Visibility = Visibility.Visible;
-            progressTextInstrument.Text = (string)e.UserState;
-            
-        }
-
-        private void worker_DoWork(object? sender, DoWorkEventArgs e)
-        {
-            var worker = sender as BackgroundWorker;
-            
-            gsh.GetInstrumentDataFromSheet(gsp, ref dataSourceInstrument, ref thisWindow, ref worker);
-
-            //LoadSheets();
-        }
-
-        private void worker_RunWorkerCompleted(object? sender, RunWorkerCompletedEventArgs e)
-        {
-            progressInstrumentLoad.Visibility = Visibility.Hidden;
-            progressTextInstrument.Visibility= Visibility.Hidden;
-            dataGridInstrument.ItemsSource = dataSourceInstrument;
-            isLoading = false;
-            LoadDataFilter();
-
-        }
-
-        public void LoadSheets()
-        {
-            //dataGridInstrument.ItemsSource = dataSourceInstrument;
-        }
-        */
-        //function to pass into xaml to distribute widths
-        public void SetMinWidths(object source, EventArgs e)
-        {
-            int i = 0;
-            foreach (var column in dataGridInstrument.Columns)
-            {
-                column.MinWidth = column.ActualWidth;
-                column.Width = new DataGridLength(widthRatios[i], DataGridLengthUnitType.Star);
-                i++;
-            }
-        }
-
+        
         //when a row in the data is selected:
         private void InstrumentRow_Click(object sender, MouseButtonEventArgs e)
         {
@@ -346,8 +212,11 @@ namespace SoundsEasyV1
                 Instrument target = dataGrid.SelectedItem as Instrument;
                 if(target != null)
                 {
+                    //if click target is valid, set the selected class variable to the target's id
                     selected = target.id;
                     Debug.WriteLine(selected);
+
+                    //based on the selected row's availability, the manage assignment button will change its display text
                     if(target.studentID == "none")
                     {
                         btnManageAssign.Content = "Assign to Student";
@@ -356,25 +225,23 @@ namespace SoundsEasyV1
                         btnManageAssign.Content = "Unassign Instrument";
                     }
                 }
-                
-                
             }
         }
 
+        //click listener for the add instrument type menu
         private void dataInstrumentOptions_Click(object sender, MouseButtonEventArgs e)
         {
             var dataGrid = sender as DataGrid;
             if (dataGrid != null)
             {
-                if (dataGrid.SelectedItem is InstrumentOption target)
+                if (dataGrid.SelectedItem is InstrumentOption target) //casting and type-checking merged
                 {
                     txtAddInstrumentType.Text = target.Type;
                 }
-
-
             }
         }
 
+        //click listener for the menu selecting an instrument's assignment target
         private void dataAssignInstrument_Click(object sender, MouseButtonEventArgs e)
         {
             var dataGrid = sender as DataGrid;
@@ -382,6 +249,7 @@ namespace SoundsEasyV1
             {
                 if (dataGrid.SelectedItem is Student)
                 {
+                    //if selection valid, class variable recipient is set to selected student
                     recipient = dataGrid.SelectedItem as Student;
                 }
 
@@ -389,20 +257,28 @@ namespace SoundsEasyV1
             }
         }
 
+        //click listener for repair change button
         private void btnRepairChange_Click(object sender, RoutedEventArgs e)
         {
             if(selected >= 0 && selected <= MainWindow.dataSourceInstrument.Count && dataGridInstrument.SelectedItem != null)
             {
-                if(MainWindow.dataSourceInstrument[selected-1].repairStatus == "good")
+                //cycle through repair statuses
+                if(MainWindow.dataSourceInstrument[selected-1].repairStatus == "Good")
                 {
-                    MainWindow.dataSourceInstrument[selected-1].repairStatus = "broken";
+                    MainWindow.dataSourceInstrument[selected-1].repairStatus = "Repair Needed";
                     Debug.WriteLine(dataGridInstrument.SelectedIndex + "  " + selected);
-                    dataSourceInstrumentFiltered[dataGridInstrument.SelectedIndex].repairStatus = "broken";
+                    dataSourceInstrumentFiltered[dataGridInstrument.SelectedIndex].repairStatus = "Repair Needed";
+                }
+                else if(MainWindow.dataSourceInstrument[selected - 1].repairStatus == "Repair Needed")
+                {
+                    MainWindow.dataSourceInstrument[selected - 1].repairStatus = "In Repair";
+                    Debug.WriteLine(dataGridInstrument.SelectedIndex + "  " + selected);
+                    dataSourceInstrumentFiltered[dataGridInstrument.SelectedIndex].repairStatus = "In Repair";
                 } else
                 {
-                    MainWindow.dataSourceInstrument[selected-1].repairStatus = "good";
+                    MainWindow.dataSourceInstrument[selected-1].repairStatus = "Good";
                     Debug.WriteLine(dataGridInstrument.SelectedIndex + "  " + selected);
-                    dataSourceInstrumentFiltered[dataGridInstrument.SelectedIndex].repairStatus = "good";
+                    dataSourceInstrumentFiltered[dataGridInstrument.SelectedIndex].repairStatus = "Good";
                 }
 
                 updateRowToSheet(selected);
@@ -410,20 +286,25 @@ namespace SoundsEasyV1
             }
         }
 
+        //click listener for button to assign/unassign an instrument
         private void btnManageAssign_Click(object sender, RoutedEventArgs e)
         {
             if (selected >= 0 && selected <= MainWindow.dataSourceInstrument.Count && MainWindow.dataSourceInstrument[selected-1].studentID!="none")
             {
+                //unassigns instrument and updates database
                 MainWindow.dataSourceInstrument[selected - 1].studentID = "none";
                 MainWindow.dataSourceInstrument[selected - 1].grade = -1;
 
                 dataSourceInstrumentFiltered[dataGridInstrument.SelectedIndex].studentID = "none";
                 dataSourceInstrumentFiltered[dataGridInstrument.SelectedIndex].grade = -1;
 
+                btnManageAssign.Content = "Assign to Student";
+
                 updateRowToSheet(selected);
 
             } else if(selected >= 0 && selected <= MainWindow.dataSourceInstrument.Count && MainWindow.dataSourceInstrument[selected - 1].studentID == "none")
             {
+                //open popup with a searchable list of students
                 if (!popupAssignInstrument.IsOpen)
                 {
                     dataAssignInstrument.ItemsSource = dataAssignOptions;
@@ -432,13 +313,17 @@ namespace SoundsEasyV1
             }
         }
 
+        //click listener to remove instrument
         private void btnRemoveInstrument_Click(object sender, RoutedEventArgs e)
         {
             if (selected >= 0 && selected <= MainWindow.dataSourceInstrument.Count && dataGridInstrument.SelectedItem!=null)
             {
+                //remove instrument from both the full database and the displayed(filtered) set
                 MainWindow.dataSourceInstrument.RemoveAt(selected - 1);
                 Debug.WriteLine(dataGridInstrument.SelectedIndex + "  " + selected);
                 dataSourceInstrumentFiltered.RemoveAt(dataGridInstrument.SelectedIndex);
+
+                //remove row from database
                 gsh.RemoveRow(selected, selected+1);
             } else if(dataGridInstrument.SelectedItem != null)
             {
@@ -446,6 +331,7 @@ namespace SoundsEasyV1
             }
         }
 
+        //load data filter
         private void btnLoadInstruments_Click(object sender, RoutedEventArgs e)
         {
             if(!isLoading)
@@ -453,6 +339,7 @@ namespace SoundsEasyV1
             
         }
 
+        //click listener to confirm the addition of an instrument
         private void btnConfirmAddInstrument_Click(object sender, RoutedEventArgs e)
         {
             if (addInstrumentEntry())
@@ -461,11 +348,14 @@ namespace SoundsEasyV1
             }
         }
 
+        //function to add instrument
         private bool addInstrumentEntry()
         {
+            //bool function, returns true if successful, return false if missing information
             Instrument cur = Instrument.CreateInstrument();
             var curRow = new GoogleSheetRow();
 
+            //checks if each input field has a value, adds value to the object that will be pushed to the database
             if (txtAddInstrumentType.Text.Length > 0)
             {
                 cur.type = txtAddInstrumentType.Text;
@@ -544,8 +434,8 @@ namespace SoundsEasyV1
 
             cur.id = MainWindow.dataSourceInstrument.Count + 1;
 
-            cur.repairStatus = "good";
-            curRow.Cells.Add(new GoogleSheetCell { CellValue = "good" });
+            cur.repairStatus = "Good";
+            curRow.Cells.Add(new GoogleSheetCell { CellValue = "Good" });
 
             MainWindow.dataSourceInstrument.Add(cur);
             LoadDataFilter();
@@ -560,6 +450,7 @@ namespace SoundsEasyV1
 
         }
 
+        //reset popup
         private void resetPopup()
         {
             txtAddInstrumentCase.Clear();
@@ -567,9 +458,14 @@ namespace SoundsEasyV1
             txtAddInstrumentSerial.Clear();
             txtAddInstrumentStudentID.Clear();
             txtAddInstrumentType.Clear();
+            radioG9.IsChecked = false;
+            radioG10.IsChecked = false;
+            radioG11.IsChecked = false;
+            radioG12.IsChecked = false;
             popupAddInstrument.IsOpen = false;
         }
 
+        //currently unused, function originally planned to force actions onto the main thread
         public void addData(Instrument i)
         {
             App.Current.Dispatcher.Invoke((Action)delegate // <--- HERE
@@ -579,7 +475,7 @@ namespace SoundsEasyV1
             });
         }
 
-        
+        //upload the contents of a row in the local database to the Google Sheet
         void updateRowToSheet(int index)
         {
             var obj = MainWindow.dataSourceInstrument[index-1];
@@ -647,6 +543,7 @@ namespace SoundsEasyV1
             }
         }
 
+        //check filters of the assignment target student list
         private bool checkAssignFilter(Student s)
         {
             if (s.fname != filterAssignFName.Text && filterAssignFName.Text.Length > 0)
@@ -697,6 +594,7 @@ namespace SoundsEasyV1
         //when cancelled, exit the popup
         private void btnCancelAssign_Click(object sender, RoutedEventArgs e)
         {
+            resetPopup();
             popupAssignInstrument.IsOpen = false;
         }
 
@@ -745,6 +643,128 @@ namespace SoundsEasyV1
                 hintInsSID.Visibility = Visibility.Hidden;
             }
         }
+
+
+        //unused code, please ignore---------------------
+
+        /* does not work!!!!!!!
+        public void scaleTextDimensions(TextBox t)
+        {
+            t.FontSize = t.ActualHeight;
+            Debug.WriteLine("Height" + t.ActualHeight);
+        }
+        public void scaleTextDimensions(TextBlock t)
+        {
+            t.FontSize = t.ActualHeight;
+            t.FontSize = t.ActualHeight;
+            Debug.WriteLine("Height" + t.ActualHeight);
+        }
+        public void scaleTextDimensions(Button b)
+        {
+            b.FontSize = b.ActualHeight;
+        }
+        */
+
+        /* currently unused
+        private ObservableCollection<Instrument> CreateObservableCollection(ObservableCollection<ExpandoObject> myObservableCollection)
+        {
+            ObservableCollection<Instrument> ret = new ObservableCollection<Instrument>();
+
+            foreach (var item in myObservableCollection)
+            {
+                var dict = (IDictionary<string, object>)item;
+                var type = dict["Type"] as string;
+                var make = dict["Make"] as string;
+                var caseN = dict["Case Number"] as string;
+                var serial = dict["Serial Number"] as string;
+
+                var grade = -1;
+                try
+                {
+                    grade = Int32.Parse(dict["Grade"] as string);
+                } catch (InvalidCastException e)
+                {
+                    break; //when reaching an item with invalid grade, end data fetching
+                }
+
+                var sID = dict["Student ID"] as string;
+                var repair = dict["Repair Status"] as string;
+
+                ret.Add(new Instrument(type, make, caseN, serial, grade, sID, repair));
+            }
+
+            return ret;
+        }
+        */
+
+
+        /* unused code for loading data
+        //load entire dataset
+        public void LoadData()
+        {
+            
+            
+            dataSourceInstrument.Clear();
+            isLoading = true;
+            gsp = new GoogleSheetParameters() { RangeColumnStart = 1, RangeRowStart = 1, RangeColumnEnd = 7, RangeRowEnd = 100, FirstRowIsHeaders = true, SheetName = insSheetName };
+            //run data loading in background
+            BackgroundWorker worker = new BackgroundWorker();
+            worker.RunWorkerCompleted += worker_RunWorkerCompleted;
+            worker.WorkerReportsProgress = true;
+            worker.DoWork += worker_DoWork;
+            worker.ProgressChanged += worker_ProgressChanged;
+            worker.RunWorkerAsync();
+            
+
+            
+        }
+        */
+        /* unused code for loading data
+        private void worker_ProgressChanged(object? sender, ProgressChangedEventArgs e)
+        {
+            progressInstrumentLoad.Visibility = Visibility.Visible;
+            progressInstrumentLoad.Value = e.ProgressPercentage;
+            progressTextInstrument.Visibility = Visibility.Visible;
+            progressTextInstrument.Text = (string)e.UserState;
+            
+        }
+
+        private void worker_DoWork(object? sender, DoWorkEventArgs e)
+        {
+            var worker = sender as BackgroundWorker;
+            
+            gsh.GetInstrumentDataFromSheet(gsp, ref dataSourceInstrument, ref thisWindow, ref worker);
+
+            //LoadSheets();
+        }
+
+        private void worker_RunWorkerCompleted(object? sender, RunWorkerCompletedEventArgs e)
+        {
+            progressInstrumentLoad.Visibility = Visibility.Hidden;
+            progressTextInstrument.Visibility= Visibility.Hidden;
+            dataGridInstrument.ItemsSource = dataSourceInstrument;
+            isLoading = false;
+            LoadDataFilter();
+
+        }
+
+        public void LoadSheets()
+        {
+            //dataGridInstrument.ItemsSource = dataSourceInstrument;
+        }
+        */
+        //function to pass into xaml to distribute widths
+        /*
+        public void SetMinWidths(object source, EventArgs e)
+        {
+            int i = 0;
+            foreach (var column in dataGridInstrument.Columns)
+            {
+                column.MinWidth = column.ActualWidth;
+                column.Width = new DataGridLength(widthRatios[i], DataGridLengthUnitType.Star);
+                i++;
+            }
+        }*/
 
     }
 }
