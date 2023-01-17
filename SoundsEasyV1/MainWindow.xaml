@@ -1,4 +1,5 @@
-﻿<Window x:Class="SoundsEasyV1.MainWindow"
+﻿<!--XAML for main window dashboard -->
+    <Window x:Class="SoundsEasyV1.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -26,7 +27,7 @@
                 <RowDefinition Height="0.2*"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-            <Button x:Name="btnInstrumentPage" Grid.Row="0" Content="Instrument Page" Click="btnInstrumentPage_Click">
+            <Button x:Name="btnInstrumentPage" Loaded="runScaleText" Grid.Row="0" Content="Instrument Page" Click="btnInstrumentPage_Click" FontFamily="Rockwell">
                 <Button.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="10"/>
@@ -50,7 +51,7 @@
                     </Style>
                 </Button.Resources>
             </Button>
-            <Button x:Name="btnStudentPage" Content="Student Page" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="btnStudentPage_Click">
+            <Button x:Name="btnStudentPage" Loaded="runScaleText" Content="Student Page" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="btnStudentPage_Click" FontFamily="Rockwell">
                 <Button.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="10"/>

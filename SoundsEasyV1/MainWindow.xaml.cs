@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -163,6 +164,59 @@ namespace SoundsEasyV1
             gsh.GetInstrumentDataFromSheet(gsp, ref dataSourceInstrument);
         }
 
-        
+        public void runScaleText(object sender, RoutedEventArgs e)
+        {
+
+            if (sender.GetType() == typeof(TextBox))
+            {
+                var obj = sender as TextBox;
+
+                if (obj.ActualHeight == 0)
+                {
+                    Debug.WriteLine("  failed run scale text     ");
+                    return;
+                }
+
+                obj.FontSize = obj.ActualHeight / 1.75;
+                Debug.WriteLine("scale text" + obj.ActualHeight);
+
+            }
+            if (sender.GetType() == typeof(TextBlock))
+            {
+
+                var obj = sender as TextBlock;
+                if (obj.ActualHeight == 0)
+                {
+                    Debug.WriteLine("  failed run scale text     ");
+                    return;
+                }
+                obj.FontSize = obj.ActualHeight / 1.75;
+                Debug.WriteLine("scale text" + obj.ActualHeight);
+            }
+            if (sender.GetType() == typeof(Button))
+            {
+
+                var obj = sender as Button;
+                if (obj.ActualHeight == 0)
+                {
+                    Debug.WriteLine("  failed run scale text     ");
+                    return;
+                }
+                obj.FontSize = obj.ActualHeight / 3.5;
+                Debug.WriteLine("scale text" + obj.ActualHeight);
+            }
+            if (sender.GetType() == typeof(ToggleButton))
+            {
+
+                var obj = sender as ToggleButton;
+                if (obj.ActualHeight == 0)
+                {
+                    Debug.WriteLine("  failed run scale text     ");
+                    return;
+                }
+                obj.FontSize = obj.ActualHeight / 3.5;
+                Debug.WriteLine("scale text" + obj.ActualHeight);
+            }
+        }
     }
 }

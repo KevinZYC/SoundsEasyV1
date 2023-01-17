@@ -1,4 +1,5 @@
-﻿using Google.Apis.Auth.OAuth2;
+﻿//google sheets api imports
+using Google.Apis.Auth.OAuth2;
 using Google.Apis.Sheets.v4;
 using Google.Apis.Sheets.v4.Data;
 using Google.Apis.Services;
@@ -7,7 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Dynamic;
-
+//system imports
 using System.Text;
 using System.Diagnostics;
 using System.Threading;
@@ -25,10 +26,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Controls.Primitives;
 
 namespace SoundsEasyV1
-{
-    /// <summary>
-    /// Interaction logic for InstrumentWindow.xaml
-    /// </summary>
+{  
     public partial class InstrumentWindow : Window
     {
         List<double> widthRatios = new List<double> { 1, 1, 1, 1.3, 0.7, 1, 0.7 };
