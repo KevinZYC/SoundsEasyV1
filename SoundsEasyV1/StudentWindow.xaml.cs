@@ -147,17 +147,18 @@ namespace SoundsEasyV1
                 {
                     dataSourceStudentFiltered.Add(MainWindow.dataSourceStudent[i]);
                 }
-                if (dataSourceStudentFiltered.Count == 0)
-                {
-                    //error message box if no entries found
-                    string messageBoxText = "No matching entries found, please try again.";
-                    string caption = "Did you make a typo?";
-                    MessageBoxButton button = MessageBoxButton.OK;
-                    MessageBoxImage icon = MessageBoxImage.Warning;
-                    MessageBoxResult result;
+                
+            }
+            if (dataSourceStudentFiltered.Count == 0)
+            {
+                //error message box if no entries found
+                string messageBoxText = "No matching entries found, please try again.";
+                string caption = "Did you make a typo?";
+                MessageBoxButton button = MessageBoxButton.OK;
+                MessageBoxImage icon = MessageBoxImage.Warning;
+                MessageBoxResult result;
 
-                    result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
-                }
+                result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
             }
             dataGridStudent.ItemsSource = dataSourceStudentFiltered;
 
